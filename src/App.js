@@ -2,6 +2,8 @@ import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/home";
 import Header from "./components/header";
+import PetDetailsPage from "./pages/pet-details/pet-details";
+import PetFoodDetails from "./pages/pet-details/pet-food-details";
 
 function App() {
   return (
@@ -15,6 +17,16 @@ function App() {
             element={<Navigate replace to="/home" />}
           ></Route>
           <Route exact path="/home" element={<Home />}></Route>
+          <Route
+            exact
+            path="/home/pets/fido"
+            element={<PetDetailsPage />}
+          ></Route>
+          <Route
+            exact
+            path="/home/pets/foods/chicken"
+            element={<PetFoodDetails />}
+          ></Route>
         </Routes>
       </div>
     </div>
