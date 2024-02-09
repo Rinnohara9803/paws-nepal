@@ -1,5 +1,6 @@
 import { Rating } from "@mui/material";
 import React, { useState } from "react";
+import ReviewItem from "../../components/review-item";
 
 const PetFoodDetails = () => {
   const [selectedTab, setSelectedTab] = useState("Details");
@@ -126,47 +127,47 @@ const PetFoodDetails = () => {
 
       {/* tabs */}
       <div className="flex flex-row mt-12 gap-x-10">
-        <p 
-        onClick={() => {
-            setSelectedTab('Details')
-            scrollToSection('details-section');
-        }}
+        <p
+          onClick={() => {
+            setSelectedTab("Details");
+            scrollToSection("details-section");
+          }}
           className={`cursor-pointer ${
             selectedTab === "Details"
               ? "border-b-2 border-b-white text-white"
-              : ""
-          } pb-1 text-zinc-500 font-semibold hover:text-white`}
+              : "text-zinc-500 "
+          } pb-1 font-semibold hover:text-white`}
         >
           {" "}
           Details
         </p>
         <p
-        onClick={() => {
-            setSelectedTab('Ingredients')
-            scrollToSection('ingredients-section');
-        }}
+          onClick={() => {
+            setSelectedTab("Ingredients");
+            scrollToSection("ingredients-section");
+          }}
           className={`cursor-pointer ${
             selectedTab === "Ingredients"
               ? "border-b-2 border-b-white text-white"
-              : ""
-          } pb-1 text-zinc-500 font-semibold hover:text-white`}
+              : " text-zinc-500"
+          } pb-1  font-semibold hover:text-white`}
         >
           {" "}
           Ingredients
         </p>
         <p
-        onClick={() => {
-            setSelectedTab('Feeding Guidelines')
-            scrollToSection('guidelines-section');
-        }}
+          onClick={() => {
+            setSelectedTab("Reviews");
+            scrollToSection("reviews-section");
+          }}
           className={`cursor-pointer ${
-            selectedTab === "Feeding Guidelines"
+            selectedTab === "Reviews"
               ? "border-b-2 border-b-white text-white"
-              : ""
-          } pb-1 text-zinc-500 font-semibold hover:text-white`}
+              : "text-zinc-500"
+          } pb-1  font-semibold hover:text-white`}
         >
           {" "}
-          Feeding Guidelines
+          Reviews
         </p>
       </div>
       <div style={{ height: "0.5px" }} className="w-full bg-white mb-4"></div>
@@ -217,6 +218,15 @@ const PetFoodDetails = () => {
           Lactobacillus casei fermentation product, dried Lactobacillus
           acidophilus fermentation product.
         </p>
+      </div>
+
+      {/* reviews */}
+      <div id="reviews-section" className="flex flex-col items-start w-full">
+        <p className="font-semibold tracking-wider mt-6 mb-5"> Reviews </p>
+        <ReviewItem></ReviewItem>
+        <ReviewItem></ReviewItem>
+        <ReviewItem></ReviewItem>
+        <ReviewItem></ReviewItem>
       </div>
     </div>
   );
