@@ -6,6 +6,7 @@ import PetDetailsPage from "./pages/pet-details/pet-details";
 import PetFoodDetails from "./pages/pet-details/pet-food-details";
 import CartPage from "./pages/cart/cart";
 import AddInventory from "./pages/add-inventory/add-inventory";
+import CheckOut from "./pages/check-out/check-out";
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
             exact
             path="/inventory/add-inventory"
             element={<AddInventory />}
+          ></Route>
+          <Route
+            exact
+            path="/home/my-cart/check-out"
+            element={<CheckOut />}
           ></Route>
         </Routes>
       </div>

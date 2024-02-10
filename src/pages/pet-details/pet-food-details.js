@@ -30,11 +30,14 @@ const PetFoodDetails = () => {
             4.8 (1200+ reviews) | 6lb bag{" "}
           </p>
         </div>
-        <img
-          className="w-1/3 h-48 rounded-lg object-cover"
-          src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"
-          alt="paws-nepal"
-        ></img>
+        <div className="flex flex-col items-start w-1/3">
+          <img
+            className="h-48 rounded-lg object-cover w-full"
+            src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"
+            alt="paws-nepal"
+          ></img>
+          <p className="mt-2 text-zinc-500 font-semibold tracking-wider"> Rs. 250</p>
+        </div>
       </div>
 
       {/* ratings */}

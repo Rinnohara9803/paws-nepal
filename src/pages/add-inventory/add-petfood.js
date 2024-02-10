@@ -162,7 +162,7 @@ const AddPetFood = () => {
               />
             </div>
 
-            <div className="flex flex-row justify-between items-center gap-x-5">
+            <div className="flex flex-row justify-between items-start gap-x-5">
               <div className="mb-5 flex flex-col items-start w-full">
                 <label
                   className="mb-2 font-semibold tracking-wider text-lg"
@@ -203,7 +203,7 @@ const AddPetFood = () => {
                 />
               </div>
             </div>
-            <div className="flex flex-row justify-between items-center gap-x-5">
+            <div className="flex flex-row justify-between items-start gap-x-5">
               <div className="mb-5 flex flex-col items-start w-full">
                 <label
                   className="mb-2 font-semibold tracking-wider text-lg"

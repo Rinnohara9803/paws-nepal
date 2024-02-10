@@ -178,7 +178,7 @@ const AddAccessories = () => {
               />
             </div>
 
-            <div className="flex flex-row items-center justify-between gap-x-5">
+            <div className="flex flex-row items-start justify-between gap-x-5">
               <div className="mb-5 flex flex-col items-start w-full">
                 <label
                   htmlFor="size"
