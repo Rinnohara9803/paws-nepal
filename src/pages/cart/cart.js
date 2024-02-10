@@ -1,7 +1,10 @@
 import React from "react";
 import CartItem from "../../components/cart-item";
+import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36">
       <p className="text-lg tracking-wider font-semibold text-zinc-500 mb-5">
@@ -27,7 +30,13 @@ const CartPage = () => {
           {" "}
           Continue Shopping
         </div>
-        <div className="bg-red-600 font-semibold rounded-lg px-4 py-2 cursor-pointer hover:bg-red-800 transition-all ease-out duration-700">
+        
+        <div
+          onClick={() => {
+            navigate("/home/my-cart/check-out");
+          }}
+          className="bg-red-600 font-semibold rounded-lg px-4 py-2 cursor-pointer hover:bg-red-800 transition-all ease-out duration-700"
+        >
           {" "}
           Proceed to Checkout
         </div>

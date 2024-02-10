@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
+import ThePulseLoader from "../../components/pulse-loader";
 
 const CheckOut = () => {
   const [selectedPm, setSelectedPm] = useState(null);
@@ -30,18 +31,24 @@ const CheckOut = () => {
           phoneNumber: Yup.string()
             .required("Phone Number is required")
             .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-          paymentNumber: Yup.string()
-            .required("Number is required")
-            .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-          paymentPin: Yup.string()
-            .required("MPIN is required")
-            .matches(/^\d{4}$/, "MPIN must be 4 digits"),
+          paymentNumber:
+            selectedPm === "Cash on Delivery"
+              ? Yup.string()
+              : Yup.string()
+                  .required("Number is required")
+                  .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
+          paymentPin:
+            selectedPm === "Cash on Delivery"
+              ? Yup.string()
+              : Yup.string()
+                  .required("MPIN is required")
+                  .matches(/^\d{4}$/, "MPIN must be 4 digits"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           setTimeout(() => {
             alert(JSON.stringify(values, null, 2));
             setSubmitting(false);
-          }, 400);
+          }, 2000);
         }}
       >
         {({ isSubmitting }) => (
@@ -244,12 +251,34 @@ const CheckOut = () => {
               </div>
             )}
 
+            {/* order summary */}
+            <p className="font-semibold text-lg tracking-wider mt-8 mb-5">
+              {" "}
+              Order Summary
+            </p>
+            <div className="flex flex-row items-center justify-between w-full mb-3">
+              <p className="text-zinc-500"> Total Items</p>
+              <p> 7 items </p>
+            </div>
+            <div className="flex flex-row items-center justify-between w-full mb-3">
+              <p className="text-zinc-500"> Subtotal</p>
+              <p> Rs. 250 </p>
+            </div>
+            <div className="flex flex-row items-center justify-between w-full mb-3">
+              <p className="text-zinc-500"> Shipping</p>
+              <p> Rs. 0 </p>
+            </div>
+            <div className="flex flex-row items-center justify-between w-full mb-3">
+              <p className="text-zinc-500"> Total</p>
+              <p> Rs. 250 </p>
+            </div>
+
             <button
               type="submit"
               disabled={isSubmitting}
-              className=" tracking-wider bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded mt-4 transition-all duration-700 ease-in"
+              className="h-10 w-44 tracking-wider bg-red-500 hover:bg-red-700 text-white font-semibold rounded mt-4 transition-all duration-700 ease-in"
             >
-              Place Order
+              {isSubmitting ? <ThePulseLoader></ThePulseLoader> : "Place Order"}
             </button>
           </Form>
         )}

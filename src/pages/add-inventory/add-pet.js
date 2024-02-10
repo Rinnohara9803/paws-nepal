@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import ThePulseLoader from "../../components/pulse-loader";
 
 const AddPet = () => {
   const [images, setImages] = useState([]);
 
-  const handleImageChange = (event) => {
+  const handleImageChange = (event, setFieldValue) => {
     const fileList = Array.from(event.currentTarget.files);
     const selectedImages = fileList.map((file) => URL.createObjectURL(file));
     setImages(selectedImages);
+    setFieldValue("images", selectedImages);
   };
 
   const initialValues = {
@@ -35,9 +37,13 @@ const AddPet = () => {
     images: Yup.array().min(1, "At least one image is required").nullable(),
   });
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = (values, { setSubmitting, resetForm }) => {
+    setTimeout(() => {
+      alert(JSON.stringify(values, null, 2));
+      setSubmitting(false);
+    }, 2000);
     console.log(values); // You can handle form submission here
-    resetForm(); // Reset the form after submission
+    // resetForm(); 
   };
 
   return (
@@ -48,7 +54,7 @@ const AddPet = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting, setFieldValue }) => (
           <Form className=" w-full md:w-2/3 lg:w-1/2">
             <div className="mb-5 flex flex-col items-start w-full ">
               <label
@@ -232,11 +238,12 @@ const AddPet = () => {
                 id="images"
                 name="images"
                 type="file"
-                onChange={handleImageChange}
+                onChange={(event) => handleImageChange(event, setFieldValue)}
                 multiple // Allow multiple file selection
                 accept="image/*" // Allow only image files
                 className="bg-zinc-800 px-3 py-3 rounded-lg w-full text-zinc-500"
               />
+
               <ErrorMessage
                 name="images"
                 component="div"
@@ -264,9 +271,9 @@ const AddPet = () => {
             <div className="flex flex-row justify-end">
               <button
                 type="submit"
-                className="bg-red-600 text-white px-4 py-3 rounded mt-8"
+                className="bg-red-600 text-white rounded mt-8 h-10 w-44 "
               >
-                Add Pet
+                {isSubmitting ? <ThePulseLoader></ThePulseLoader> : "Add Pet"}
               </button>
             </div>
           </Form>
