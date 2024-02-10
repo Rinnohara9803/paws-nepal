@@ -1,6 +1,7 @@
 import {
   faCat,
   faDog,
+  faFishFins,
   faKiwiBird,
   faPaw,
 } from "@fortawesome/free-solid-svg-icons";
@@ -38,6 +39,10 @@ const Home = () => {
           <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faKiwiBird}></FontAwesomeIcon>
             <p> Birds </p>
+          </div>
+          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
+            <FontAwesomeIcon icon={faFishFins}></FontAwesomeIcon>
+            <p> Fishes </p>
           </div>
           <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faPaw}></FontAwesomeIcon>

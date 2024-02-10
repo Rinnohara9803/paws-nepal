@@ -5,6 +5,7 @@ import Header from "./components/header";
 import PetDetailsPage from "./pages/pet-details/pet-details";
 import PetFoodDetails from "./pages/pet-details/pet-food-details";
 import CartPage from "./pages/cart/cart";
+import AddInventory from "./pages/add-inventory/add-inventory";
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
             exact
             path="/home/pets/foods/chicken"
             element={<PetFoodDetails />}
+          ></Route>
+          <Route
+            exact
+            path="/inventory/add-inventory"
+            element={<AddInventory />}
           ></Route>
         </Routes>
       </div>
