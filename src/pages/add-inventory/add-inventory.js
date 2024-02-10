@@ -12,7 +12,7 @@ const AddInventory = () => {
 
   return (
     <div className="flex flex-col items-start px-10 md:px-36 w-full">
-      <div className="flex flex-row items-center justify-between w-full mb-8">
+      <div className="flex flex-col gap-y-8 items-start md:flex-row md:items-center md:justify-between w-full mb-8">
         <p className="text-lg tracking-wider font-semibold text-zinc-500">
           Inventory / <span className="text-white"> Add Inventory </span>
         </p>

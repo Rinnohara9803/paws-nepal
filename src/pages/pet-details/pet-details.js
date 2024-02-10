@@ -49,7 +49,7 @@ const PetDetailsPage = () => {
       </p>
       <div style={{ height: "0.5px" }} className="w-full bg-white my-4"></div>
       <div className="flex flex-row justify-between w-full tracking-wider">
-        <div className="flex flex-col items-start w-1/2 gap-y-1">
+        <div className="flex flex-col items-start w-1/2 gap-y-1"> 
           <p className="text-zinc-500"> Vaccination Status</p>
           <p>Up To Date </p>
         </div>

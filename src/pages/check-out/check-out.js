@@ -6,7 +6,7 @@ import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
 
 const CheckOut = () => {
-  const [selectedPm, setSelectedPm] = useState(null);
+  const [selectedPm, setSelectedPm] = useState('Cash on Delivery');
 
   const paymentMethods = ["Cash on Delivery", "E-sewa", "Khalti"];
   return (

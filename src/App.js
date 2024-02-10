@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/home";
@@ -7,8 +8,21 @@ import PetFoodDetails from "./pages/pet-details/pet-food-details";
 import CartPage from "./pages/cart/cart";
 import AddInventory from "./pages/add-inventory/add-inventory";
 import CheckOut from "./pages/check-out/check-out";
+import PetAccessoryDetails from "./pages/pet-details/pet-accessory-details";
 
 function App() {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
   return (
     <div className="text-white bg-zinc-900">
       <Header></Header>
@@ -30,6 +44,11 @@ function App() {
             exact
             path="/home/pets/foods/chicken"
             element={<PetFoodDetails />}
+          ></Route>
+          <Route
+            exact
+            path="/home/pets/accessories/chew-toy"
+            element={<PetAccessoryDetails />}
           ></Route>
           <Route
             exact

@@ -21,35 +21,35 @@ const Home = () => {
   ];
 
   return (
-    <div className="flex flex-row w-full gap-x-4 px-4 md:px-7 lg:px-11">
-      <div className="flex flex-col w-1/4 h-fit gap-y-28">
-        <div className="flex flex-col w-full items-start justify-start">
-          <p className="mb-5 font-semibold tracking-wider text-lg">
+    <div className="flex flex-col md:flex-row w-full gap-x-4 px-4 md:px-7 lg:px-11">
+      <div className="flex flex-col w-full md:w-1/4 h-fit gap-y-28">
+        <div className="flex flex-row flex-wrap items-center md:flex-col w-full md:items-start md:justify-start">
+        <p className="hidden md:flex mb-5 font-semibold tracking-wider text-lg">
             {" "}
-            Categories{" "}
+            Categories: {" "}
           </p>
-          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
+          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faDog}></FontAwesomeIcon>
             <p> Dogs </p>
           </div>
-          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
+          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faCat}></FontAwesomeIcon>
             <p> Cats </p>
           </div>
-          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
+          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800  px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faKiwiBird}></FontAwesomeIcon>
             <p> Birds </p>
           </div>
-          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
+          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800  px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faFishFins}></FontAwesomeIcon>
             <p> Fishes </p>
           </div>
-          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800 w-full px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
+          <div className="flex flex-row gap-x-3 items-center hover:bg-zinc-800  px-3 py-2 rounded-lg mb-2 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faPaw}></FontAwesomeIcon>
             <p> Others </p>
           </div>
         </div>
-        <div className="flex flex-col gap-y-7">
+        {/* <div className="flex flex-col gap-y-7">
           <div className="bg-red-600  text-center py-2 rounded-lg transition-all ease-out duration-700 hover:bg-red-700 cursor-pointer">
             {" "}
             See all
@@ -63,11 +63,11 @@ const Home = () => {
               );
             })}
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* main-div */}
-      <div className="flex flex-col w-3/4 items-start">
+      <div className="flex flex-col w-full md:w-3/4 items-start">
         <HomePageDetails></HomePageDetails>
       </div>
     </div>
