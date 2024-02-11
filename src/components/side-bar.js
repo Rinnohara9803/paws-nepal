@@ -7,10 +7,16 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { logoutUser } from "../services/auth-Service";
+import { useDispatch } from "react-redux";
+import { authSliceActions } from "../slices/auth-slice";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   return (
     <div
       className={`fixed overflow-y-auto overflow-hidden h-full w-2/3 md:w-1/3 bg-zinc-900 top-0 left-0 transition-transform duration-1000 transform z-10 ${
@@ -72,15 +78,23 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         </div>
         <div className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer">
           <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>
-          <Link
-            onClick={() => {
+          <div
+            onClick={async () => {
               toggleSidebar();
+              await logoutUser().then(() => {
+                dispatch(
+                  authSliceActions.replaceLoggedInState({
+                    user: null,
+                    token: null,
+                  })
+                );
+              });
+              navigate("/login");
             }}
-            to="/"
             className="font-semibold tracking-wider text-lg"
           >
             Log Out
-          </Link>
+          </div>
         </div>
       </div>
     </div>

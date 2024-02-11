@@ -2,13 +2,10 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faChessKing,
-  faEye,
-  faEyeSlash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
+import { registerUser } from "../../services/auth-Service";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -26,15 +23,20 @@ const initialValues = {
 };
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleFormSubmit = (values, {setSubmitting, resetForm}) => {
-    setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 2000);
-      console.log(values); // You can handle form submission here
-      // resetForm(); 
+  const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
+    await registerUser(values)
+      .then(() => {
+        navigate("/home");
+      })
+      .catch((e) => {
+        // show error message
+        console.log(e.message);
+      });
+    setSubmitting(false);
   };
 
   return (

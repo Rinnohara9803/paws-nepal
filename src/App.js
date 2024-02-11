@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/home";
@@ -11,20 +11,16 @@ import CheckOut from "./pages/check-out/check-out";
 import PetAccessoryDetails from "./pages/pet-details/pet-accessory-details";
 import Register from "./pages/register/register";
 import Login from "./pages/login/login";
+import { getLoggedInState } from "./services/auth-Service";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
+    dispatch(getLoggedInState());
+  }, [dispatch]);
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
   return (
     <div className="App text-white">
       <Header></Header>

@@ -6,7 +6,7 @@ import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
 
 const CheckOut = () => {
-  const [selectedPm, setSelectedPm] = useState('Cash on Delivery');
+  const [selectedPm, setSelectedPm] = useState("Cash on Delivery");
 
   const paymentMethods = ["Cash on Delivery", "E-sewa", "Khalti"];
   return (
@@ -273,13 +273,19 @@ const CheckOut = () => {
               <p> Rs. 250 </p>
             </div>
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="h-10 w-44 tracking-wider bg-red-500 hover:bg-red-700 text-white font-semibold rounded mt-4 transition-all duration-700 ease-in"
-            >
-              {isSubmitting ? <ThePulseLoader></ThePulseLoader> : "Place Order"}
-            </button>
+            <div className="flex flex-row justify-end">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="h-10 w-44 tracking-wider bg-red-500 hover:bg-red-700 text-white font-semibold rounded mt-4 transition-all duration-700 ease-in"
+              >
+                {isSubmitting ? (
+                  <ThePulseLoader></ThePulseLoader>
+                ) : (
+                  "Place Order"
+                )}
+              </button>
+            </div>
           </Form>
         )}
       </Formik>

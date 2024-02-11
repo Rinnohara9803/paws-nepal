@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCheck,
-  faEye,
-  faEyeSlash,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
+import { signInUser } from "../../services/auth-Service";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import authSlice, { authSliceActions } from "../../slices/auth-slice";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -23,15 +23,23 @@ const initialValues = {
 };
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleFormSubmit = (values, {setSubmitting, resetForm}) => {
-    setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        setSubmitting(false);
-      }, 2000);
-      console.log(values); // You can handle form submission here
-      // resetForm(); 
+  const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
+    await signInUser(values.email, values.password)
+      .then((user) => {
+        navigate("/home");
+        dispatch(authSliceActions.replaceLoggedInState({user: user, token: ''}));
+      })
+      .catch((e) => {
+        // show error message
+        console.log(e.message);
+      });
+    setSubmitting(false);
+    
   };
 
   return (
@@ -68,8 +76,6 @@ const Login = () => {
                   className="text-red-500 text-sm"
                 />
               </div>
-
-              
 
               <div className="mb-6 flex flex-col items-start gap-y-1">
                 <label
