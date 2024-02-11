@@ -9,6 +9,8 @@ import CartPage from "./pages/cart/cart";
 import AddInventory from "./pages/add-inventory/add-inventory";
 import CheckOut from "./pages/check-out/check-out";
 import PetAccessoryDetails from "./pages/pet-details/pet-accessory-details";
+import Register from "./pages/register/register";
+import Login from "./pages/login/login";
 
 function App() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -24,10 +26,12 @@ function App() {
     };
   }, []);
   return (
-    <div className="text-white bg-zinc-900">
+    <div className="App text-white">
       <Header></Header>
       <div className=" py-4 md:py-12 bg-zinc-900 w-full">
         <Routes>
+          <Route exact path="/login" element={<Login />}></Route>
+          <Route exact path="/register" element={<Register />}></Route>
           <Route
             exact
             path="/"

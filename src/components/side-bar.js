@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               toggleSidebar();
             }}
             to="/"
-            className="hover:text-orange-400 transition-all duration-300 font-semibold tracking-wider text-lg"
+            className="font-semibold tracking-wider text-lg"
           >
             Profile
           </Link>
@@ -41,7 +41,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               toggleSidebar();
             }}
             to="/"
-            className="hover:text-orange-400 transition-all duration-300 font-semibold tracking-wider text-lg"
+            className="font-semibold tracking-wider text-lg"
           >
             Home
           </Link>
@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               toggleSidebar();
             }}
             to="/"
-            className="hover:text-orange-400 transition-all duration-300 font-semibold tracking-wider text-lg"
+            className="font-semibold tracking-wider text-lg"
           >
             Orders
           </Link>
@@ -65,7 +65,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               toggleSidebar();
             }}
             to="/"
-            className="hover:text-orange-400 transition-all duration-300 font-semibold tracking-wider text-lg"
+            className="font-semibold tracking-wider text-lg"
           >
             My Cart
           </Link>
@@ -77,7 +77,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
               toggleSidebar();
             }}
             to="/"
-            className="hover:text-orange-400 transition-all duration-300 font-semibold tracking-wider text-lg"
+            className="font-semibold tracking-wider text-lg"
           >
             Log Out
           </Link>

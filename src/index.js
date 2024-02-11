@@ -12,7 +12,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
+        <div className="bg-zinc-900 min-h-screen">
         <App />
+        </div>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>
