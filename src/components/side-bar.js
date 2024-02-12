@@ -19,7 +19,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={`fixed overflow-y-auto overflow-hidden h-full w-2/3 md:w-1/3 bg-zinc-900 top-0 left-0 transition-transform duration-1000 transform z-10 ${
+      className={`fixed overflow-y-auto overflow-hidden h-full w-2/3 md:w-1/3  top-0 left-0 transition-transform duration-1000 transform z-10 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >

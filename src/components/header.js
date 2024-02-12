@@ -63,17 +63,7 @@ const Header = () => {
           {" "}
           Inventory{" "}
         </p> */}
-        <div className="flex items-center bg-zinc-700 rounded-lg mr-5 relative">
-          <FontAwesomeIcon
-            className="absolute left-3 text-gray-500"
-            icon={faSearch}
-          ></FontAwesomeIcon>
-          <input
-            type="text"
-            placeholder="Search..."
-            className="outline-none bg-zinc-700 w-full pl-9 py-2 px-3 rounded-lg"
-          />
-        </div>
+
         {user !== null && (
           <div
             onClick={() => {
@@ -88,6 +78,14 @@ const Header = () => {
             <p className="font-semibold text-sm"> Cart (0) </p>
           </div>
         )}
+        <div
+          onClick={() => {
+            navigate("/search");
+          }}
+          className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
+        >
+          <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+        </div>
         {user !== null && (
           <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>

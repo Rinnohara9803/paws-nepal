@@ -13,6 +13,7 @@ import Register from "./pages/register/register";
 import Login from "./pages/login/login";
 import { getLoggedInState } from "./services/auth-Service";
 import { useDispatch } from "react-redux";
+import Search from "./pages/search/search";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,10 +25,11 @@ function App() {
   return (
     <div className="App text-white">
       <Header></Header>
-      <div className=" py-4 md:py-12 bg-zinc-900 w-full">
+      <div className=" py-4 md:py-12  w-full">
         <Routes>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
+          <Route exact path="/search" element={<Search />}></Route>
           <Route
             exact
             path="/"

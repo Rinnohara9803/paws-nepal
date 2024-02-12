@@ -32,21 +32,22 @@ const Login = () => {
     await signInUser(values.email, values.password)
       .then((user) => {
         navigate("/home");
-        dispatch(authSliceActions.replaceLoggedInState({user: user, token: ''}));
+        dispatch(
+          authSliceActions.replaceLoggedInState({ user: user, token: "" })
+        );
       })
       .catch((e) => {
         // show error message
         console.log(e.message);
       });
     setSubmitting(false);
-    
   };
 
   return (
     <div className="flex flex-col items-center justify-center h-full text-white">
-      <div className="max-w-md w-full p-6 bg-zinc-900 rounded-md shadow-md flex flex-col items-start">
+      <div className="max-w-md w-full p-6  rounded-md shadow-md flex flex-col items-start">
         <h2 className="text-2xl font-semibold tracking-wider mb-4">
-          Register for Paws Nepal
+          Sign in to your account
         </h2>
 
         <Formik

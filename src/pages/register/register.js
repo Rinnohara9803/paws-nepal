@@ -41,7 +41,7 @@ const Register = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-full text-white">
-      <div className="max-w-md w-full p-6 bg-zinc-900 rounded-md shadow-md flex flex-col items-start">
+      <div className="max-w-md w-full p-6  rounded-md shadow-md flex flex-col items-start">
         <h2 className="text-2xl font-semibold tracking-wider mb-4">
           Register for Paws Nepal
         </h2>

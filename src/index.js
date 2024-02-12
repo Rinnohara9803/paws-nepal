@@ -13,7 +13,7 @@ root.render(
     <BrowserRouter>
       <Provider store={store}>
         <div className="bg-zinc-900 min-h-screen">
-        <App />
+          <App />
         </div>
       </Provider>
     </BrowserRouter>

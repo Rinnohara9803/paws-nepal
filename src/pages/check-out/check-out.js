@@ -189,7 +189,7 @@ const CheckOut = () => {
                   }}
                   className={` ${
                     selectedPm === pm ? "shadow-sm shadow-white" : ""
-                  } flex flex-row items-center justify-between w-full bg-zinc-900 px-3 py-3 rounded-lg border border-solid border-zinc-700 mb-4 cursor-pointer`}
+                  } flex flex-row items-center justify-between w-full  px-3 py-3 rounded-lg border border-solid border-zinc-700 mb-4 cursor-pointer`}
                 >
                   <div className="flex flex-row items-center gap-x-4">
                     {selectedPm === pm && (
