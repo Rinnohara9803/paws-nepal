@@ -1,6 +1,7 @@
 import { Rating } from "@mui/material";
 import React, { useState } from "react";
 import ReviewItem from "../../components/review-item";
+import WriteReview from "../../components/write-review";
 
 const PetAccessoryDetails = () => {
   const [selectedTab, setSelectedTab] = useState("Details");
@@ -9,11 +10,17 @@ const PetAccessoryDetails = () => {
 
   const sizes = ["Small", "Medium", "Large", "Extra Large"];
 
+  const [showWriteReview, setShowWriteReview] = useState(false);
+
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const toggleShowWriteReview = () => {
+    setShowWriteReview(!showWriteReview);
   };
 
   return (
@@ -61,7 +68,7 @@ const PetAccessoryDetails = () => {
             Add to Cart{" "}
           </div>
         </div>
-        <div className="flex flex-col items-start w-full md:w-1/3">
+        <div className="flex flex-col items-start w-full md:w-1/3"> 
           <img
             className="h-48 rounded-lg object-cover w-full"
             src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"
@@ -76,89 +83,106 @@ const PetAccessoryDetails = () => {
 
       {/* ratings */}
 
-      <div className="flex flex-col lg:flex-row gap-y-5 gap-x-5 mt-5 w-full lg:w-2/3">
-        <div className="flex flex-col items-start justify-start gap-y-1">
-          <p className="font-bold tracking-wide text-xl"> 4.5</p>
-          <Rating
-            name="simple-controlled"
-            value={4.5}
-            precision={0.5}
-            sx={{
-              "& .MuiRating-iconFilled": {
-                color: "red", // Change the filled star color
-              },
-              "& .MuiRating-iconEmpty": {
-                borderColor: "red", // Change the border color
-              },
-              "& .MuiSvgIcon-root": {
-                fill: "red", // Make the unfilled stars transparent
-                //   stroke: "red", // Change the border color of the unfilled stars
-              },
-            }}
-          />
-          <p className="text-sm"> 1200 reviews</p>
+      <div className="flex flex-col lg:flex-row gap-y-10 gap-x-5 mt-5 w-full lg:items-start lg:justify-between">
+        <div className="flex flex-col lg:flex-row gap-x-5 gap-y-5">
+          <div className="flex flex-col items-start justify-start gap-y-1">
+            <p className="font-bold tracking-wide text-xl"> 4.5</p>
+            <Rating
+              name="simple-controlled"
+              value={4.5}
+              precision={0.5}
+              sx={{
+                "& .MuiRating-iconFilled": {
+                  color: "red", // Change the filled star color
+                },
+                "& .MuiRating-iconEmpty": {
+                  borderColor: "red", // Change the border color
+                },
+                "& .MuiSvgIcon-root": {
+                  fill: "red", // Make the unfilled stars transparent
+                  //   stroke: "red", // Change the border color of the unfilled stars
+                },
+              }}
+            />
+            <p className="text-sm"> 1200 reviews</p>
+          </div>
+          <div className="w-full flex flex-col gap-y-3">
+            <div className="flex flex-row items-center gap-x-2">
+              <p>5</p>
+              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
+                <div
+                  style={{
+                    width: "68%",
+                  }}
+                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
+                ></div>
+              </div>
+              <p> 68%</p>
+            </div>
+            <div className="flex flex-row items-center gap-x-2">
+              <p>4</p>
+              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
+                <div
+                  style={{
+                    width: "15%",
+                  }}
+                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
+                ></div>
+              </div>
+              <p> 15%</p>
+            </div>
+            <div className="flex flex-row items-center gap-x-2">
+              <p>3</p>
+              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
+                <div
+                  style={{
+                    width: "8%",
+                  }}
+                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
+                ></div>
+              </div>
+              <p> 8%</p>
+            </div>
+            <div className="flex flex-row items-center gap-x-2">
+              <p>2</p>
+              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
+                <div
+                  style={{
+                    width: "3%",
+                  }}
+                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
+                ></div>
+              </div>
+              <p> 3%</p>
+            </div>
+            <div className="flex flex-row items-center gap-x-2">
+              <p>1</p>
+              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
+                <div
+                  style={{
+                    width: "5%",
+                  }}
+                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
+                ></div>
+              </div>
+              <p> 5%</p>
+            </div>
+          </div>
         </div>
-        <div className="w-full flex flex-col gap-y-3">
-          <div className="flex flex-row items-center gap-x-2">
-            <p>5</p>
-            <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-              <div
-                style={{
-                  width: "68%",
-                }}
-                className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-              ></div>
-            </div>
-            <p> 68%</p>
+        <div className="flex flex-col w-full items-start">
+          <div
+            onClick={toggleShowWriteReview}
+            className="bg-zinc-800 px-4 py-2 rounded-lg cursor-pointer transition-all duration-500 hover:bg-red-600 font-semibold"
+          >
+            {" "}
+            Write a Review
           </div>
-          <div className="flex flex-row items-center gap-x-2">
-            <p>4</p>
-            <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-              <div
-                style={{
-                  width: "15%",
-                }}
-                className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-              ></div>
-            </div>
-            <p> 15%</p>
-          </div>
-          <div className="flex flex-row items-center gap-x-2">
-            <p>3</p>
-            <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-              <div
-                style={{
-                  width: "8%",
-                }}
-                className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-              ></div>
-            </div>
-            <p> 8%</p>
-          </div>
-          <div className="flex flex-row items-center gap-x-2">
-            <p>2</p>
-            <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-              <div
-                style={{
-                  width: "3%",
-                }}
-                className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-              ></div>
-            </div>
-            <p> 3%</p>
-          </div>
-          <div className="flex flex-row items-center gap-x-2">
-            <p>1</p>
-            <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-              <div
-                style={{
-                  width: "5%",
-                }}
-                className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-              ></div>
-            </div>
-            <p> 5%</p>
-          </div>
+          {showWriteReview && (
+            <WriteReview
+              showWriteReview={showWriteReview}
+              close={toggleShowWriteReview}
+            />
+          )}
         </div>
       </div>
 

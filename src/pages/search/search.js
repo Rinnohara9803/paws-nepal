@@ -33,7 +33,6 @@ const Search = () => {
           <PetItemShimmer></PetItemShimmer>
           <PetItemShimmer></PetItemShimmer>
           <PetItemShimmer></PetItemShimmer>
-
         </div>
       )}
       {!isLoading && error === null && (
