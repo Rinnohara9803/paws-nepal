@@ -30,11 +30,11 @@ const WriteReview = ({ showWriteReview, close }) => {
   return (
     <div
       onClick={close}
-      className="heading-text-1 fixed z-50 inset-0 flex justify-center items-center bg-gray-800 bg-opacity-45"
+      className="fixed z-50 inset-0 flex justify-center items-center bg-gray-800 bg-opacity-45"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-zinc-800 p-8 rounded-lg shadow-lg mx-4 md:mx-0"
+        className="heading-text-1 bg-zinc-800 p-8 rounded-lg shadow-lg mx-4 md:mx-0"
       >
         <div className="flex flex-row justify-between">
           <p className="header-data text-xl text-white tracking-wider font-semibold">
