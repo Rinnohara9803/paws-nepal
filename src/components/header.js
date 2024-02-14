@@ -28,7 +28,7 @@ const Header = () => {
   const user = authState.user;
 
   return (
-    <div className="bg-zinc-900 flex flex-row w-full justify-between items-center px-5 py-5 border-b-2 border-b-white sticky top-0 z-40">
+    <div className="bg-zinc-900 flex flex-row w-full justify-between items-center px-5 py-5 border-b-2 border-b-white sticky top-0 z-20">
       <Sidebar isOpen={showMenu} toggleSidebar={toggleMenu}></Sidebar>
       <div className="flex flex-row items-center gap-x-3">
         <FontAwesomeIcon className="text-xl" icon={faPaw}></FontAwesomeIcon>

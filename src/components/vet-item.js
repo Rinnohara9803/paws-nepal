@@ -5,7 +5,7 @@ const VetItem = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full flex flex-col items-start gap-y-3 md:flex-row md:justify-between md:items-center mb-4 hover:translate-x-2 transition-all duration-500 ease-in-out cursor-pointer">
+    <div className="w-full flex flex-col items-start gap-y-3 md:flex-row md:justify-between md:items-center mb-6 hover:translate-x-2 transition-all duration-500 ease-in-out cursor-pointer">
       <div className="flex flex-row items-center gap-x-4">
         <img
           className="h-14 w-14 rounded-full"

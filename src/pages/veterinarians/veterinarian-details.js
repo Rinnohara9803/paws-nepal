@@ -2,12 +2,19 @@ import { Rating } from "@mui/material";
 import React, { useState } from "react";
 import ReviewItem from "../../components/review-item";
 import WriteReview from "../../components/write-review";
+import ScheduleDate from "../../components/schedule-date";
 
 const VeterinarianDetails = () => {
   const [showWriteReview, setShowWriteReview] = useState(false);
 
   const toggleShowWriteReview = () => {
     setShowWriteReview(!showWriteReview);
+  };
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu); // Corrected the toggle logic
   };
 
   const expertises = [
@@ -19,25 +26,37 @@ const VeterinarianDetails = () => {
   ];
 
   return (
-    <div className="flex flex-col items-start justify-start px-10 md:px-36 ">
-      {/* <p className="text-lg tracking-wider font-semibold text-zinc-500 mb-5">
+    <div className="flex flex-col items-start justify-start px-10 md:px-36">
+      {showMenu && (
+        <div
+          className="fixed top-0 right-0 h-full w-screen bg-black bg-opacity-35"
+          onClick={toggleMenu}
+        ></div>
+      )}
+      <ScheduleDate isOpen={showMenu} toggleSidebar={toggleMenu}></ScheduleDate>
+      <p className="text-lg tracking-wider font-semibold text-zinc-500 mb-5">
         {" "}
         Veterinarians / <span className="text-white"> Emily </span>
-      </p> */}
+      </p>
       <div className="flex flex-row items-center gap-x-6">
         <img
           className="h-28 w-28 rounded-full"
           src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*"
           alt="vet"
         />
-        <div className="flex flex-col items-start">
-          <p className="font-semibold text-2xl tracking-wider">
+        <div className="flex flex-col items-start justify-between">
+          <p className="font-bold text-xl tracking-wider text-start">
             {" "}
             Dr. Emily Smith
           </p>
-          <p className="text-zinc-500 font-semibold text-xl tracking-wider">
+          <p className="text-zinc-500 font-semibold  tracking-wide text-start">
             {" "}
-            Veterinarian{" "}
+            Veterinarian | Phd{" "}
+          </p>
+          <p className="text-zinc-500 font-semibold text-sm  tracking-wide text-start">
+            {" "}
+            Veterinay Specialist in Animal Internal Medicine, Emergency and
+            Critical Care
           </p>
         </div>
       </div>
@@ -208,7 +227,10 @@ const VeterinarianDetails = () => {
         })}
       </div>
 
-      <div className="mt-7 bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
+      <div
+        onClick={toggleMenu}
+        className="mt-7 bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3"
+      >
         {" "}
         Schedule an Appointment
       </div>
