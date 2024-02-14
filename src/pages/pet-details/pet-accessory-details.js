@@ -68,7 +68,7 @@ const PetAccessoryDetails = () => {
             Add to Cart{" "}
           </div>
         </div>
-        <div className="flex flex-col items-start w-full md:w-1/3"> 
+        <div className="flex flex-col items-start w-full md:w-1/3">
           <img
             className="h-48 rounded-lg object-cover w-full"
             src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"

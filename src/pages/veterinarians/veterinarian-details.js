@@ -3,53 +3,41 @@ import React, { useState } from "react";
 import ReviewItem from "../../components/review-item";
 import WriteReview from "../../components/write-review";
 
-const PetFoodDetails = () => {
-  const [selectedTab, setSelectedTab] = useState("Details");
-
+const VeterinarianDetails = () => {
   const [showWriteReview, setShowWriteReview] = useState(false);
-
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   const toggleShowWriteReview = () => {
     setShowWriteReview(!showWriteReview);
   };
 
+  const expertises = [
+    "Feline Medicine",
+    "Internal Medicine",
+    "Nutrition",
+    "Surgery",
+    "Pain Management",
+  ];
+
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36 ">
-      <p className="text-lg tracking-wider font-semibold text-zinc-500 mb-5">
+      {/* <p className="text-lg tracking-wider font-semibold text-zinc-500 mb-5">
         {" "}
-        Home / Pets / <span className="text-white"> Food </span>
-      </p>
-      <div className="flex lg:flex-row flex-col-reverse items-start gap-x-5 w-full gap-y-5">
-        <div className="flex flex-col items-start w-full lg:w-2/3 gap-y-1">
-          <p className="text-zinc-500 text-sm"> PetCo Brand</p>
-          <p className="text-sm font-semibold tracking-wide">
+        Veterinarians / <span className="text-white"> Emily </span>
+      </p> */}
+      <div className="flex flex-row items-center gap-x-6">
+        <img
+          className="h-28 w-28 rounded-full"
+          src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*"
+          alt="vet"
+        />
+        <div className="flex flex-col items-start">
+          <p className="font-semibold text-2xl tracking-wider">
             {" "}
-            Nutrition first Adult Cat Food - Chicken and Brown Rice
+            Dr. Emily Smith
           </p>
-          <p className="text-zinc-500 text-sm mb-3">
+          <p className="text-zinc-500 font-semibold text-xl tracking-wider">
             {" "}
-            4.8 (1200+ reviews) | 6lb bag{" "}
-          </p>
-          <div className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
-            {" "}
-            Add to Cart{" "}
-          </div>
-        </div>
-        <div className="flex flex-col items-start w-full md:w-1/3">
-          <img
-            className="h-48 rounded-lg object-cover w-full"
-            src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"
-            alt="paws-nepal"
-          ></img>
-          <p className="mt-2 text-zinc-500 font-semibold tracking-wider">
-            {" "}
-            Rs. 250
+            Veterinarian{" "}
           </p>
         </div>
       </div>
@@ -159,81 +147,12 @@ const PetFoodDetails = () => {
         </div>
       </div>
 
-      {/* tabs */}
-      <div className="flex flex-row mt-12 gap-x-10">
-        <p
-          onClick={() => {
-            setSelectedTab("Details");
-            scrollToSection("details-section");
-          }}
-          className={`cursor-pointer ${
-            selectedTab === "Details"
-              ? "border-b-2 border-b-white text-white"
-              : "text-zinc-500 "
-          } pb-1 font-semibold hover:text-white`}
-        >
+      <div className="flex flex-col items-start w-full mt-4">
+        <p className="tracking-wider mt-6 mb-5 text-xl font-bold">
           {" "}
-          Details
+          Biography{" "}
         </p>
-        <p
-          onClick={() => {
-            setSelectedTab("Ingredients");
-            scrollToSection("ingredients-section");
-          }}
-          className={`cursor-pointer ${
-            selectedTab === "Ingredients"
-              ? "border-b-2 border-b-white text-white"
-              : " text-zinc-500"
-          } pb-1  font-semibold hover:text-white`}
-        >
-          {" "}
-          Ingredients
-        </p>
-        <p
-          onClick={() => {
-            setSelectedTab("Reviews");
-            scrollToSection("reviews-section");
-          }}
-          className={`cursor-pointer ${
-            selectedTab === "Reviews"
-              ? "border-b-2 border-b-white text-white"
-              : "text-zinc-500"
-          } pb-1  font-semibold hover:text-white`}
-        >
-          {" "}
-          Reviews
-        </p>
-      </div>
-      <div style={{ height: "0.5px" }} className="w-full bg-white mb-4"></div>
-
-      {/* details */}
-      <div id="details-section" className="flex flex-col items-start w-full">
-        <p className="font-semibold tracking-wider mt-6 mb-5"> Details </p>
-        <div className="flex flex-row justify-between items-center w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Brand </p>
-          <p className=""> PetCo Brand</p>
-        </div>
-        <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Model </p>
-          <p className=""> Adult</p>
-        </div>
-        <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Weight </p>
-          <p className=""> 60lb </p>
-        </div>
-        <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Flavour </p>
-          <p className=""> Chicken and Brown Rice</p>
-        </div>
-      </div>
-
-      {/* ingredients */}
-      <div
-        id="ingredients-section"
-        className="flex flex-col items-start w-full"
-      >
-        <p className="font-semibold tracking-wider mt-6 mb-5"> Ingredients </p>
-        <p className="text-start text-sm">
+        <p className="text-start font-normal tracking-wider">
           {" "}
           Deboned chicken, chicken meal, brown rice, barley, oatmeal, chicken
           fat (preserved with mixed tocopherols), flaxseed, natural flavor,
@@ -254,6 +173,46 @@ const PetFoodDetails = () => {
         </p>
       </div>
 
+      <div style={{ height: "0.5px" }} className="w-full bg-white my-5"></div>
+      <div className="flex flex-row justify-between w-full tracking-wider">
+        <div className="flex flex-col items-start w-1/2 gap-y-1">
+          <p className="text-zinc-500"> Education</p>
+          <p className="text-start">
+            Doctor of Vetnary Medicined, University of Pokhara
+          </p>
+        </div>
+        <div className="flex flex-col items-start w-1/2 gap-y-1">
+          <p className="text-zinc-500"> Experience</p>
+          <p className="text-start">
+            Associate Veterinarian, Paws and Claws Pet Hospital
+          </p>
+        </div>
+      </div>
+      <div style={{ height: "0.5px" }} className="w-full bg-white my-5"></div>
+      <div className="flex flex-row justify-between w-full tracking-wider">
+        <div className="flex flex-col items-start w-1/2 gap-y-1">
+          <p className="text-zinc-500"> Certifications</p>
+          <p className="text-start">Board Certified in Feline Medicines</p>
+        </div>
+      </div>
+      <div style={{ height: "0.5px" }} className="w-full bg-white my-5"></div>
+      <p className="tracking-wider mt-6 mb-5 text-xl font-bold"> Expertises</p>
+      <div className="flex flex-row flex-wrap w-full gap-x-3 gap-y-3">
+        {expertises.map((expertise) => {
+          return (
+            <div className="px-3 py-1.5 rounded-md bg-zinc-700 cursor-pointer hover:bg-red-600 transition-all duration-500 ease-out">
+              {" "}
+              {expertise}{" "}
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="mt-7 bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
+        {" "}
+        Schedule an Appointment
+      </div>
+
       {/* reviews */}
       <div id="reviews-section" className="flex flex-col items-start w-full">
         <p className="font-semibold tracking-wider mt-6 mb-5"> Reviews </p>
@@ -266,4 +225,4 @@ const PetFoodDetails = () => {
   );
 };
 
-export default PetFoodDetails;
+export default VeterinarianDetails;

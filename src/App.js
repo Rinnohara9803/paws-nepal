@@ -14,6 +14,8 @@ import Login from "./pages/login/login";
 import { getLoggedInState } from "./services/auth-Service";
 import { useDispatch } from "react-redux";
 import Search from "./pages/search/search";
+import Veterinarians from "./pages/veterinarians/veterinarians";
+import VeterinarianDetails from "./pages/veterinarians/veterinarian-details";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +38,16 @@ function App() {
             element={<Navigate replace to="/home" />}
           ></Route>
           <Route exact path="/home" element={<Home />}></Route>
+          <Route
+            exact
+            path="/veterinarians"
+            element={<Veterinarians />}
+          ></Route>
+          <Route
+            exact
+            path="/veterinarians/Emily"
+            element={<VeterinarianDetails />}
+          ></Route>
           <Route exact path="/home/my-cart" element={<CartPage />}></Route>
           <Route
             exact
