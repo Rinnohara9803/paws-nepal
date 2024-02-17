@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import CartItem from "../../components/cart-item";
 import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const navigate = useNavigate();
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
 
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36">

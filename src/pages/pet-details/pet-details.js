@@ -1,6 +1,11 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 
 const PetDetailsPage = () => {
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36">
       <p className="text-lg tracking-wider font-semibold text-zinc-400 mb-5">

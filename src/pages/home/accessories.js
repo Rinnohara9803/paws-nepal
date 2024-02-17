@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PetItem from "../../components/pet-item";
+import PetItem, { PetAccessoryItem } from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import LoadError from "./load-error";
 
@@ -10,7 +10,7 @@ const Accessories = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-      setError("Wifi went down");
+      // setError("Wifi went down");
     }, 2000);
   });
 
@@ -29,12 +29,12 @@ const Accessories = () => {
       )}
       {!isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
+          <PetAccessoryItem></PetAccessoryItem>
+          <PetAccessoryItem></PetAccessoryItem>
+          <PetAccessoryItem></PetAccessoryItem>
+          <PetAccessoryItem></PetAccessoryItem>
+          <PetAccessoryItem></PetAccessoryItem>
+          <PetAccessoryItem></PetAccessoryItem>
         </div>
       )}
       {!isLoading && error !== null && <LoadError></LoadError>}

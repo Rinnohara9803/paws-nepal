@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import PetItem from "../../components/pet-item";
 import LoadError from "../home/load-error";
@@ -8,6 +8,12 @@ const Search = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
 
   return (
     <div className="flex flex-col items-start px-10 md:px-36 w-full">

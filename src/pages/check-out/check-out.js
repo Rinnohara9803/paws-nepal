@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +9,13 @@ const CheckOut = () => {
   const [selectedPm, setSelectedPm] = useState("Cash on Delivery");
 
   const paymentMethods = ["Cash on Delivery", "E-sewa", "Khalti"];
+
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
+
   return (
     <div className="flex flex-col items-start px-10 md:px-36 w-full">
       <Formik

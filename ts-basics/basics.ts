@@ -22,29 +22,43 @@ let hobbies: string[];
 
 hobbies = ["table tennis", "pool"];
 
-let friend: {
+// type alias
+
+type Person = {
   name: string;
   age: number;
 };
+
+let friend: Person;
 
 friend = {
   name: "Ajay",
   age: 23,
 };
 
-let friends: {
-  name: string;
-  age: number;
-}[];
+let friends: Person[];
 
 friends = [friend];
 
-
 // type inference
 
-let course = 'react';
+let course = "react";
 
 // union types
 
-let theCourse: string | number = 'react';
+let theCourse: string | number = "react";
 theCourse = 123;
+
+// functions and types
+
+const add = (a: number, b: number): string | number => {
+  return "";
+};
+
+// generics
+
+const updateArray = <T>(array: T[], value: T) => {
+  return [value, ...array];
+};
+
+const newArray = updateArray(['3'], '4');

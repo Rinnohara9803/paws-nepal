@@ -1,5 +1,5 @@
 import { Rating } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReviewItem from "../../components/review-item";
 import WriteReview from "../../components/write-review";
 
@@ -22,6 +22,12 @@ const PetAccessoryDetails = () => {
   const toggleShowWriteReview = () => {
     setShowWriteReview(!showWriteReview);
   };
+
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
 
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36 ">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AddPet from "./add-pet";
 import AddPetFood from "./add-petfood";
 import AddAccessories from "./add-accessories";
@@ -9,6 +9,12 @@ const AddInventory = () => {
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
   };
+
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
 
   return (
     <div className="flex flex-col items-start px-10 md:px-36 w-full">

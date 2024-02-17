@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,19 +29,25 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
-    await signInUser(values.email, values.password)
-      .then((user) => {
-        navigate("/home");
-        dispatch(
-          authSliceActions.replaceLoggedInState({ user: user, token: "" })
-        );
-      })
-      .catch((e) => {
-        // show error message
-        console.log(e.message);
-      });
-    setSubmitting(false);
+    // await signInUser(values.email, values.password)
+    //   .then((user) => {
+    //     navigate("/home");
+    //     dispatch(
+    //       authSliceActions.replaceLoggedInState({ user: user, token: "" })
+    //     );
+    //   })
+    //   .catch((e) => {
+    //     // show error message
+    //     console.log(e.message);
+    //   });
+    // setSubmitting(false);
   };
+
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
 
   return (
     <div className="flex flex-col items-center justify-center h-full text-white">

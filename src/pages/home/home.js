@@ -6,7 +6,7 @@ import {
   faPaw,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import HomePageDetails from "./home-details";
 
 const Home = () => {
@@ -19,6 +19,12 @@ const Home = () => {
     "Bowls",
     "Leashes",
   ];
+
+  const scrollRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo(0, scrollRef.current);
+  });
 
   return (
     <div className="flex flex-col md:flex-row w-full gap-x-4 px-4 md:px-7 lg:px-11">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PetItem from "../../components/pet-item";
+import PetItem, { PetFoodItem } from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import cat from "../../images/cat-sorry.png";
 import LoadError from "./load-error";
@@ -26,12 +26,12 @@ const PetFoods = () => {
       )}
       {!isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
-          <PetItem></PetItem>
+          <PetFoodItem></PetFoodItem>
+          <PetFoodItem></PetFoodItem>
+          <PetFoodItem></PetFoodItem>
+          <PetFoodItem></PetFoodItem>
+          <PetFoodItem></PetFoodItem>
+          <PetFoodItem></PetFoodItem>
         </div>
       )}
       {!isLoading && error !== null && <LoadError></LoadError>}

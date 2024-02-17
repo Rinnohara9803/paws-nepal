@@ -18,16 +18,16 @@ import Veterinarians from "./pages/veterinarians/veterinarians";
 import VeterinarianDetails from "./pages/veterinarians/veterinarian-details";
 
 function App() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getLoggedInState());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getLoggedInState());
+  // }, [dispatch]);
 
   return (
     <div className="App text-white">
       <Header></Header>
-      <div className=" py-4 md:py-12  w-full">
+      <div className="py-4 md:py-12 w-full">
         <Routes>
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
