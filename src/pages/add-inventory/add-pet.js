@@ -2,15 +2,24 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ThePulseLoader from "../../components/pulse-loader";
+import { useSelector } from "react-redux";
+import { addPet } from "../../action-creators/inventory-action";
+import toast from "react-hot-toast";
 
 const AddPet = () => {
   const [images, setImages] = useState([]);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const token = authState.token;
 
   const handleImageChange = (event, setFieldValue) => {
     const fileList = Array.from(event.currentTarget.files);
     const selectedImages = fileList.map((file) => URL.createObjectURL(file));
     setImages(selectedImages);
-    setFieldValue("images", selectedImages);
+    setFieldValue("images", fileList);
   };
 
   const initialValues = {
@@ -18,10 +27,8 @@ const AddPet = () => {
     category: "Dogs",
     breed: "",
     age: "",
-    sex: "Male",
-    weight: "",
-    medicalInfo: "",
-    careInstructions: "",
+    price: "",
+    description: "",
     images: images,
   };
 
@@ -30,20 +37,21 @@ const AddPet = () => {
     category: Yup.string().required("Category is required"),
     breed: Yup.string().required("Breed is required"),
     age: Yup.number().required("Age is required"),
-    sex: Yup.string().required("Sex is required"),
-    weight: Yup.number().required("Weight is required"),
-    medicalInfo: Yup.string().required("Medical Info is required"),
-    careInstructions: Yup.string().required("Care Instructions are required"),
+    price: Yup.number().required("Price is required"),
+    description: Yup.string().required("Medical Info is required"),
     images: Yup.array().min(1, "At least one image is required").nullable(),
   });
 
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 2000);
-    console.log(values); // You can handle form submission here
-    // resetForm(); 
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    await addPet(values, token)
+      .then(() => {
+        toast.success("Pet added successfully.");
+        resetForm({ ...values, images: [] });
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
+    console.log(values);
   };
 
   return (
@@ -144,40 +152,18 @@ const AddPet = () => {
             <div className="mb-5 flex flex-col items-start w-full ">
               <label
                 className="mb-2 font-semibold tracking-wider text-lg"
-                htmlFor="sex"
+                htmlFor="price"
               >
-                Sex
+                Price
               </label>
               <Field
-                as="select"
-                name="sex"
-                className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
-              >
-                <option value="Dogs">Male</option>
-                <option value="Cats">Female</option>
-              </Field>
-              <ErrorMessage
-                name="sex"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-
-            <div className="mb-5 flex flex-col items-start w-full ">
-              <label
-                className="mb-2 font-semibold tracking-wider text-lg"
-                htmlFor="weight"
-              >
-                Weight ( In Kg )
-              </label>
-              <Field
-                placeholder="Enter weight"
+                placeholder="Enter price"
                 type="number"
-                name="weight"
+                name="price"
                 className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
               />
               <ErrorMessage
-                name="weight"
+                name="price"
                 component="div"
                 className="text-red-500"
               />
@@ -186,42 +172,20 @@ const AddPet = () => {
             <div className="mb-5 flex flex-col items-start w-full ">
               <label
                 className="mb-2 font-semibold tracking-wider text-lg"
-                htmlFor="medicalInfo"
+                htmlFor="description"
               >
-                Medical Info
+                Description
               </label>
               <Field
                 as="textarea"
                 rows={6}
-                placeholder="Enter medical info"
+                placeholder="Enter short description"
                 type="text"
-                name="medicalInfo"
+                name="description"
                 className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
               />
               <ErrorMessage
-                name="medicalInfo"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-
-            <div className="mb-5 flex flex-col items-start w-full ">
-              <label
-                className="mb-2 font-semibold tracking-wider text-lg"
-                htmlFor="careInstructions"
-              >
-                Care Instructions
-              </label>
-              <Field
-                as="textarea"
-                rows={6}
-                placeholder="Enter Care Instructions"
-                type="text"
-                name="careInstructions"
-                className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
-              />
-              <ErrorMessage
-                name="careInstructions"
+                name="description"
                 component="div"
                 className="text-red-500"
               />
@@ -239,7 +203,7 @@ const AddPet = () => {
                 name="images"
                 type="file"
                 onChange={(event) => handleImageChange(event, setFieldValue)}
-                multiple // Allow multiple file selection
+                // multiple // Allow multiple file selection
                 accept="image/*" // Allow only image files
                 className="bg-zinc-800 px-3 py-3 rounded-lg w-full text-zinc-500"
               />

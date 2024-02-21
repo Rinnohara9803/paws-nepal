@@ -2,22 +2,31 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ThePulseLoader from "../../components/pulse-loader";
+import { addPetFood } from "../../action-creators/inventory-action";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const AddPetFood = () => {
   const [images, setImages] = useState([]);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const token = authState.token;
 
   const handleImageChange = (event, setFieldValue) => {
     const fileList = Array.from(event.currentTarget.files);
     const selectedImages = fileList.map((file) => URL.createObjectURL(file));
     setImages(selectedImages);
-    setFieldValue("images", selectedImages);
+    setFieldValue("images", fileList);
   };
 
   const initialValues = {
     productName: "",
     category: "Dogs",
     brand: "",
-    weight: "",
+    price: "",
     shortDescription: "",
     protein: "",
     fat: "",
@@ -31,23 +40,26 @@ const AddPetFood = () => {
     productName: Yup.string().required("Product name is required"),
     category: Yup.string().required("Category is required"),
     brand: Yup.string().required("Brand is required"),
-    weight: Yup.string().required("Weight is required"),
+    price: Yup.string().required("Price is required"),
     shortDescription: Yup.string().required("Short description is required"),
-    protein: Yup.string().required("Protein is required"),
-    fat: Yup.string().required("Fat is required"),
-    fiber: Yup.string().required("Fiber is required"),
-    moisture: Yup.string().required("Moisture is required"),
+    protein: Yup.number().required("Protein is required"),
+    fat: Yup.number().required("Fat is required"),
+    fiber: Yup.number().required("Fiber is required"),
+    moisture: Yup.number().required("Moisture is required"),
     ingredients: Yup.string().required("Ingredients are required"),
     images: Yup.array().min(1, "At least one image is required").nullable(),
   });
 
-  const handleSubmit = (values, { resetForm, setSubmitting }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 2000);
-    console.log(values); // You can handle form submission here
-    // resetForm();
+  const handleSubmit = async (values, { resetForm, setSubmitting }) => {
+    await addPetFood(values, token)
+      .then(() => {
+        toast.success("Pet-food added successfully.");
+        resetForm({ ...values, images: [] });
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
+    console.log(values);
   };
 
   return (
@@ -128,18 +140,18 @@ const AddPetFood = () => {
             <div className="mb-5 flex flex-col items-start w-full">
               <label
                 className="mb-2 font-semibold tracking-wider text-lg"
-                htmlFor="weight"
+                htmlFor="price"
               >
-                Weight (in grams)
+                Price
               </label>
               <Field
-                placeholder="Enter weight"
+                placeholder="Enter price"
                 type="number"
-                name="weight"
+                name="price"
                 className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
               />
               <ErrorMessage
-                name="weight"
+                name="price"
                 component="div"
                 className="text-red-500"
               />
@@ -177,7 +189,7 @@ const AddPetFood = () => {
                 </label>
                 <Field
                   placeholder="Protein %"
-                  type="text"
+                  type="number"
                   name="protein"
                   className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
                 />
@@ -197,7 +209,7 @@ const AddPetFood = () => {
                 </label>
                 <Field
                   placeholder="Fat %"
-                  type="text"
+                  type="numer"
                   name="fat"
                   className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
                 />
@@ -218,7 +230,7 @@ const AddPetFood = () => {
                 </label>
                 <Field
                   placeholder="Fiber %"
-                  type="text"
+                  type="number"
                   name="fiber"
                   className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
                 />
@@ -238,7 +250,7 @@ const AddPetFood = () => {
                 </label>
                 <Field
                   placeholder="Moisture %"
-                  type="text"
+                  type="number"
                   name="moisture"
                   className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
                 />

@@ -11,21 +11,62 @@ import CheckOut from "./pages/check-out/check-out";
 import PetAccessoryDetails from "./pages/pet-details/pet-accessory-details";
 import Register from "./pages/register/register";
 import Login from "./pages/login/login";
-import { getLoggedInState } from "./services/auth-Service";
-import { useDispatch } from "react-redux";
+import { getLoggedInState } from "./action-creators/auth-action";
+import { useDispatch, useSelector } from "react-redux";
 import Search from "./pages/search/search";
 import Veterinarians from "./pages/veterinarians/veterinarians";
 import VeterinarianDetails from "./pages/veterinarians/veterinarian-details";
+import { Toaster } from "react-hot-toast";
+import NotFound from "./pages/not-found/not-found";
 
 function App() {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getLoggedInState());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getLoggedInState());
+  }, [dispatch]);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
 
   return (
     <div className="App text-white">
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+          // Define default options
+          className: "",
+          duration: 5000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+
+          // Default options for specific types
+          success: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+
+          error: {
+            duration: 3000,
+            theme: {
+              primary: "green",
+              secondary: "black",
+            },
+          },
+        }}
+      />
       <Header></Header>
       <div className="py-4 md:py-12 w-full">
         <Routes>
@@ -64,16 +105,19 @@ function App() {
             path="/home/pets/accessories/chew-toy"
             element={<PetAccessoryDetails />}
           ></Route>
-          <Route
-            exact
-            path="/inventory/add-inventory"
-            element={<AddInventory />}
-          ></Route>
+          {user && user.role === "admin" && (
+            <Route
+              exact
+              path="/inventory/add-inventory"
+              element={<AddInventory />}
+            ></Route>
+          )}
           <Route
             exact
             path="/home/my-cart/check-out"
             element={<CheckOut />}
           ></Route>
+          <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
     </div>

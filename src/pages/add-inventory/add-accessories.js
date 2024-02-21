@@ -2,15 +2,24 @@ import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ThePulseLoader from "../../components/pulse-loader";
+import { addPetAccessory } from "../../action-creators/inventory-action";
+import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AddAccessories = () => {
   const [images, setImages] = useState([]);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const token = authState.token;
 
   const handleImageChange = (event, setFieldValue) => {
     const fileList = Array.from(event.currentTarget.files);
     const selectedImages = fileList.map((file) => URL.createObjectURL(file));
     setImages(selectedImages);
-    setFieldValue("images", selectedImages);
+    setFieldValue("images", fileList);
   };
 
   const initialValues = {
@@ -39,13 +48,16 @@ const AddAccessories = () => {
     images: Yup.array().min(1, "At least one image is required").nullable(),
   });
 
-  const handleSubmit = (values, { setSubmitting, resetForm }) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      setSubmitting(false);
-    }, 2000);
-    console.log(values); // You can handle form submission here
-    // resetForm(); 
+  const handleSubmit = async (values, { setSubmitting, resetForm }) => {
+    await addPetAccessory(values, token)
+      .then(() => {
+        toast.success("Pet-accessory added successfully.");
+        resetForm({ ...values, images: [] });
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
+    console.log(values);
   };
 
   return (
@@ -270,7 +282,11 @@ const AddAccessories = () => {
                 type="submit"
                 className="bg-red-600 text-white rounded mt-8 h-10 w-44"
               >
-                {isSubmitting ? <ThePulseLoader></ThePulseLoader> : "Add Accessory"}
+                {isSubmitting ? (
+                  <ThePulseLoader></ThePulseLoader>
+                ) : (
+                  "Add Accessory"
+                )}
               </button>
             </div>
           </Form>

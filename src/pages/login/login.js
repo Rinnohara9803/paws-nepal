@@ -4,10 +4,11 @@ import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
-import { signInUser } from "../../services/auth-Service";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import authSlice, { authSliceActions } from "../../slices/auth-slice";
+import toast from "react-hot-toast";
+import { loginUser } from "../../action-creators/auth-action";
+import { authSliceActions } from "../../slices/auth-slice";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -29,18 +30,23 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleFormSubmit = async (values, { setSubmitting, resetForm }) => {
-    // await signInUser(values.email, values.password)
-    //   .then((user) => {
-    //     navigate("/home");
-    //     dispatch(
-    //       authSliceActions.replaceLoggedInState({ user: user, token: "" })
-    //     );
-    //   })
-    //   .catch((e) => {
-    //     // show error message
-    //     console.log(e.message);
-    //   });
-    // setSubmitting(false);
+    await loginUser(values.email, values.password)
+      .then((data) => {
+        toast.success("Signed in successfully");
+        dispatch(
+          authSliceActions.replaceLoggedInState({
+            role: data.user.role,
+            user: data.user,
+            token: data.token,
+          })
+        );
+        navigate("/home");
+        setSubmitting(false);
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
+    setSubmitting(false);
   };
 
   const scrollRef = useRef(0);
