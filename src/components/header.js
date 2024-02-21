@@ -6,15 +6,20 @@
     faPaw,
     faSearch,
     faShoppingCart,
+    faSignOut,
     faUser,
   } from "@fortawesome/free-solid-svg-icons";
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import { useNavigate } from "react-router-dom";
   import Sidebar from "./side-bar";
-  import { useSelector } from "react-redux";
+  import { useDispatch, useSelector } from "react-redux";
+import { logoutUser } from "../action-creators/auth-action";
+import { authSliceActions } from "../slices/auth-slice";
 
   const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
+
+    const dispatch = useDispatch();
 
     const toggleMenu = () => {
       setShowMenu(!showMenu); // Corrected the toggle logic
@@ -31,7 +36,9 @@
     return (
       <div className="bg-zinc-900 flex flex-row w-full justify-between items-center px-5 py-5 border-b-2 border-b-white sticky top-0 z-20">
         <Sidebar isOpen={showMenu} toggleSidebar={toggleMenu}></Sidebar>
-        <div className="flex flex-row items-center gap-x-3">
+        <div onClick={() => {
+          navigate('/home');
+        }} className="flex flex-row items-center gap-x-3">
           <FontAwesomeIcon className="text-xl" icon={faPaw}></FontAwesomeIcon>
           <p className="text-lg font-semibold"> Paws Nepal</p>
         </div>
@@ -100,6 +107,28 @@
           <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
           </div>
+          {user && (
+            <div
+              onClick={async () => {
+                await logoutUser().then(() => {
+                  navigate('/login');
+                  dispatch(
+                    authSliceActions.replaceLoggedInState({
+                      user: null,
+                      token: null,
+                    })
+                  );
+                });
+              }}
+              className=" cursor-pointer bg-zinc-700 px-5 py-2 rounded-lg flex flex-row items-center justify-center gap-x-4"
+            >
+              <FontAwesomeIcon
+                className="text-sm"
+                icon={faSignOut}
+              ></FontAwesomeIcon>
+              <p className="font-semibold text-sm"> Log Out </p>
+            </div>
+          )}
         </div>
       </div>
     );

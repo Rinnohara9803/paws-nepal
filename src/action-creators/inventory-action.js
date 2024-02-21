@@ -28,9 +28,6 @@ export const addPet = async (pet, token) => {
     console.log(jsonData);
 
     if (response.status === 200) {
-      localStorage.setItem("token", jsonData.token);
-      localStorage.setItem("role", jsonData.result.role);
-      localStorage.setItem("user", JSON.stringify(jsonData.result));
       return jsonData;
     } else {
       console.log(jsonData);
@@ -75,9 +72,6 @@ export const addPetFood = async (food, token) => {
     console.log(jsonData);
 
     if (response.status === 200) {
-      localStorage.setItem("token", jsonData.token);
-      localStorage.setItem("role", jsonData.result.role);
-      localStorage.setItem("user", JSON.stringify(jsonData.result));
       return jsonData;
     } else {
       console.log(jsonData);
@@ -89,7 +83,7 @@ export const addPetFood = async (food, token) => {
 };
 
 export const addPetAccessory = async (accessory, token) => {
-  const url = "http://localhost:3009/pet/create-pet-food";
+  const url = "http://localhost:3009/pet/create-accessories";
   const formData = new FormData();
   console.log("here");
   console.log(accessory);
@@ -101,12 +95,9 @@ export const addPetAccessory = async (accessory, token) => {
   formData.append("category", accessory.category);
   formData.append("brand", accessory.brand);
   formData.append("price", accessory.price);
-  formData.append("description", accessory.shortDescription);
-  formData.append("protein", accessory.protein);
-  formData.append("fat", accessory.fat);
-  formData.append("fiber", accessory.fiber);
-  formData.append("moisture", accessory.moisture);
-  formData.append("ingredients", accessory.ingredients);
+  formData.append("size", accessory.size);
+  formData.append("description", accessory.description);
+  formData.append("materials", accessory.materials);
   formData.append("image", imageFile);
 
   try {
@@ -122,9 +113,78 @@ export const addPetAccessory = async (accessory, token) => {
     console.log(jsonData);
 
     if (response.status === 200) {
-      localStorage.setItem("token", jsonData.token);
-      localStorage.setItem("role", jsonData.result.role);
-      localStorage.setItem("user", JSON.stringify(jsonData.result));
+      return jsonData;
+    } else {
+      console.log(jsonData);
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+export const fetchPets = async () => {
+  const url = "http://localhost:3009/product/get-pet-product";
+
+  console.log('here fetch pets');
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    console.log(response.status);
+    const jsonData = await response.json();
+    console.log(jsonData);
+
+    if (response.status === 200) {
+      return jsonData;
+    } else {
+      console.log(jsonData);
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+export const fetchPetFoods = async () => {
+  const url = "http://localhost:3009/product/get-petfood-product";
+
+  console.log('here fetch pets');
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    console.log(response.status);
+    const jsonData = await response.json();
+    console.log(jsonData);
+
+    if (response.status === 200) {
+      return jsonData;
+    } else {
+      console.log(jsonData);
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+export const fetchPetAccessories = async () => {
+  const url = "http://localhost:3009/product/get-petaccessories-product";
+
+  console.log('here fetch pets');
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    console.log(response.status);
+    const jsonData = await response.json();
+    console.log(jsonData);
+
+    if (response.status === 200) {
       return jsonData;
     } else {
       console.log(jsonData);

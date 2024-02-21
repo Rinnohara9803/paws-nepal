@@ -13,7 +13,7 @@ const AddPetFood = () => {
     return state.auth;
   });
 
-  const token = authState.token;
+  const token = authState.token; 
 
   const handleImageChange = (event, setFieldValue) => {
     const fileList = Array.from(event.currentTarget.files);
@@ -209,7 +209,7 @@ const AddPetFood = () => {
                 </label>
                 <Field
                   placeholder="Fat %"
-                  type="numer"
+                  type="number"
                   name="fat"
                   className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
                 />

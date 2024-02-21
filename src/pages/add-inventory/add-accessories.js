@@ -28,7 +28,6 @@ const AddAccessories = () => {
     category: "Toys",
     description: "",
     materials: "",
-    careInstructions: "",
     size: "",
     price: "",
     images: images,
@@ -40,8 +39,7 @@ const AddAccessories = () => {
     category: Yup.string().required("Category is required"),
     description: Yup.string().required("Description is required"),
     materials: Yup.string().required("Materials are required"),
-    careInstructions: Yup.string().required("Care instructions are required"),
-    size: Yup.string().required("Sizes are required"),
+    size: Yup.number().required("Sizes are required"),
     price: Yup.number()
       .required("Price is required")
       .min(0, "Price must be greater than or equal to 0"),
@@ -175,27 +173,6 @@ const AddAccessories = () => {
               />
             </div>
 
-            <div className="mb-5 flex flex-col items-start w-full">
-              <label
-                htmlFor="careInstructions"
-                className="mb-2 font-semibold tracking-wider text-lg"
-              >
-                Care Instructions
-              </label>
-              <Field
-                as="textarea"
-                name="careInstructions"
-                rows={4}
-                placeholder="Enter care instructions"
-                className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
-              />
-              <ErrorMessage
-                name="careInstructions"
-                component="div"
-                className="text-red-500"
-              />
-            </div>
-
             <div className="flex flex-row items-start justify-between gap-x-5">
               <div className="mb-5 flex flex-col items-start w-full">
                 <label
@@ -205,7 +182,7 @@ const AddAccessories = () => {
                   Size
                 </label>
                 <Field
-                  type="text"
+                  type="number"
                   name="size"
                   placeholder="Enter available sizes"
                   className="bg-zinc-800 px-3 py-3 rounded-lg w-full"
