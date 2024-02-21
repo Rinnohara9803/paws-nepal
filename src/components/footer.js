@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const Footer = () => {
   const navigate = useNavigate();
   return (
-    <div className="bg-zinc-900 shawdow sm:w-full px-10 md:px-16 lg:px-28 flex flex-col lg:flex-row lg:justify-start py-20 md:py-10 gap-x-10">
+    <div className="bg-zinc-900 shawdow sm:w-full px-10 md:px-16 flex flex-col lg:flex-row lg:justify-around py-20 md:py-10">
       {/* first */}
       <div className=" flex flex-col justify-start text-start">
         <h2 className="text-white font-semibold">Paws Nepal</h2>
@@ -62,22 +62,22 @@ const Footer = () => {
 
         <p
           onClick={() => {
-            navigate("/about-us");
+            navigate("/login");
           }}
           className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
         >
           {" "}
-          About Us
+          Login
         </p>
 
         <p
           onClick={() => {
-            navigate("/contact-us");
+            navigate("/register");
           }}
           className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
         >
           {" "}
-          Contact Us
+          Sign Up
         </p>
       </div>
     </div>

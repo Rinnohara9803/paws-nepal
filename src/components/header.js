@@ -4,6 +4,7 @@
     faBars,
     faBell,
     faPaw,
+    faRightToBracket,
     faSearch,
     faShoppingCart,
     faSignOut,
@@ -101,12 +102,12 @@ import { authSliceActions } from "../slices/auth-slice";
           >
             <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
           </div>
-          <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
+          {user && <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
-          </div>
-          <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
+          </div>}
+          {user && <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
-          </div>
+          </div>}
           {user && (
             <div
               onClick={async () => {
@@ -129,6 +130,32 @@ import { authSliceActions } from "../slices/auth-slice";
               <p className="font-semibold text-sm"> Log Out </p>
             </div>
           )}
+          {!user && (
+          <div className="flex flex-row sm:gap-x-1 md:gap-x-5">
+            <div
+              onClick={() => {
+                navigate("/login");
+              }}
+              className="flex flex-row cursor-pointer items-center border border-solid border-white rounded-sm hover:bg-black bg-transparent text-black-400 py-1.5 px-4   hover:text-white transition-all duration-300  ease-in-out"
+            >
+              <FontAwesomeIcon className="pr-3" icon={faUser}></FontAwesomeIcon>
+              <p className="text-sm">Login</p>
+            </div>
+
+            <div
+              onClick={() => {
+                navigate("/register");
+              }}
+              className="flex flex-row cursor-pointer items-center border border-solid border-red-500 rounded-sm hover:bg-red-500 bg-transparent text-red-500 py-1.5 px-4   hover:text-white transition-all duration-300  ease-in-out"
+            >
+              <FontAwesomeIcon
+                className="pr-3"
+                icon={faRightToBracket}
+              ></FontAwesomeIcon>
+              <p className="text-sm">Sign Up</p>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     );

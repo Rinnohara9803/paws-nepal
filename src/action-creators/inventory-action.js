@@ -132,9 +132,7 @@ export const fetchPets = async () => {
     const response = await fetch(url, {
       method: "GET",
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200) {
       return jsonData;
@@ -156,9 +154,7 @@ export const fetchPetFoods = async () => {
     const response = await fetch(url, {
       method: "GET",
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200) {
       return jsonData;

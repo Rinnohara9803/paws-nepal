@@ -16,21 +16,30 @@ const Accessories = () => {
     return state.inventory;
   });
 
-  const petFoods = inventoryState.petAccessories;
+  const petAccessories = inventoryState.petAccessories;
 
   useEffect(() => {
     const fetchThePetFoods = async () => {
       setIsLoading(true);
       await fetchPetAccessories()
         .then((data) => {
-          console.log('here');
-          console.log(data);
-          console.log('food');
-          dispatch(
-            inventorySliceActions.replacePetAccessoriesList({
-              list: data.result,
-            })
-          );
+          if (data.result === 'No product Avialable') {
+            dispatch(
+              inventorySliceActions.replacePetAccessoriesList({
+                list: [],
+              })
+            );
+          } else {
+            console.log("here");
+            console.log(data);
+            console.log("food");
+            dispatch(
+              inventorySliceActions.replacePetAccessoriesList({
+                list: data.result,
+              })
+            );
+          }
+          
           setIsLoading(false);
         })
         .catch((e) => {
@@ -40,7 +49,6 @@ const Accessories = () => {
     };
 
     fetchThePetFoods();
-
   }, [dispatch]);
 
   return (
@@ -56,13 +64,19 @@ const Accessories = () => {
           <PetItemShimmer></PetItemShimmer>
         </div>
       )}
-      {!isLoading && petFoods.length === 0 && (
+      {!isLoading && petAccessories.length === 0 && (
         <p className="my-20"> No pet foods available.</p>
       )}
-      {!isLoading && error === null && (
+      {(!isLoading && error === null && petAccessories.length !== 0) && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          {petFoods.map((petFood) => {
-            return <PetAccessoryItem name={petFood.name} image={petFood.image} brand={petFood.brand}></PetAccessoryItem>;
+          {petAccessories.map((petFood) => {
+            return (
+              <PetAccessoryItem
+                name={petFood.name}
+                image={petFood.image}
+                brand={petFood.brand}
+              ></PetAccessoryItem>
+            );
           })}
         </div>
       )}

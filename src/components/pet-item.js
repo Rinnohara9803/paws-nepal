@@ -62,8 +62,8 @@ export const PetAccessoryItem = ({ name, image, brand }) => {
         className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full"
       ></img>
       <div className="flex flex-col items-start">
-        <p className="font-semibold text-lg"> Pedigree </p>
-        <p className="text-gray-600"> Complete Nutrition</p>
+        <p className="font-semibold text-lg"> {name} </p>
+        <p className="text-gray-600"> {brand} </p>
       </div>
     </div>
   );

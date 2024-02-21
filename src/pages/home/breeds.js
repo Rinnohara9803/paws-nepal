@@ -23,11 +23,19 @@ const Breeds = () => {
       setIsLoading(true);
       await fetchPets()
         .then((data) => {
-          dispatch(
-            inventorySliceActions.replacePetsList({
-              list: data.result,
-            })
-          );
+          if (data.result === "No product Avialable") {
+            dispatch(
+              inventorySliceActions.replacePetsList({
+                list: [],
+              })
+            );
+          } else {
+            dispatch(
+              inventorySliceActions.replacePetsList({
+                list: data.result,
+              })
+            );
+          }
           setIsLoading(false);
         })
         .catch((e) => {
@@ -38,9 +46,7 @@ const Breeds = () => {
 
     fetchThePets();
 
-    return () => {
-    };
-
+    return () => {};
   }, [dispatch]);
 
   return (
@@ -59,7 +65,13 @@ const Breeds = () => {
       {!isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
           {pets.map((pet) => {
-            return <PetItem name={pet.name} image={pet.image} breed={pet.breed}></PetItem>;
+            return (
+              <PetItem
+                name={pet.name}
+                image={pet.image}
+                breed={pet.breed}
+              ></PetItem>
+            );
           })}
         </div>
       )}
