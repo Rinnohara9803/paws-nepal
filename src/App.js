@@ -18,6 +18,7 @@ import Veterinarians from "./pages/veterinarians/veterinarians";
 import VeterinarianDetails from "./pages/veterinarians/veterinarian-details";
 import { Toaster } from "react-hot-toast";
 import NotFound from "./pages/not-found/not-found";
+import Footer from "./components/footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -120,6 +121,7 @@ function App() {
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>
+      <Footer></Footer>
     </div>
   );
 }
