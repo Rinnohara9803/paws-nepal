@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import PetItem, { PetFoodItem } from "../../components/pet-item";
+import PetItem, { PetAccessoryItem } from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
-import cat from "../../images/cat-sorry.png";
 import LoadError from "./load-error";
+import { fetchPetAccessories } from "../../action-creators/inventory-action";
 import { inventorySliceActions } from "../../slices/inventory-slice";
-import { fetchPetFoods } from "../../action-creators/inventory-action";
 import { useDispatch, useSelector } from "react-redux";
 
-const PetFoods = () => {
+const Accessories = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -17,42 +16,45 @@ const PetFoods = () => {
     return state.inventory;
   });
 
-  const petFoods = inventoryState.petFoods;
+  const petAccessories = inventoryState.petAccessories;
 
   useEffect(() => {
     const fetchThePetFoods = async () => {
       setIsLoading(true);
-      await fetchPetFoods()
+      await fetchPetAccessories()
         .then((data) => {
-          if (data.result === "No product Avialable") {
+          if (data.result.length === 0) {
             dispatch(
-              inventorySliceActions.replacePetFoodsList({
+              inventorySliceActions.replacePetAccessoriesList({
                 list: [],
               })
             );
+            setError("No products available.");
           } else {
-            console.log("here");
-            console.log(data);
-            console.log("food");
             dispatch(
-              inventorySliceActions.replacePetFoodsList({
+              inventorySliceActions.replacePetAccessoriesList({
                 list: data.result,
               })
             );
           }
+
           setIsLoading(false);
         })
         .catch((e) => {
-          setError("Something went wrong.");
+          setError(e.message);
           setIsLoading(false);
         });
     };
 
     fetchThePetFoods();
   }, [dispatch]);
+
   return (
     <div className="flex flex-col items-start mb-12  w-full">
-      <p className="font-bold tracking-wider text-xl mb-5"> Pet Foods</p>
+      <p className="font-bold tracking-wider text-xl mb-5">
+        {" "}
+        Explore Accessories
+      </p>
       {isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
           <PetItemShimmer></PetItemShimmer>
@@ -60,26 +62,29 @@ const PetFoods = () => {
           <PetItemShimmer></PetItemShimmer>
         </div>
       )}
-
-      {!isLoading && petFoods.length === 0 && (
+      {!isLoading && petAccessories.length === 0 && error === null && (
         <p className="my-20"> No pet foods available.</p>
       )}
-      {!isLoading && error === null && (
+      {!isLoading && error === null && petAccessories.length !== 0 && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          {petFoods.map((petFood) => {
-            return (
-              <PetFoodItem
-                name={petFood.name}
-                image={petFood.image}
-                brand={petFood.brand}
-              ></PetFoodItem>
+          {petAccessories.map((accessory) => {
+            return ( 
+              <PetAccessoryItem
+                key={accessory._id}
+                id={accessory._id}
+                type={accessory.producttype}
+                price={accessory.price}
+                name={accessory.name}
+                image={accessory.image}
+                brand={accessory.brand}
+              ></PetAccessoryItem>
             );
           })}
         </div>
       )}
-      {!isLoading && error !== null && <LoadError></LoadError>}
+      {!isLoading && error !== null && <LoadError message={error}></LoadError>}
     </div>
   );
 };
 
-export default PetFoods;
+export default Accessories;

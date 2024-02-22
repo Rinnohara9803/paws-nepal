@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/home/home";
+import Home from "./pages/category/category-page";
 import Header from "./components/header";
 import PetDetailsPage from "./pages/pet-details/pet-details";
 import PetFoodDetails from "./pages/pet-details/pet-food-details";
@@ -19,6 +19,7 @@ import VeterinarianDetails from "./pages/veterinarians/veterinarian-details";
 import { Toaster } from "react-hot-toast";
 import NotFound from "./pages/not-found/not-found";
 import Footer from "./components/footer";
+import BecomeADoctor from "./pages/become-vet.js/apply-for-vet";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,7 +37,7 @@ function App() {
   return (
     <div className="App text-white">
       <Toaster
-        position="top-right"
+        position="bottom-right"
         reverseOrder={false}
         gutter={8}
         containerClassName=""
@@ -113,11 +114,20 @@ function App() {
               element={<AddInventory />}
             ></Route>
           )}
-          <Route
-            exact
-            path="/home/my-cart/check-out"
-            element={<CheckOut />}
-          ></Route>
+          {user && user.role !== "admin" && user.role !== "doctor" && (
+            <Route
+              exact
+              path="/:userId/apply-for-vet"
+              element={<BecomeADoctor></BecomeADoctor>}
+            ></Route>
+          )}
+          {user && (
+            <Route
+              exact
+              path="/home/:userId/my-cart/check-out"
+              element={<CheckOut />}
+            ></Route>
+          )}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

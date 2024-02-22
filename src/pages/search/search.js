@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import PetItem from "../../components/pet-item";
-import LoadError from "../home/load-error";
+import LoadError from "../category/load-error";
 
 const Search = () => {
   const [searchValue, setSearchValue] = useState("");

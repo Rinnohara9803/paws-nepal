@@ -1,20 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { cartSliceActions } from "../slices/cart-slice";
+import toast from "react-hot-toast";
 
-const PetItem = ({ name, image, breed }) => {
+const AddToCartButton = ({ id, type, image, name, price }) => {
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
+
+  const handleClick = (e) => {
+    e.stopPropagation(); // Prevent the click event from propagating to the parent div
+
+    if (!user) {
+      navigate("/login");
+      toast.success("Plese login to add items to your cart.");
+    } else {
+      dispatch(
+        cartSliceActions.addItemToCart({
+          item: {
+            productItem: {
+              id: id,
+              type: type,
+              image: image,
+              name: name,
+              price: price,
+            },
+            count: 1,
+            price: price,
+          },
+        })
+      );
+      toast.success("Item added to cart");
+    }
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="absolute bottom-2 right-2 flex text-sm font-normal py-2 px-7 border-2 bg-opacity-85 bg-black border-white text-white transition-all duration-300 rounded-lg ease-in-out hover:decoration-solid hover:font-semibold hover:text-red-700  hover:border-red-700"
+    >
+      Add to Cart
+    </button>
+  );
+};
+
+const PetItem = ({ id, type, image, name, price, breed }) => {
+  const navigate = useNavigate();
+
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
         navigate("/home/pets/fido");
       }}
-      className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
+      className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer relative"
     >
-      <img
-        src={`http://localhost:3009/uploads/${image}`}
-        alt="paws-nepal"
-        className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full"
-      ></img>
+      <div className="relative h-64 md:h-56 lg:h-52 w-full flex">
+        <img
+          src={`http://localhost:3009/uploads/${image}`}
+          alt="paws-nepal"
+          className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full"
+        ></img>
+        {isHovered && (
+          <div className="absolute top-0 left-0 h-64 md:h-56 lg:h-52 rounded-xl w-full bg-black bg-opacity-40 transition-all ease-out duration-500"></div>
+        )}
+        {isHovered && (
+          <AddToCartButton
+            id={id}
+            type={type}
+            image={image}
+            name={name}
+            price={price}
+          ></AddToCartButton>
+        )}
+      </div>
       <div className="flex flex-col items-start">
         <p className="font-semibold text-lg"> {name} </p>
         <p className="text-gray-600"> {breed} </p>
@@ -25,20 +94,37 @@ const PetItem = ({ name, image, breed }) => {
 
 export default PetItem;
 
-export const PetFoodItem = ({ name, image, brand }) => {
+export const PetFoodItem = ({ id, type, image, name, price, brand }) => {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
         navigate("/home/pets/foods/chicken");
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
     >
-      <img
-        src={`http://localhost:3009/uploads/${image}`}
-        alt="paws-nepal"
-        className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full"
-      ></img>
+      <div className="relative h-64 md:h-56 lg:h-52 w-full flex">
+        <img
+          src={`http://localhost:3009/uploads/${image}`}
+          alt="paws-nepal"
+          className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full"
+        ></img>
+        {isHovered && (
+          <div className="absolute top-0 left-0 h-64 md:h-56 lg:h-52 rounded-xl w-full bg-black bg-opacity-40 transition-all ease-out duration-500"></div>
+        )}
+        {isHovered && (
+          <AddToCartButton
+            id={id}
+            type={type}
+            image={image}
+            name={name}
+            price={price}
+          ></AddToCartButton>
+        )}
+      </div>
       <div className="flex flex-col items-start">
         <p className="font-semibold text-lg"> {name} </p>
         <p className="text-gray-600"> {brand} </p>
@@ -47,20 +133,37 @@ export const PetFoodItem = ({ name, image, brand }) => {
   );
 };
 
-export const PetAccessoryItem = ({ name, image, brand }) => {
+export const PetAccessoryItem = ({ id, type, image, name, price, brand }) => {
   const navigate = useNavigate();
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
         navigate("/home/pets/accessories/chew-toy");
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
     >
-      <img
-        src={`http://localhost:3009/uploads/${image}`}
-        alt="paws-nepal"
-        className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full"
-      ></img>
+      <div className="relative h-64 md:h-56 lg:h-52 w-full flex">
+        <img
+          src={`http://localhost:3009/uploads/${image}`}
+          alt="paws-nepal"
+          className="h-64 md:h-56 lg:h-52 object-cover rounded-xl w-full "
+        ></img>
+        {isHovered && (
+          <div className="absolute top-0 left-0 h-64 md:h-56 lg:h-52 rounded-xl w-full bg-black bg-opacity-40 transition-all ease-out duration-500"></div>
+        )}
+        {isHovered && (
+          <AddToCartButton
+            id={id}
+            type={type}
+            image={image}
+            name={name}
+            price={price}
+          ></AddToCartButton>
+        )}
+      </div>
       <div className="flex flex-col items-start">
         <p className="font-semibold text-lg"> {name} </p>
         <p className="text-gray-600"> {brand} </p>

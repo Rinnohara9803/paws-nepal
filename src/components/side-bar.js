@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch } from "react-redux";
 import { authSliceActions } from "../slices/auth-slice";
 import { logoutUser } from "../action-creators/auth-action";
+import { cartSliceActions } from "../slices/cart-slice";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const navigate = useNavigate();
@@ -28,73 +29,66 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <FontAwesomeIcon className="text-xl" icon={faPaw}></FontAwesomeIcon>
           <p className="text-xl font-semibold"> Paws Nepal</p>
         </div>
-        <div onClick={() => {
-              toggleSidebar();
-            }} className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer">
+        <div
+          onClick={() => {
+            toggleSidebar();
+          }}
+          className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer"
+        >
           <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
-          <Link
-            
-            to="/"
-            className="font-semibold tracking-wider text-lg"
-          >
+          <Link to="/" className="font-semibold tracking-wider text-lg">
             Profile
           </Link>
         </div>
-        <div onClick={() => {
-              toggleSidebar();
-            }}
-            to="/" className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer">
+        <div
+          onClick={() => {
+            toggleSidebar();
+          }}
+          to="/"
+          className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer"
+        >
           <FontAwesomeIcon icon={faHome}></FontAwesomeIcon>
-          <Link
-            
-            className="font-semibold tracking-wider text-lg"
-          >
-            Home
-          </Link>
+          <Link className="font-semibold tracking-wider text-lg">Home</Link>
         </div>
-        <div onClick={() => {
-              toggleSidebar();
-            }}
-            to="/" className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer">
+        <div
+          onClick={() => {
+            toggleSidebar();
+          }}
+          to="/"
+          className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer"
+        >
           <FontAwesomeIcon icon={faBoxOpen}></FontAwesomeIcon>
-          <Link
-            
-            className="font-semibold tracking-wider text-lg"
-          >
-            Orders
-          </Link>
+          <Link className="font-semibold tracking-wider text-lg">Orders</Link>
         </div>
-        <div onClick={() => {
-              toggleSidebar();
-            }} className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer">
+        <div
+          onClick={() => {
+            toggleSidebar();
+          }}
+          className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer"
+        >
           <FontAwesomeIcon icon={faShoppingBasket}></FontAwesomeIcon>
-          <Link
-            
-            to="/"
-            className="font-semibold tracking-wider text-lg"
-          >
+          <Link to="/" className="font-semibold tracking-wider text-lg">
             My Cart
           </Link>
         </div>
-        <div onClick={async () => {
-              toggleSidebar();
-              await logoutUser().then(() => {
-                dispatch(
-                  authSliceActions.replaceLoggedInState({
-                    user: null,
-                    token: null,
-                  })
-                );
-              });
-              navigate("/login");
-            }} className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer">
+        <div
+          onClick={async () => {
+            toggleSidebar();
+            await logoutUser().then(() => {
+              dispatch(
+                authSliceActions.replaceLoggedInState({
+                  user: null,
+                  token: null,
+                })
+              );
+              dispatch(cartSliceActions.clearCart());
+            });
+            navigate("/login");
+          }}
+          className="flex flex-row items-center gap-x-6 hover:bg-red-700 transition-all duration-700 ease-in w-full px-10 py-3 cursor-pointer"
+        >
           <FontAwesomeIcon icon={faSignOut}></FontAwesomeIcon>
-          <div
-            
-            className="font-semibold tracking-wider text-lg"
-          >
-            Log Out
-          </div>
+          <div className="font-semibold tracking-wider text-lg">Log Out</div>
         </div>
       </div>
     </div>

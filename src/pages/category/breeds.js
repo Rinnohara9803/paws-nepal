@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import PetItem, { PetAccessoryItem } from "../../components/pet-item";
+import PetItem from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import LoadError from "./load-error";
-import { fetchPetAccessories } from "../../action-creators/inventory-action";
-import { inventorySliceActions } from "../../slices/inventory-slice";
+import { fetchPets } from "../../action-creators/inventory-action";
 import { useDispatch, useSelector } from "react-redux";
+import { inventorySliceActions } from "../../slices/inventory-slice";
 
-const Accessories = () => {
-  const [isLoading, setIsLoading] = useState(true);
+const Breeds = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -16,30 +16,27 @@ const Accessories = () => {
     return state.inventory;
   });
 
-  const petAccessories = inventoryState.petAccessories;
+  const pets = inventoryState.pets;
 
   useEffect(() => {
-    const fetchThePetFoods = async () => {
+    const fetchThePets = async () => {
       setIsLoading(true);
-      await fetchPetAccessories()
+      await fetchPets()
         .then((data) => {
-          if (data.result === 'No product Avialable') {
+          if (data.result.length === 0) {
             dispatch(
-              inventorySliceActions.replacePetAccessoriesList({
+              inventorySliceActions.replacePetsList({
                 list: [],
               })
             );
+            setError("No pets available.");
           } else {
-            console.log("here");
-            console.log(data);
-            console.log("food");
             dispatch(
-              inventorySliceActions.replacePetAccessoriesList({
+              inventorySliceActions.replacePetsList({
                 list: data.result,
               })
             );
           }
-          
           setIsLoading(false);
         })
         .catch((e) => {
@@ -48,15 +45,14 @@ const Accessories = () => {
         });
     };
 
-    fetchThePetFoods();
+    fetchThePets();
+
+    return () => {};
   }, [dispatch]);
 
   return (
     <div className="flex flex-col items-start mb-12  w-full">
-      <p className="font-bold tracking-wider text-xl mb-5">
-        {" "}
-        Explore Accessories
-      </p>
+      <p className="font-bold tracking-wider text-xl mb-5"> Explore by Breed</p>
       {isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
           <PetItemShimmer></PetItemShimmer>
@@ -64,25 +60,29 @@ const Accessories = () => {
           <PetItemShimmer></PetItemShimmer>
         </div>
       )}
-      {!isLoading && petAccessories.length === 0 && (
-        <p className="my-20"> No pet foods available.</p>
+      {!isLoading && pets.length === 0 && error === null && (
+        <p className="my-20"> No pets available.</p>
       )}
-      {(!isLoading && error === null && petAccessories.length !== 0) && (
+      {!isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          {petAccessories.map((petFood) => {
+          {pets.map((pet) => {
             return (
-              <PetAccessoryItem
-                name={petFood.name}
-                image={petFood.image}
-                brand={petFood.brand}
-              ></PetAccessoryItem>
+              <PetItem
+                key={pet._id}
+                id={pet._id}
+                type={pet.producttype}
+                price={pet.price}
+                name={pet.name}
+                image={pet.image}
+                breed={pet.breed}
+              ></PetItem>
             );
           })}
         </div>
       )}
-      {!isLoading && error !== null && <LoadError></LoadError>}
+      {!isLoading && error !== null && <LoadError message={error}></LoadError>}
     </div>
   );
 };
 
-export default Accessories;
+export default Breeds;

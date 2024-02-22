@@ -126,7 +126,7 @@ export const addPetAccessory = async (accessory, token) => {
 export const fetchPets = async () => {
   const url = "http://localhost:3009/product/get-pet-product";
 
-  console.log('here fetch pets');
+  console.log("here fetch pets");
 
   try {
     const response = await fetch(url, {
@@ -134,21 +134,23 @@ export const fetchPets = async () => {
     });
     const jsonData = await response.json();
 
-    if (response.status === 200) {
+    if (jsonData.result === "No product Avialable") {
+      return { result: [] };
+    } else if (response.status === 200) {
       return jsonData;
     } else {
       console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
-    throw new Error(e.message);
+    throw Error(e.message);
   }
 };
 
 export const fetchPetFoods = async () => {
   const url = "http://localhost:3009/product/get-petfood-product";
 
-  console.log('here fetch pets');
+  console.log("here fetch pets");
 
   try {
     const response = await fetch(url, {
@@ -156,21 +158,23 @@ export const fetchPetFoods = async () => {
     });
     const jsonData = await response.json();
 
-    if (response.status === 200) {
+    if (jsonData.result === "No product Avialable") {
+      return { result: [] };
+    } else if (response.status === 200) {
       return jsonData;
     } else {
       console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
-    throw new Error(e.message);
+    throw Error(e.message);
   }
 };
 
 export const fetchPetAccessories = async () => {
   const url = "http://localhost:3009/product/get-petaccessories-product";
 
-  console.log('here fetch pets');
+  console.log("here fetch pets");
 
   try {
     const response = await fetch(url, {
@@ -179,14 +183,14 @@ export const fetchPetAccessories = async () => {
     console.log(response.status);
     const jsonData = await response.json();
     console.log(jsonData);
-
-    if (response.status === 200) {
+    if (jsonData.result === "No product Avialable") {
+      return { result: [] };
+    } else if (response.status === 200) {
       return jsonData;
     } else {
-      console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
-    throw new Error(e.message);
+    throw Error(e.message);
   }
 };

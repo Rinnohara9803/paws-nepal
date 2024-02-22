@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
+import { useSelector } from "react-redux";
 
 const CheckOut = () => {
   const [selectedPm, setSelectedPm] = useState("Cash on Delivery");
@@ -11,6 +12,23 @@ const CheckOut = () => {
   const paymentMethods = ["Cash on Delivery", "E-sewa", "Khalti"];
 
   const scrollRef = useRef(0);
+
+  const cartState = useSelector((state) => {
+    return state.cart;
+  });
+
+  let totalCount = cartState.totalItemCount;
+
+
+  // const authState = useSelector((state) => {
+  //   return state.auth;
+  // });
+
+  // const user = authState.user;
+
+  let totalPrice = cartState.totalPrice;
+
+  
 
   useEffect(() => {
     window.scrollTo(0, scrollRef.current);
@@ -265,11 +283,11 @@ const CheckOut = () => {
             </p>
             <div className="flex flex-row items-center justify-between w-full mb-3">
               <p className="text-zinc-500"> Total Items</p>
-              <p> 7 items </p>
+              <p> {totalCount} items </p>
             </div>
             <div className="flex flex-row items-center justify-between w-full mb-3">
               <p className="text-zinc-500"> Subtotal</p>
-              <p> Rs. 250 </p>
+              <p> Rs. {totalPrice} </p>
             </div>
             <div className="flex flex-row items-center justify-between w-full mb-3">
               <p className="text-zinc-500"> Shipping</p>
@@ -277,7 +295,7 @@ const CheckOut = () => {
             </div>
             <div className="flex flex-row items-center justify-between w-full mb-3">
               <p className="text-zinc-500"> Total</p>
-              <p> Rs. 250 </p>
+              <p> Rs. {totalPrice} </p>
             </div>
 
             <div className="flex flex-row justify-end">

@@ -110,3 +110,51 @@ export const getLoggedInState = () => {
     }
   };
 };
+
+export const registerDoctorRequest = async (doctorData, token) => {
+  const url = "http://localhost:3009/user/applyasdoctor";
+
+  const formData = new FormData();
+  for (let i = 0; i < doctorData.education.length; i++) {
+    formData.append(
+      `education[${i}][instituteName]`,
+      doctorData.education[i].instituteName
+    );
+    formData.append(`education[${i}][grade]`, doctorData.education[i].grade);
+  }
+
+  for (let i = 0; i < doctorData.imageFiles; i++) {
+    formData.append("document", doctorData.imageFiles[i]);
+  }
+
+  doctorData.imageFiles.forEach((file, index) => {
+    formData.append("document", file);
+  });
+  formData.append("specialization", doctorData.speciality);
+  formData.append("experience", doctorData.experience);
+
+  try {
+    console.log("here");
+    const response = await fetch(url, {
+      method: "POST",
+      body: formData,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response.status);
+    const jsonData = await response.json();
+    console.log(jsonData);
+
+    if (response.status === 200) {
+      return jsonData.message;
+    } else {
+      console.log(jsonData.message);
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    console.log("error");
+    console.log(e.message);
+    throw Error(e.message);
+  }
+};

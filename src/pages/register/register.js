@@ -193,7 +193,7 @@ const Register = () => {
                 />
               </div>
 
-              <div className="mb-6 flex flex-col items-start">
+              {/* <div className="mb-6 flex flex-col items-start">
                 <label className="flex items-center relative">
                   <Field
                     type="checkbox"
@@ -208,7 +208,7 @@ const Register = () => {
                     </span>
                   )}
                 </label>
-              </div>
+              </div> */}
 
               <button
                 type="submit"

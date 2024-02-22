@@ -121,7 +121,7 @@ const Login = () => {
                 />
               </div>
 
-              <div className="mb-4 flex flex-col items-start">
+              {/* <div className="mb-4 flex flex-col items-start">
                 <label className="flex items-center relative">
                   <Field
                     type="checkbox"
@@ -136,7 +136,7 @@ const Login = () => {
                     </span>
                   )}
                 </label>
-              </div>
+              </div> */}
 
               <button
                 type="submit"

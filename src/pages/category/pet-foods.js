@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import PetItem from "../../components/pet-item";
+import  { PetFoodItem } from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import LoadError from "./load-error";
-import { fetchPets } from "../../action-creators/inventory-action";
-import { useDispatch, useSelector } from "react-redux";
 import { inventorySliceActions } from "../../slices/inventory-slice";
+import { fetchPetFoods } from "../../action-creators/inventory-action";
+import { useDispatch, useSelector } from "react-redux";
 
-const Breeds = () => {
-  const [isLoading, setIsLoading] = useState(false);
+const PetFoods = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -16,22 +16,23 @@ const Breeds = () => {
     return state.inventory;
   });
 
-  const pets = inventoryState.pets;
+  const petFoods = inventoryState.petFoods;
 
   useEffect(() => {
-    const fetchThePets = async () => {
+    const fetchThePetFoods = async () => {
       setIsLoading(true);
-      await fetchPets()
+      await fetchPetFoods()
         .then((data) => {
-          if (data.result === "No product Avialable") {
+          if (data.result.length === 0) {
             dispatch(
-              inventorySliceActions.replacePetsList({
+              inventorySliceActions.replacePetFoodsList({
                 list: [],
               })
             );
+            setError("No pet foods available.");
           } else {
             dispatch(
-              inventorySliceActions.replacePetsList({
+              inventorySliceActions.replacePetFoodsList({
                 list: data.result,
               })
             );
@@ -44,14 +45,11 @@ const Breeds = () => {
         });
     };
 
-    fetchThePets();
-
-    return () => {};
+    fetchThePetFoods();
   }, [dispatch]);
-
   return (
     <div className="flex flex-col items-start mb-12  w-full">
-      <p className="font-bold tracking-wider text-xl mb-5"> Explore by Breed</p>
+      <p className="font-bold tracking-wider text-xl mb-5"> Pet Foods</p>
       {isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
           <PetItemShimmer></PetItemShimmer>
@@ -59,25 +57,30 @@ const Breeds = () => {
           <PetItemShimmer></PetItemShimmer>
         </div>
       )}
-      {!isLoading && pets.length === 0 && (
-        <p className="my-20"> No pets available.</p>
+
+      {!isLoading && petFoods.length === 0 && error === null && (
+        <p className="my-20"> No pet foods available.</p>
       )}
       {!isLoading && error === null && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full">
-          {pets.map((pet) => {
+          {petFoods.map((petFood) => {
             return (
-              <PetItem
-                name={pet.name}
-                image={pet.image}
-                breed={pet.breed}
-              ></PetItem>
+              <PetFoodItem
+                key={petFood._id}
+                id={petFood._id}
+                type={petFood.producttype}
+                price={petFood.price}
+                name={petFood.name}
+                image={petFood.image}
+                brand={petFood.brand}
+              ></PetFoodItem>
             );
           })}
         </div>
       )}
-      {!isLoading && error !== null && <LoadError></LoadError>}
+      {!isLoading && error !== null && <LoadError message={error}></LoadError>}
     </div>
   );
 };
 
-export default Breeds;
+export default PetFoods;

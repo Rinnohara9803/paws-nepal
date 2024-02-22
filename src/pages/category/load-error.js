@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import cat from "../../images/cat-sorry.png";
 import "../../styles/home.css";
 
-const LoadError = () => {
+const LoadError = ({message}) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -39,8 +39,7 @@ const LoadError = () => {
         </p>
         <p className="heading-text-2 text-sm tracking-wide text-zinc-500">
           {" "}
-          We are sorry, we couldn't load the products at this time. Please try
-          refreshing the page or come back later.{" "}
+          {message}
         </p>
       </div>
     </div>

@@ -4,13 +4,22 @@ import {
   faLinkedin,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { tableSortLabelClasses } from "@mui/material";
 import React from "react";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
+
   const navigate = useNavigate();
   return (
-    <div className="bg-zinc-900 shawdow sm:w-full px-10 md:px-16 flex flex-col lg:flex-row lg:justify-around py-20 md:py-10">
+    <div className="bg-zinc-900 gap-y-7 shawdow sm:w-full px-10 md:px-16 flex flex-col lg:flex-row lg:justify-around py-20 md:py-10 border border-t-2 border-white">
       {/* first */}
       <div className=" flex flex-col justify-start text-start">
         <h2 className="text-white font-semibold">Paws Nepal</h2>
@@ -70,6 +79,63 @@ const Footer = () => {
           Login
         </p>
 
+        <p
+          onClick={() => {
+            navigate("/register");
+          }}
+          className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
+        >
+          {" "}
+          Sign Up
+        </p>
+      </div>
+      <div className="flex flex-col justify-start items-start text-white gap-y-3 pt-5 md:pt-0">
+        <div className="pb-4 flex flex-col">
+          <p className="font-semibold text-lg "> Join Us </p>
+          <div className="h-0.5 w-9 bg-white mt-1"></div>
+        </div>
+        <p
+          onClick={() => {
+            if (!user) {
+              navigate("/login");
+              toast.error("Please login to become a doctor");
+            } else {
+              navigate(`/${user._id}/apply-for-vet`);
+            }
+          }}
+          className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
+        >
+          Become a Doctor
+        </p>
+      </div>
+      <div className="flex flex-col justify-start items-start text-white gap-y-3 pt-5 md:pt-0">
+        <div className="pb-4 flex flex-col">
+          <p className="font-semibold text-lg "> Join Us </p>
+          <div className="h-0.5 w-9 bg-white mt-1"></div>
+        </div>
+        <p
+          onClick={() => {
+            if (!user) {
+              navigate("/login");
+              toast.error("Please login to become a doctor");
+            } else {
+              navigate(`/${user._id}/apply-for-vet`);
+            }
+          }}
+          className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
+        >
+          Become a Doctor
+        </p>
+
+        <p
+          onClick={() => {
+            navigate("/login");
+          }}
+          className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
+        >
+          {" "}
+          Login
+        </p>
         <p
           onClick={() => {
             navigate("/register");
