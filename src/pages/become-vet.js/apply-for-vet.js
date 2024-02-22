@@ -63,7 +63,7 @@ const BecomeADoctor = () => {
     )
       .then(() => {
         toast.success("Your application has been sent");
-        navigate("/home");
+        navigate("/category/All");
         resetForm();
         setImageFiles([]);
         setEducationList([]);

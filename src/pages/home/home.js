@@ -1,22 +1,21 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Questions from "../Questions/question";
 import { useEffect, useRef } from "react";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
-import "../../css/home/home.css";
+import "../../styles/home.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { doctorsListSliceActions } from "../../slices/doctors_slice";
-import { fetchDoctorsList } from "../../action-creators/doctors_list_action";
-import "../../css/find_doctors.css";
+import "../../styles/find_doctors.css";
 
-import { faMinus, } from "@fortawesome/free-solid-svg-icons";
-import Section2 from "./section_two";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import ImageSlider from "./image_slider";
+import { fetchDoctorsList } from "../../action-creators/doctor-list-action";
+import { doctorsListSliceActions } from "../../slices/doctors_slice";
+import MedicalServices from "../Mobile/medicalservices";
 library.add(faFacebookF);
 
-const Home = () => {
+const MainPage = () => {
   const navigate = useNavigate();
 
   const scrollRef = useRef(0);
@@ -47,17 +46,6 @@ const Home = () => {
               "block3-active"
             );
           } else {
-            entry.target.classList.remove(
-              "heading-text-1-active",
-              "heading-text-2-active",
-              "header-image-1-active",
-              "header-image-2-active",
-              "header-image-3-active",
-              "header-data-active",
-              "block1-active",
-              "block2-active",
-              "block3-active"
-            );
           }
         });
       },
@@ -106,19 +94,20 @@ const Home = () => {
           <div class="left_container lg:w-2/5 lg:pt-8 sm:w-full sm:pt-20">
             <div class="lft_con_first">
               <h1 className="heading-text-1 font-bold text-left lg:text-5xl lg:leading-snug sm:text-4xl sm:leading-snug sm:pb-4">
-                We help patients live a healthy, longer life
+                Discover Paw's Nepal: Your Pet's Paradise!
               </h1>
               <p className="heading-text-2 text-left">
-                Discover a curated list of experienced and caring doctors to
-                meet your healthcare needs. Browse through our diverse range of
-                specialists to find the perfect match for you.
+                Embark on a journey towards ensuring your furry friend lives a
+                healthy and vibrant life. Explore our carefully curated
+                selection of pets, accessories, and essential supplies to meet
+                all their needs.
               </p>
               <div className="text-left">
                 <button
                   onClick={() => {
                     navigate("/find-doctors");
                   }}
-                  className="lg:p-3 lg:px-6 sm:p-3 sm:text-sm mt-6 font-semibold bg-orange-500 rounded-3xl text-white hover:scale-105 transition-all duration-300"
+                  className="lg:p-3 lg:px-6 sm:p-3 sm:text-sm mt-6 font-semibold bg-red-600 rounded-3xl text-white hover:scale-105 transition-all duration-300"
                 >
                   Request an Appointment
                 </button>
@@ -126,23 +115,25 @@ const Home = () => {
             </div>
             <div className="header-data flex flex-row items-start  lg:flex lg:flex-row mt-10  sm:flex-col sm:items-center">
               <div className="lg:mr-8 sm:mb-4 cursor-pointer transition-all hover:scale-105 ">
-                <p className="text-5xl font-semibold">30+</p>
+                <p className="text-5xl font-semibold">10+</p>
                 <p className="text-xs font-normal mt-2">Years of Service </p>
               </div>
               <div className="lg:mr-8 sm:mb-4 cursor-pointer transition-all hover:scale-105">
                 <p className="text-5xl font-semibold">15+</p>
-                <p className="text-xs font-normal mt-2">Clinic Location</p>
+                <p className="text-xs font-normal mt-2">Primary Location</p>
               </div>
               <div className="lg:mr-8 sm:mb-4 cursor-pointer transition-all hover:scale-105">
                 <p className="text-5xl font-semibold">100%</p>
-                <p className="text-xs font-normal mt-2">Patient Satisfaction</p>
+                <p className="text-xs font-normal mt-2">User Satisfaction</p>
               </div>
             </div>
           </div>
-          <div className="lg:flex sm:hidden">
+          <div className="lg:flex hidden ">
             <div className=" header-image-1  mt-20 mr-8 ml-12">
               <img
-                src={process.env.PUBLIC_URL + "/img/doctor-1.png"}
+                src={
+                  "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
+                }
                 alt="alt"
                 style={{ height: "70%", width: "45rem" }}
                 className="object-cover"
@@ -151,7 +142,9 @@ const Home = () => {
             <div className="mt-28">
               <div className="mb-8  ">
                 <img
-                  src={process.env.PUBLIC_URL + "/img/doctor2.jpg"}
+                  src={
+                    "https://www.shutterstock.com/image-photo/border-collie-dog-portrait-hiding-600nw-1933485896.jpg"
+                  }
                   alt="alt"
                   style={{ height: "30%", width: "15rem" }}
                   className="header-image-2 object-cover "
@@ -159,7 +152,9 @@ const Home = () => {
               </div>
               <div className="header-image-3">
                 <img
-                  src={process.env.PUBLIC_URL + "/img/doctor-3.jpg"}
+                  src={
+                    "https://www.shutterstock.com/image-photo/labrador-retriever-dog-panting-ginger-600nw-2198998317.jpg"
+                  }
                   alt="alt"
                   className="header-image-3 object-cover"
                 />
@@ -185,38 +180,26 @@ const Home = () => {
         </div>
       )}
 
-      
-      {/* SECOND CONTAINER */}
-      <Section2
-        firstClassName="heading-text-1"
-        secondClassName="heading-text-2"
-        thirdClassName="block1"
-        fourthClassName="block2"
-        fifthClassName="block3"
-      ></Section2>
-
-      {/* FOURTH CONTAINER */}
       <div class="fourth_container pb-32">
         <div className="sm:w-4/6 my-0 mx-auto">
           <div className="lg:w-5/12 my-0 mr-auto ml-auto ">
-            <h3 className="text-4xl font-semibold">Our medical services</h3>
+            <h3 className="text-4xl font-semibold">Our Services</h3>
             <p className="mt-3 font-normal">
-              World class for everyone. Our health System offers unmatched,
-              expert healthcare
+              World class veterinarians for everyone. Our veterinarians offers
+              unmatched, expert healthcare for your loved ones.
             </p>
           </div>
 
-          {/* <MedicalServices></MedicalServices> */}
-          
+          <MedicalServices></MedicalServices>
         </div>
       </div>
-      {/* FIFTH CONTAINER */}
+
       <div class="fifth_container" className=" pb-32">
         <div className="w-4/6 lg:flex my-0 mx-auto">
           <div className=" sm:w-full  lg:w-1/2 text-left pt-16">
             <div className="sm:w-full">
               <h1 className="text-3xl font-semibold sm:text-center lg:text-left">
-                Get virtual treatment anytime
+                Get treatment anytime
               </h1>
             </div>
             <div className="mt-8">
@@ -230,20 +213,22 @@ const Home = () => {
               </p>
               <p className="mt-3 flex items-start">
                 <FontAwesomeIcon icon={faMinus} className="mr-2.5 mt-1.5" />
-                View our physicians who are accepting new patients, use the
+                View our veterinarians who are accepting new dates, use the
                 online scheduling tool to select an appointment time.
               </p>
             </div>
             <div className="mt-10">
-              <button className="px-5 py-2 font-semibold bg-orange-400 text-white  hover:bg-blue-700 transition-all duration-300 rounded-3xl">
+              <button className="px-5 py-2 font-semibold bg-red-600 text-white  hover:bg-red-700 transition-all duration-300 rounded-3xl">
                 Learn More
               </button>
             </div>
           </div>
-          <div className="w-1/2 sm:hidden lg:flex ">
-            <div className=" pl-40">
+          <div className="sm:hidden lg:flex w-full">
+            <div className=" pl-40 w-full">
               <img
-                src={process.env.PUBLIC_URL + "/img/doctor-4.jpg"}
+                src={
+                  "https://www.usnews.com/dims4/USNEWS/d754e45/2147483647/crop/2000x1334+0+0/resize/970x647/quality/85/?url=https%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F75%2F77%2F28b9c03949ceb1e855bfa2b78c46%2F200109-veterinarian-stock.jpg"
+                }
                 style={{ width: "90%", height: "25rem" }}
                 alt="alt"
                 className="object-cover"
@@ -252,10 +237,8 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {/* SIXTH CONTAINER */}
 
-      {/* SEVENTH CONTAINER */}
-      <div class="seventh_container" className="flex pb-32">
+      {/* <div class="seventh_container" className="flex pb-32">
         <div className="w-4/6 lg:flex my-0 mx-auto">
           <div className="lg:w-1/3 pt-12 sm:hidden lg:flex ">
             <img
@@ -305,10 +288,9 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </div>
-      
+      </div> */}
     </main>
   );
 };
 
-export default Home;
+export default MainPage;

@@ -19,7 +19,6 @@ const CheckOut = () => {
 
   let totalCount = cartState.totalItemCount;
 
-
   // const authState = useSelector((state) => {
   //   return state.auth;
   // });
@@ -27,8 +26,6 @@ const CheckOut = () => {
   // const user = authState.user;
 
   let totalPrice = cartState.totalPrice;
-
-  
 
   useEffect(() => {
     window.scrollTo(0, scrollRef.current);
@@ -314,6 +311,19 @@ const CheckOut = () => {
           </Form>
         )}
       </Formik>
+
+      {/* animated truck */}
+      <div className="flex flex-row items-center">
+        <div className=" h-24 w-40 bg-white rounded-lg"> </div>
+        <div className="h-16 w-3 bg-blue-800"></div>
+        <div className="h-24 w-16 bg-blue-600 rounded-tr-md rounded-br-md relative">
+          <div className="h-7 w-2 rounded-md bg-yellow-500 absolute top-3 -right-1"></div>
+          <div className="h-7 w-2 rounded-md bg-yellow-500 absolute bottom-3 -right-1"></div>
+          <div
+            className="absolute left-2 h-16 w-14  bg-red-800 top-3"
+          ></div>
+        </div>
+      </div>
     </div>
   );
 };

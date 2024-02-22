@@ -46,7 +46,7 @@ const Header = () => {
       <Sidebar isOpen={showMenu} toggleSidebar={toggleMenu}></Sidebar>
       <div
         onClick={() => {
-          navigate("/home");
+          navigate("/category/All");
         }}
         className="flex flex-row items-center gap-x-3 cursor-pointer"
       >

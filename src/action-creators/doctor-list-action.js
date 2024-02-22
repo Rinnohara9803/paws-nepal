@@ -1,16 +1,16 @@
 export const fetchDoctorsList = async (speciality) => {
   console.log(speciality);
   try {
-    const url = `http://localhost:3009/doctor/getalldoctors?find=${speciality}`;
+    const url = `http://localhost:3009/admin/getAllDoctor`;
 
     const response = await fetch(url, {
       method: "GET",
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
+      
     });
     console.log(response.status);
     const jsonData = await response.json();
+    console.log('doctors');
+    console.log(jsonData);
     if (response.status === 200) {
       console.log(jsonData);
       return jsonData.result;

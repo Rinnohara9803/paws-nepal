@@ -130,7 +130,7 @@ export const registerDoctorRequest = async (doctorData, token) => {
   doctorData.imageFiles.forEach((file, index) => {
     formData.append("document", file);
   });
-  formData.append("specialization", doctorData.speciality);
+  formData.append("specialization", doctorData.specialization);
   formData.append("experience", doctorData.experience);
 
   try {

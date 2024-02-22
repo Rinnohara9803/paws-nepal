@@ -59,7 +59,7 @@ const CartPage = () => {
       <div className="flex flex-col items-start md:flex-row md:justify-end md:items-center mt-5 w-full gap-x-4 gap-y-4">
         <div
           onClick={() => {
-            navigate("/home");
+            navigate("/category/All");
           }}
           className="bg-zinc-700 font-semibold rounded-lg px-4 py-2 cursor-pointer hover:bg-red-800 transition-all ease-out duration-700"
         >

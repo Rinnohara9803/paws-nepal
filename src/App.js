@@ -20,6 +20,9 @@ import { Toaster } from "react-hot-toast";
 import NotFound from "./pages/not-found/not-found";
 import Footer from "./components/footer";
 import BecomeADoctor from "./pages/become-vet.js/apply-for-vet";
+import DoctorApplications from "./pages/Applications/doctor-applications";
+import AddSchedule from "./pages/MyAppointments/add_schedule_page";
+import MainPage from "./pages/home/home";
 
 function App() {
   const dispatch = useDispatch();
@@ -80,7 +83,8 @@ function App() {
             path="/"
             element={<Navigate replace to="/home" />}
           ></Route>
-          <Route exact path="/home" element={<Home />}></Route>
+          <Route exact path="/home" element={<MainPage />}></Route>
+          <Route exact path="/category/:category" element={<Home />}></Route>
           <Route
             exact
             path="/veterinarians"
@@ -121,11 +125,24 @@ function App() {
               element={<BecomeADoctor></BecomeADoctor>}
             ></Route>
           )}
+          {user && user.role === "admin" && (
+            <Route
+              exact
+              path="/doctor-applications"
+              element={<DoctorApplications />}
+            ></Route>
+          )}
           {user && (
             <Route
               exact
               path="/home/:userId/my-cart/check-out"
               element={<CheckOut />}
+            ></Route>
+          )}
+          {user && user.role === "doctor" && (
+            <Route
+              path="/add-schedule"
+              element={<AddSchedule></AddSchedule>}
             ></Route>
           )}
           <Route path="*" element={<NotFound />}></Route>

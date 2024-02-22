@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
         <p
           onClick={() => {
-            navigate("/home");
+            navigate("/category/All");
           }}
           className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
         >
