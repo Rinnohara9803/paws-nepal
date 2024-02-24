@@ -1,9 +1,7 @@
 export const addPet = async (pet, token) => {
   const url = "http://localhost:3009/pet/createproduct";
   const formData = new FormData();
-  console.log("here");
-  console.log(pet);
-  console.log("here");
+  
 
   const imageFile = new File([pet.images[0]], pet.images[0].name);
 
@@ -23,14 +21,11 @@ export const addPet = async (pet, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200) {
       return jsonData;
     } else {
-      console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
@@ -41,9 +36,6 @@ export const addPet = async (pet, token) => {
 export const addPetFood = async (food, token) => {
   const url = "http://localhost:3009/pet/create-pet-food";
   const formData = new FormData();
-  console.log("here");
-  console.log(food);
-  console.log("here");
 
   const imageFile = new File([food.images[0]], food.images[0].name);
 
@@ -67,14 +59,11 @@ export const addPetFood = async (food, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200) {
       return jsonData;
     } else {
-      console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
@@ -85,9 +74,6 @@ export const addPetFood = async (food, token) => {
 export const addPetAccessory = async (accessory, token) => {
   const url = "http://localhost:3009/pet/create-accessories";
   const formData = new FormData();
-  console.log("here");
-  console.log(accessory);
-  console.log("here");
 
   const imageFile = new File([accessory.images[0]], accessory.images[0].name);
 
@@ -108,14 +94,11 @@ export const addPetAccessory = async (accessory, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log(jsonData);
 
     if (response.status === 200) {
       return jsonData;
     } else {
-      console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
@@ -126,7 +109,6 @@ export const addPetAccessory = async (accessory, token) => {
 export const fetchPets = async () => {
   const url = "http://localhost:3009/product/get-pet-product";
 
-  console.log("here fetch pets");
 
   try {
     const response = await fetch(url, {
@@ -139,7 +121,6 @@ export const fetchPets = async () => {
     } else if (response.status === 200) {
       return jsonData;
     } else {
-      console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
@@ -150,7 +131,6 @@ export const fetchPets = async () => {
 export const fetchPetFoods = async () => {
   const url = "http://localhost:3009/product/get-petfood-product";
 
-  console.log("here fetch pets");
 
   try {
     const response = await fetch(url, {
@@ -163,7 +143,6 @@ export const fetchPetFoods = async () => {
     } else if (response.status === 200) {
       return jsonData;
     } else {
-      console.log(jsonData);
       throw Error(jsonData.message);
     }
   } catch (e) {
@@ -174,15 +153,12 @@ export const fetchPetFoods = async () => {
 export const fetchPetAccessories = async () => {
   const url = "http://localhost:3009/product/get-petaccessories-product";
 
-  console.log("here fetch pets");
 
   try {
     const response = await fetch(url, {
       method: "GET",
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log(jsonData);
     if (jsonData.result === "No product Avialable") {
       return { result: [] };
     } else if (response.status === 200) {

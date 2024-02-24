@@ -3,12 +3,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import AddAppointmentButton from "./add_appointment_button";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchMyAppointments } from "../../action-creators/my_appointments_action";
 import { ClipLoader } from "react-spinners";
 import { useDispatch } from "react-redux";
-import { myAppointmentsSliceActions } from "../../slices/my_appointments_slice";
 import AppointmentList from "./appointment_list";
-import "../../css/my_appointments.css";
+import { fetchMyAppointments } from "../../action-creators/my_appointments_action";
+import { myAppointmentsSliceActions } from "../../slices/my_appointments_slice";
 
 const MyAppointments = () => {
   const authState = useSelector((state) => {
@@ -54,7 +53,6 @@ const MyAppointments = () => {
       setIsLoading(true);
       await fetchMyAppointments(token)
         .then((data) => {
-          console.log(data.result);
           dispatch(
             myAppointmentsSliceActions.replaceMyAppointments({
               appointments: data.result,
@@ -88,7 +86,7 @@ const MyAppointments = () => {
                 <select
                   value={selectedAppointmentStatus}
                   onChange={(e) => handleDoctorSelection(e.target.value)}
-                  className="px-2 py-2 "
+                  className="px-2 py-2 bg-zinc-700"
                 >
                   <option value="All" className="px-1 py-2">
                     <p>All</p>
@@ -108,29 +106,29 @@ const MyAppointments = () => {
             </div>
           </div>
         </div>
-        <div className="bg-blue-200 mt-5  px-2 md:px-5 py-3 rounded-md w-full">
-          <h1 className="text-black font-bold ">Appointments</h1>
+        <div className="bg-zinc-700 mt-5  px-2 md:px-5 py-3 rounded-md w-full">
+          <h1 className="text-white font-bold ">Appointments</h1>
 
           <div className="flex w-full justify-between mb-5">
             {/* {windowWidth >= 800 && role !== "patient" && ( */}
-            <div className="text-gray-600 font-bold  w-1/4 flex flex-row justify-start">
+            <div className="text-white font-bold  w-1/4 flex flex-row justify-start">
               Doctor
             </div>
             {/* )}  */}
             {/* {windowWidth >= 800 && role !== "doctor" && ( */}
-            <div className="text-gray-600 font-bold w-1/4 flex flex-row justify-center">
+            <div className="text-white font-bold w-1/4 flex flex-row justify-center">
               Patient
             </div>
             {/* )}  */}
-            <div className="text-gray-600 font-bold w-1/4 flex flex-row justify-center">
+            <div className="text-white font-bold w-1/4 flex flex-row justify-center">
               Start Time
             </div>
-            <div className="text-gray-600 font-bold w-1/4 flex flex-row justify-center">
+            <div className="text-white font-bold w-1/4 flex flex-row justify-center">
               Status
             </div>
-            <div className="text-gray-600 font-bold w-1/4 flex flex-row justify-center">
+            {/* <div className="text-white font-bold w-1/4 flex flex-row justify-center">
               Action
-            </div>
+            </div> */}
           </div>
           {isLoading && (
             <div className="text-center">

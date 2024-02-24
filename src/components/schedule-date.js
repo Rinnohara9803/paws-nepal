@@ -48,7 +48,6 @@ const ScheduleDate = ({ isOpen, toggleSidebar }) => {
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <StaticDatePicker
               onChange={(newDate) => {
-                console.log(newDate);
                 setValue(newDate);
               }}
               label="Controlled picker"

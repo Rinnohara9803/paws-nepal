@@ -23,6 +23,10 @@ import BecomeADoctor from "./pages/become-vet.js/apply-for-vet";
 import DoctorApplications from "./pages/Applications/doctor-applications";
 import AddSchedule from "./pages/MyAppointments/add_schedule_page";
 import MainPage from "./pages/home/home";
+import DoctorDetailsPage from "./pages/DoctorDetails/doctor_Details_page";
+import AppointmentDates from "./pages/DoctorDetails/appointment_dates";
+import RatingsAndReviews from "./pages/DoctorDetails/ratings_reviews";
+import MyAppointments from "./pages/MyAppointments/my_appointments";
 
 function App() {
   const dispatch = useDispatch();
@@ -85,11 +89,20 @@ function App() {
           ></Route>
           <Route exact path="/home" element={<MainPage />}></Route>
           <Route exact path="/category/:category" element={<Home />}></Route>
+          <Route exact path="/find-doctors" element={<Veterinarians />}></Route>
           <Route
-            exact
-            path="/veterinarians"
-            element={<Veterinarians />}
-          ></Route>
+            path="/doctor-details/:doctorId"
+            element={<DoctorDetailsPage />}
+          >
+            <Route
+              path="/doctor-details/:doctorId/appointmentdates"
+              element={<AppointmentDates />}
+            ></Route>
+            <Route
+              path="/doctor-details/:doctorId/ratings&reviews"
+              element={<RatingsAndReviews />}
+            ></Route>
+          </Route>
           <Route
             exact
             path="/veterinarians/Emily"
@@ -111,6 +124,13 @@ function App() {
             path="/home/pets/accessories/chew-toy"
             element={<PetAccessoryDetails />}
           ></Route>
+          {user && user.role !== "admin" && (
+            <Route
+              exact
+              path="/my_appointments"
+              element={<MyAppointments />}
+            ></Route>
+          )}
           {user && user.role === "admin" && (
             <Route
               exact

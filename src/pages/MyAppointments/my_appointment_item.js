@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux/es/hooks/useSelector";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNotesMedical, faPenNib } from "@fortawesome/free-solid-svg-icons";
-import "../../css/my_appointments.css";
 import { useNavigate } from "react-router-dom";
-import MedicalReport from "./medical_report";
-import { fetchMedicalReportById } from "../../action-creators/medical_report_action";
 import toast from "react-hot-toast";
 
 const MyAppointmentItem = ({ appointment, className }) => {
@@ -13,7 +10,6 @@ const MyAppointmentItem = ({ appointment, className }) => {
     return state.auth;
   });
 
-  console.log(appointment);
 
   const token = authState.token;
 
@@ -28,16 +24,16 @@ const MyAppointmentItem = ({ appointment, className }) => {
     });
   };
 
-  const viewReport = async () => {
-    await fetchMedicalReportById(token, appointmentId)
-      .then((data) => {
-        setReport(data.result);
-        setIsReportOpen(true);
-      })
-      .catch((e) => {
-        toast.error(e.message);
-      });
-  };
+  // const viewReport = async () => {
+  //   await fetchMedicalReportById(token, appointmentId)
+  //     .then((data) => {
+  //       setReport(data.result);
+  //       setIsReportOpen(true);
+  //     })
+  //     .catch((e) => {
+  //       toast.error(e.message);
+  //     });
+  // };
 
   const toggleIsOpen = () => {
     setIsReportOpen(!isReportOpen);
@@ -54,14 +50,9 @@ const MyAppointmentItem = ({ appointment, className }) => {
           className="fixed h-full w-full bg-slate-500  top-0 left-0 opacity-25 z-30"
         ></div>
       )}
-      <MedicalReport
-        onClick={viewReport}
-        isOpen={isReportOpen}
-        report={report}
-        toggleIsOpen={toggleIsOpen}
-      ></MedicalReport>
+      
       <div
-        className={` ${className} flex flex-row justify-between items-center bg-gray-100 cursor-pointer hover:bg-gray-200 shadow-sm px-2 py-3 mb-2 rounded-md`}
+        className={` ${className} flex flex-row justify-between items-center bg-zinc-800 cursor-pointer hover:bg-zinc-900 shadow-sm px-2 py-3 mb-2 rounded-md`}
       >
         {/* {windowWidth >= 800 && authState.user.role === "patient" && ( */}
         <div className="w-1/4 flex flex-row justify-start">
@@ -80,7 +71,7 @@ const MyAppointmentItem = ({ appointment, className }) => {
           {appointment.status}
         </div>
 
-        {authState.role === "doctor" && appointment.status === "Pending" && (
+        {/* {authState.role === "doctor" && appointment.status === "Pending" && (
           <div
             onClick={navigateToFillInReportPage}
             className="w-1/4 flex justify-center"
@@ -96,14 +87,8 @@ const MyAppointmentItem = ({ appointment, className }) => {
               <p className="text-sm">No Actions</p>
             </div>
           </div>
-        )}
-        {appointment.status !== "Pending" && (
-          <div onClick={viewReport} className="w-1/4 flex justify-center">
-            <div className=" justify-center w-28 border border-solid border-green-400 transition-all cursor-pointer duration-200  ease-in-out border-spacing-2 flex flex-row gap-x-3 text-green-400 items-center py-1 rounded-sm px-2 hover:bg-green-400 hover:text-white">
-              <p className="text-sm">View Report</p>
-            </div>
-          </div>
-        )}
+        )} */}
+        
       </div>
     </div>
   );

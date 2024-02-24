@@ -1,5 +1,4 @@
 export const fetchDoctorsList = async (speciality) => {
-  console.log(speciality);
   try {
     const url = `http://localhost:3009/admin/getAllDoctor`;
 
@@ -7,12 +6,8 @@ export const fetchDoctorsList = async (speciality) => {
       method: "GET",
       
     });
-    console.log(response.status);
     const jsonData = await response.json();
-    console.log('doctors');
-    console.log(jsonData);
     if (response.status === 200) {
-      console.log(jsonData);
       return jsonData.result;
     } else {
       throw Error(jsonData.message);
@@ -23,7 +18,6 @@ export const fetchDoctorsList = async (speciality) => {
 };
 
 export const fetchDoctorsByName = async (name, token) => {
-  console.log(name);
   try {
     const url = `http://localhost:3009/doctor/serchdoctor?name=${name}`;
 
@@ -33,12 +27,9 @@ export const fetchDoctorsByName = async (name, token) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.status);
     const jsonData = await response.json();
     if (response.status === 200) {
-      console.log("al;sdfsjdlfskjfsldk");
-      console.log(jsonData);
-      console.log("al;sdfsjdlfskjfsldk");
+      
       return jsonData.result;
     } else {
       throw Error(jsonData.message);
@@ -49,7 +40,6 @@ export const fetchDoctorsByName = async (name, token) => {
 };
 
 export const fetchDoctorById = async (id) => {
-  console.log(id);
   try {
     const url = `http://localhost:3009/doctor/getdoctorbyid/${id}`;
 
@@ -59,10 +49,8 @@ export const fetchDoctorById = async (id) => {
       //   Authorization: `Bearer ${token}`,
       // },
     });
-    console.log(response.status);
     const jsonData = await response.json();
     if (response.status === 200) {
-      console.log(jsonData);
       return jsonData;
     } else {
       throw Error(jsonData.message);
@@ -73,8 +61,6 @@ export const fetchDoctorById = async (id) => {
 };
 
 export const fetchSchedules = async (date, token, doctorId) => {
-  console.log("fetch Schedule");
-  console.log(date);
   try {
     const url = `http://localhost:3009/schedule/get-all-schedule/${doctorId}?date=${date}`;
 
@@ -84,11 +70,8 @@ export const fetchSchedules = async (date, token, doctorId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.status);
     const jsonData = await response.json();
     if (response.status === 200) {
-      console.log("all good");
-      console.log(jsonData);
       return jsonData;
     } else {
       throw Error(jsonData.message);

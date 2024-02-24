@@ -19,7 +19,7 @@ const Footer = () => {
 
   const navigate = useNavigate();
   return (
-    <div className="bg-zinc-900 gap-y-7 shawdow sm:w-full px-10 md:px-16 flex flex-col lg:flex-row lg:justify-around py-20 md:py-10 border border-t-2 border-white">
+    <div className="bg-zinc-900 gap-y-7 shawdow sm:w-full px-10 md:px-16 flex flex-col lg:flex-row lg:justify-around py-20 md:py-10 border-t-2 border-t-white">
       {/* first */}
       <div className=" flex flex-col justify-start text-start">
         <h2 className="text-white font-semibold">Paws Nepal</h2>

@@ -51,7 +51,6 @@ const AddPet = () => {
       .catch((e) => {
         toast.error(e.message);
       });
-    console.log(values);
   };
 
   return (

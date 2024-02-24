@@ -37,14 +37,11 @@ const ImageSlider = ({ doctors }) => {
       await fetchSchedules(date, token, doctors[index].doctorId).then(
         (data) => {
           setIsLoading(false);
-          console.log(data.result[0].timeslot);
           setScheduleToday(data.result[0].timeslot);
-          console.log(scheduletoday);
         }
       );
     } catch (e) {
       setIsLoading(false);
-      console.log(e.message);
     }
   };
 
@@ -199,8 +196,6 @@ const BookDateAlertDialog = ({ doctorId, schedule, date, token }) => {
 
   const bookAppointment = async () => {
     const url = `http://localhost:3009/appointment/book-appointment/${doctorId}`;
-    console.log(date);
-    console.log(schedule._id);
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -214,9 +209,7 @@ const BookDateAlertDialog = ({ doctorId, schedule, date, token }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.status);
       const jsonData = await response.json();
-      console.log(jsonData);
       if (response.status === 200) {
         setIsBooked(true);
         toast.success(jsonData.message);

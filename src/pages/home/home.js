@@ -31,7 +31,6 @@ const MainPage = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        console.log(entries);
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add(
@@ -56,7 +55,7 @@ const MainPage = () => {
     );
     hiddenElements.forEach((el) => observer.observe(el));
 
-    const getDoctorApplications = async () => {
+    const fetchAllDoctors = async () => {
       await fetchDoctorsList("all")
         .then((data) => {
           if (data === null) {
@@ -79,7 +78,7 @@ const MainPage = () => {
         })
         .catch((e) => {});
     };
-    getDoctorApplications();
+    fetchAllDoctors();
     window.scrollTo(0, scrollRef.current);
 
     return () => {
@@ -107,7 +106,7 @@ const MainPage = () => {
                   onClick={() => {
                     navigate("/find-doctors");
                   }}
-                  className="lg:p-3 lg:px-6 sm:p-3 sm:text-sm mt-6 font-semibold bg-red-600 rounded-3xl text-white hover:scale-105 transition-all duration-300"
+                  className="py-3 px-6 sm:p-3 sm:text-sm mt-6 font-semibold bg-red-600 rounded-3xl text-white hover:scale-105 transition-all duration-300"
                 >
                   Request an Appointment
                 </button>
@@ -136,7 +135,7 @@ const MainPage = () => {
                 }
                 alt="alt"
                 style={{ height: "70%", width: "45rem" }}
-                className="object-cover"
+                className="object-cover rounded-xl"
               />
             </div>
             <div className="mt-28">
@@ -147,7 +146,7 @@ const MainPage = () => {
                   }
                   alt="alt"
                   style={{ height: "30%", width: "15rem" }}
-                  className="header-image-2 object-cover "
+                  className="header-image-2 object-cover rounded-xl "
                 />
               </div>
               <div className="header-image-3">
@@ -156,7 +155,7 @@ const MainPage = () => {
                     "https://www.shutterstock.com/image-photo/labrador-retriever-dog-panting-ginger-600nw-2198998317.jpg"
                   }
                   alt="alt"
-                  className="header-image-3 object-cover"
+                  className="header-image-3 object-cover rounded-2xl"
                 />
               </div>
             </div>
@@ -170,8 +169,8 @@ const MainPage = () => {
               Our Best doctors
             </h3>
             <p className="heading-text-2 mt-3 font-normal">
-              World class for everyone. Our health System offers unmatched,
-              expert healthcare
+              World class veterinarians for everyone. Our veterinarians offers
+              unmatched, expert healthcare for your loved ones.
             </p>
           </div>
           <div className="header-image-1 w-full">
@@ -183,10 +182,11 @@ const MainPage = () => {
       <div class="fourth_container pb-32">
         <div className="sm:w-4/6 my-0 mx-auto">
           <div className="lg:w-5/12 my-0 mr-auto ml-auto ">
-            <h3 className="text-4xl font-semibold">Our Services</h3>
-            <p className="mt-3 font-normal">
-              World class veterinarians for everyone. Our veterinarians offers
-              unmatched, expert healthcare for your loved ones.
+            <h3 className="text-4xl font-semibold mb-3">Our Services</h3>
+            <p className="mt-3 font-normal mb-5">
+              At Paw's Nepal, we're committed to nurturing a strong bond between
+              you and your pet, ensuring many joyful and healthy years together.
+              Start your journey with us today
             </p>
           </div>
 
@@ -195,7 +195,7 @@ const MainPage = () => {
       </div>
 
       <div class="fifth_container" className=" pb-32">
-        <div className="w-4/6 lg:flex my-0 mx-auto">
+        <div className="w-4/6 flex flex-col-reverse lg:flex-row my-0 mx-auto">
           <div className=" sm:w-full  lg:w-1/2 text-left pt-16">
             <div className="sm:w-full">
               <h1 className="text-3xl font-semibold sm:text-center lg:text-left">
@@ -223,15 +223,15 @@ const MainPage = () => {
               </button>
             </div>
           </div>
-          <div className="sm:hidden lg:flex w-full">
-            <div className=" pl-40 w-full">
+          <div className="flex w-full lg:w-1/2">
+            <div className="w-full">
               <img
                 src={
                   "https://www.usnews.com/dims4/USNEWS/d754e45/2147483647/crop/2000x1334+0+0/resize/970x647/quality/85/?url=https%3A%2F%2Fwww.usnews.com%2Fcmsmedia%2F75%2F77%2F28b9c03949ceb1e855bfa2b78c46%2F200109-veterinarian-stock.jpg"
                 }
                 style={{ width: "90%", height: "25rem" }}
                 alt="alt"
-                className="object-cover"
+                className="object-cover rounded-2xl"
               />
             </div>
           </div>

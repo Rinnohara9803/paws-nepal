@@ -3,12 +3,14 @@ import {
   faAdd,
   faBars,
   faBell,
+  faCalendar,
   faPaw,
   faRightToBracket,
   faSearch,
   faShoppingCart,
   faSignOut,
   faUser,
+  faUserDoctor,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
@@ -46,10 +48,11 @@ const Header = () => {
       <Sidebar isOpen={showMenu} toggleSidebar={toggleMenu}></Sidebar>
       <div
         onClick={() => {
-          navigate("/category/All");
+          navigate("/");
         }}
         className="flex flex-row items-center gap-x-3 cursor-pointer"
       >
+
         <FontAwesomeIcon className="text-xl" icon={faPaw}></FontAwesomeIcon>
         <p className="text-lg font-semibold"> Paws Nepal</p>
       </div>
@@ -82,7 +85,32 @@ const Header = () => {
             <p className="tracking-wider mr-3 font-semibold">Add Inventory</p>
           </div>
         )}
-        {user && user.role !== "admin" && user.role !== "doctor" && (
+        {user && user.role !== "admin" && (
+            <div
+            onClick={() => {
+              navigate("/my_appointments");
+            }}
+            className=" cursor-pointer hover:text-red-600 rounded-lg flex flex-row items-center justify-center gap-x-4 transition-all duration-700"
+          >
+            
+            <p className="font-semibold text-sm"> My Appointments </p>
+          </div>
+          )}
+        {user && user.role === "doctor" && (
+          <div
+            onClick={() => {
+              navigate("/add-schedule");
+            }}
+            className=" cursor-pointer bg-red-600 px-5 py-2 rounded-lg flex flex-row items-center justify-center gap-x-4"
+          >
+            <FontAwesomeIcon
+              className="text-sm"
+              icon={faAdd}
+            ></FontAwesomeIcon>
+            <p className="font-semibold text-sm"> Add Schedule </p>
+          </div>
+        )}
+        {user && user.role === "user" && (
           <div
             onClick={() => {
               navigate("/home/my-cart");
@@ -96,6 +124,16 @@ const Header = () => {
             <p className="font-semibold text-sm"> Cart ( {totalCount} ) </p>
           </div>
         )}
+        {user && user.role === "admin" && (
+          <div
+            onClick={() => {
+              navigate("/doctor-applications");
+            }}
+            className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
+          >
+            <FontAwesomeIcon icon={faUserDoctor}></FontAwesomeIcon>
+          </div>
+        )}
         <div
           onClick={() => {
             navigate("/search");
@@ -104,6 +142,7 @@ const Header = () => {
         >
           <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
         </div>
+
         {user && (
           <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>

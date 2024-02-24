@@ -27,9 +27,7 @@ const DoctorRequestItem1 = (props) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.status);
       const jsonData = await response.json();
-      console.log(jsonData);
       if (response.status === 200) {
         toast.success(jsonData.message);
         props.setNewDoctors(props.data._id);

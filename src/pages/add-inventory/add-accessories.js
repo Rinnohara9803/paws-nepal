@@ -55,7 +55,6 @@ const AddAccessories = () => {
       .catch((e) => {
         toast.error(e.message);
       });
-    console.log(values);
   };
 
   return (

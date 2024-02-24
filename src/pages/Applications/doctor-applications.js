@@ -34,7 +34,6 @@ const DoctorApplications = () => {
     setSelectedStatus(status);
     await fetchDoctorApplications(token, status)
       .then((data) => {
-        console.log(JSON.parse(data.result));
         if (data.result === null) {
           dispatch(
             doctorapplicationsactions.replaceDoctorApplications({
@@ -67,7 +66,6 @@ const DoctorApplications = () => {
               })
             );
           } else {
-            console.log(data.result);
             dispatch(
               doctorapplicationsactions.replaceDoctorApplications({
                 requests: data.result,
@@ -102,7 +100,6 @@ const DoctorApplications = () => {
   };
 
   const toggleSidebar = () => {
-    console.log("clicke");
     setIsOpen(!isOpen);
   };
 
@@ -121,7 +118,7 @@ const DoctorApplications = () => {
       />
 
       <div className="pb-24 flex pt-24 overflow-y-auto">
-        <div className="w-full flex my-0 pt-4 flex-col sm:px-3 md:px-24 lg:px-52">
+        <div className="w-full flex my-0 pt-4 flex-col px-3 sm:px-3 md:px-24 lg:px-52">
           <div className="flex flex-row justify-between items-center w-full">
             <div className=" border border-solid border-white flex ">
               <select

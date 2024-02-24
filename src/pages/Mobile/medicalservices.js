@@ -17,7 +17,6 @@ const ServiceCard = ({ title, description, index, color }) => (
       >
         <FontAwesomeIcon icon={faArrowRight} />
       </button>
-      
     </div>
   </div>
 );
@@ -53,7 +52,6 @@ const MedicalServices = () => {
     },
   ];
 
-
   useEffect(() => {
     const handleResize = () => {
       setIsSmallScreen(window.innerWidth <= 800);
@@ -69,29 +67,12 @@ const MedicalServices = () => {
     };
   }, []);
 
-  const handleNext = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex + 1) % services.length
-    );
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + services.length) %
-        services.length
-    );
-  };
+  
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3  lg:gap-10 gap-y-5 lg:mt-20 sm:mt-10">
+    <div className="grid grid-cols-1 lg:grid-cols-3  lg:gap-10 gap-y-5 lg:mt-20 sm:mt-10 px-5 md:px-0">
       {services.map((data, index) => (
-        <div
-          key={index}
-          className={`w-full ${
-            !isSmallScreen || index === currentIndex ? "block" : "hidden"
-          }`}
-        >
+        <div key={index} className={`w-full `}>
           <ServiceCard
             title={data.title}
             description={data.description}
@@ -101,24 +82,7 @@ const MedicalServices = () => {
         </div>
       ))}
 
-      {/* Buttons outside the map function */}
-
-      {isSmallScreen && (
-        <>
-          <button
-            className="absolute -left-10 top-1/2 transform -translate-y-1/2 text-slate-500  px-2 py-1 rounded-xl text-3xl  btn-left"
-            onClick={handlePrev}
-          >
-            <FontAwesomeIcon icon={faAngleLeft}></FontAwesomeIcon>
-          </button>
-          <button
-            className="absolute -right-10 top-1/2 transform -translate-y-1/2 text-slate-500  px-2 py-1 rounded-xl text-3xl  btn-right"
-            onClick={handleNext}
-          >
-            <FontAwesomeIcon icon={faAngleRight}></FontAwesomeIcon>
-          </button>
-        </>
-      )}
+      
     </div>
   );
 };
