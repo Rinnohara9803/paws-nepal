@@ -12,7 +12,7 @@ const AddAppointmentButton = () => {
       }}
       className="bg-green-500 hover:bg-green-700 text-white sm:py-2.5 font-bold lg:py-2 px-4 rounded-sm "
     >
-      <FontAwesomeIcon icon={faPlus} /> Add Appointment
+      <FontAwesomeIcon icon={faPlus} /> Add Schedule
     </button>
   );
 };

@@ -3,10 +3,10 @@ import  { PetFoodItem } from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import LoadError from "./load-error";
 import { inventorySliceActions } from "../../slices/inventory-slice";
-import { fetchPetFoods } from "../../action-creators/inventory-action";
+import { fetchPetFoods, fetchPetFoodsByCategory } from "../../action-creators/inventory-action";
 import { useDispatch, useSelector } from "react-redux";
 
-const PetFoods = () => {
+const PetFoods = ({category}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -21,7 +21,9 @@ const PetFoods = () => {
   useEffect(() => {
     const fetchThePetFoods = async () => {
       setIsLoading(true);
-      await fetchPetFoods()
+      setError(null);
+      if (category === 'All') {
+        await fetchPetFoods()
         .then((data) => {
           if (data.result.length === 0) {
             dispatch(
@@ -43,10 +45,34 @@ const PetFoods = () => {
           setError("Something went wrong.");
           setIsLoading(false);
         });
+      } else {
+        await fetchPetFoodsByCategory(category)
+        .then((data) => {
+          if (data.length === 0) {
+            dispatch(
+              inventorySliceActions.replacePetFoodsList({
+                list: [],
+              })
+            );
+            setError("No pet foods available.");
+          } else {
+            dispatch(
+              inventorySliceActions.replacePetFoodsList({
+                list: data,
+              })
+            );
+          }
+          setIsLoading(false);
+        })
+        .catch((e) => {
+          setError("Something went wrong.");
+          setIsLoading(false);
+        });
+      }
     };
 
     fetchThePetFoods();
-  }, [dispatch]);
+  }, [dispatch, category]);
   return (
     <div className="flex flex-col items-start mb-12  w-full">
       <p className="font-bold tracking-wider text-xl mb-5"> Pet Foods</p>

@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import PetItem from "../../components/pet-item";
 import PetItemShimmer from "../../utilities/shimmers/pet-item-shimmer";
 import LoadError from "./load-error";
-import { fetchPets } from "../../action-creators/inventory-action";
+import {
+  fetchPets,
+  fetchPetsByCategory,
+} from "../../action-creators/inventory-action";
 import { useDispatch, useSelector } from "react-redux";
 import { inventorySliceActions } from "../../slices/inventory-slice";
 
-const Breeds = () => {
+const Breeds = ({ category }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -20,35 +23,69 @@ const Breeds = () => {
 
   useEffect(() => {
     const fetchThePets = async () => {
+      console.log(`the category is: ${category}`);
       setIsLoading(true);
-      await fetchPets()
-        .then((data) => {
-          if (data.result.length === 0) {
-            dispatch(
-              inventorySliceActions.replacePetsList({
-                list: [],
-              })
-            );
-            setError("No pets available.");
-          } else {
-            dispatch(
-              inventorySliceActions.replacePetsList({
-                list: data.result,
-              })
-            );
-          }
-          setIsLoading(false);
-        })
-        .catch((e) => {
-          setError("Something went wrong.");
-          setIsLoading(false);
-        });
+      setError(null);
+
+      if (category === "All") {
+        await fetchPets()
+          .then((data) => {
+            if (data.result.length === 0) {
+              dispatch(
+                inventorySliceActions.replacePetsList({
+                  list: [],
+                })
+              );
+              setError("No pets available.");
+            } else {
+              dispatch(
+                inventorySliceActions.replacePetsList({
+                  list: data.result,
+                })
+              );
+            }
+            setIsLoading(false);
+          })
+          .catch((e) => {
+            setError("Something went wrong.");
+            setIsLoading(false);
+          });
+      } else {
+        console.log("category " + category);
+        await fetchPetsByCategory(category)
+          .then((data) => {
+            console.log("data");
+            console.log(data);
+            console.log("data");
+            if (data.length === 0) {
+              console.log("idhar aagaya");
+              dispatch(
+                inventorySliceActions.replacePetsList({
+                  list: [],
+                })
+              );
+              setError("No pets available.");
+            } else {
+              console.log("accha hey");
+              dispatch(
+                inventorySliceActions.replacePetsList({
+                  list: data,
+                })
+              );
+            }
+            setIsLoading(false);
+          })
+          .catch((e) => {
+            setError("Something went wrong.");
+            setIsLoading(false);
+          });
+      }
     };
 
     fetchThePets();
 
     return () => {};
-  }, [dispatch]);
+  }, [category, dispatch]);
 
   return (
     <div className="flex flex-col items-start mb-12  w-full">

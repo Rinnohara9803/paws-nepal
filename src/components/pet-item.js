@@ -18,9 +18,11 @@ const AddToCartButton = ({ id, type, image, name, price }) => {
   const handleClick = (e) => {
     e.stopPropagation(); // Prevent the click event from propagating to the parent div
 
-    if (!user) {
+    if (!user ) {
       navigate("/login");
       toast.success("Plese login to add items to your cart.");
+    } else if (user.role !== 'user') {
+      toast.error('Access denied.');
     } else {
       dispatch(
         cartSliceActions.addItemToCart({

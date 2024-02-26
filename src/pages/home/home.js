@@ -55,6 +55,7 @@ const MainPage = () => {
     );
     hiddenElements.forEach((el) => observer.observe(el));
 
+
     const fetchAllDoctors = async () => {
       await fetchDoctorsList("all")
         .then((data) => {
@@ -166,7 +167,7 @@ const MainPage = () => {
         <div>
           <div className="w-5/12  mr-auto ml-auto my-7">
             <h3 className="heading-text-2 text-4xl font-semibold">
-              Our Best doctors
+              Our Best Veterinarians
             </h3>
             <p className="heading-text-2 mt-3 font-normal">
               World class veterinarians for everyone. Our veterinarians offers
@@ -181,7 +182,7 @@ const MainPage = () => {
 
       <div class="fourth_container pb-32">
         <div className="sm:w-4/6 my-0 mx-auto">
-          <div className="lg:w-5/12 my-0 mr-auto ml-auto ">
+          <div className="my-0 mr-auto ml-auto ">
             <h3 className="text-4xl font-semibold mb-3">Our Services</h3>
             <p className="mt-3 font-normal mb-5">
               At Paw's Nepal, we're committed to nurturing a strong bond between
@@ -218,7 +219,9 @@ const MainPage = () => {
               </p>
             </div>
             <div className="mt-10">
-              <button className="px-5 py-2 font-semibold bg-red-600 text-white  hover:bg-red-700 transition-all duration-300 rounded-3xl">
+              <button onClick={() => {
+                 navigate('/find-doctors');
+              }} className="px-5 py-2 font-semibold bg-red-600 text-white  hover:bg-red-700 transition-all duration-300 rounded-3xl">
                 Learn More
               </button>
             </div>

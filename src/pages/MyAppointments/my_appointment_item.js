@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faNotesMedical, faPenNib } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { fetchMedicalReportById } from "../../action-creators/medical_report_action";
+import MedicalReport from "./medical_report";
 
 const MyAppointmentItem = ({ appointment, className }) => {
   const authState = useSelector((state) => {
@@ -24,16 +26,16 @@ const MyAppointmentItem = ({ appointment, className }) => {
     });
   };
 
-  // const viewReport = async () => {
-  //   await fetchMedicalReportById(token, appointmentId)
-  //     .then((data) => {
-  //       setReport(data.result);
-  //       setIsReportOpen(true);
-  //     })
-  //     .catch((e) => {
-  //       toast.error(e.message);
-  //     });
-  // };
+  const viewReport = async () => {
+    await fetchMedicalReportById(token, appointmentId)
+      .then((data) => {
+        setReport(data.result);
+        setIsReportOpen(true);
+      })
+      .catch((e) => {
+        toast.error(e.message);
+      });
+  };
 
   const toggleIsOpen = () => {
     setIsReportOpen(!isReportOpen);
@@ -50,7 +52,12 @@ const MyAppointmentItem = ({ appointment, className }) => {
           className="fixed h-full w-full bg-slate-500  top-0 left-0 opacity-25 z-30"
         ></div>
       )}
-      
+      <MedicalReport
+        onClick={viewReport}
+        isOpen={isReportOpen}
+        report={report}
+        toggleIsOpen={toggleIsOpen}
+      ></MedicalReport>
       <div
         className={` ${className} flex flex-row justify-between items-center bg-zinc-800 cursor-pointer hover:bg-zinc-900 shadow-sm px-2 py-3 mb-2 rounded-md`}
       >
@@ -67,11 +74,11 @@ const MyAppointmentItem = ({ appointment, className }) => {
         <div className="w-1/4 flex flex-row justify-center">
           {appointment.startTime}
         </div>
-        <div className="w-1/4 flex flex-row justify-center">
+        {/* <div className="w-1/4 flex flex-row justify-center">
           {appointment.status}
-        </div>
+        </div> */}
 
-        {/* {authState.role === "doctor" && appointment.status === "Pending" && (
+        {authState.role === "doctor" && appointment.status === "Pending" && (
           <div
             onClick={navigateToFillInReportPage}
             className="w-1/4 flex justify-center"
@@ -81,13 +88,20 @@ const MyAppointmentItem = ({ appointment, className }) => {
             </div>
           </div>
         )}
-        {authState.role === "patient" && appointment.status === "Pending" && (
+        {authState.role === "user" && appointment.status === "Pending" && (
           <div className="w-1/4 flex justify-center">
             <div className=" justify-center w-28 border border-solid border-red-400 transition-all cursor-pointer duration-200  ease-in-out border-spacing-2 flex flex-row gap-x-3 text-red-400 items-center py-1 rounded-sm px-2 hover:bg-red-400 hover:text-white">
               <p className="text-sm">No Actions</p>
             </div>
           </div>
-        )} */}
+        )}
+        {appointment.status !== "Pending" && (
+          <div onClick={viewReport} className="w-1/4 flex justify-center">
+            <div className=" justify-center w-28 border border-solid border-green-400 transition-all cursor-pointer duration-200  ease-in-out border-spacing-2 flex flex-row gap-x-3 text-green-400 items-center py-1 rounded-sm px-2 hover:bg-green-400 hover:text-white">
+              <p className="text-sm">View Report</p>
+            </div>
+          </div>
+        )}
         
       </div>
     </div>

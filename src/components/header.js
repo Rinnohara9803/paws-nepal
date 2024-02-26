@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./side-bar";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../action-creators/auth-action";
+import { getLoggedInState, logoutUser } from "../action-creators/auth-action";
 import { authSliceActions } from "../slices/auth-slice";
 import { cartSliceActions } from "../slices/cart-slice";
 
@@ -27,6 +27,12 @@ const Header = () => {
 
   const toggleMenu = () => {
     setShowMenu(!showMenu); // Corrected the toggle logic
+  };
+
+  const [showOptions, setShowOptions] = useState(false);
+
+  const toggleOptions = () => {
+    setShowOptions(!showOptions);
   };
 
   const navigate = useNavigate();
@@ -52,7 +58,6 @@ const Header = () => {
         }}
         className="flex flex-row items-center gap-x-3 cursor-pointer"
       >
-
         <FontAwesomeIcon className="text-xl" icon={faPaw}></FontAwesomeIcon>
         <p className="text-lg font-semibold"> Paws Nepal</p>
       </div>
@@ -85,17 +90,24 @@ const Header = () => {
             <p className="tracking-wider mr-3 font-semibold">Add Inventory</p>
           </div>
         )}
+        <div
+            onClick={() => {
+              navigate("/category/All");
+            }}
+            className="bg-zinc-700 hover:bg-red-600 px-3 py-2 cursor-pointer hover:text-white-600 rounded-lg flex flex-row items-center justify-center gap-x-4 transition-all duration-700"
+          >
+            <p className="font-semibold text-sm"> Categories </p>
+          </div>
         {user && user.role !== "admin" && (
-            <div
+          <div
             onClick={() => {
               navigate("/my_appointments");
             }}
-            className=" cursor-pointer hover:text-red-600 rounded-lg flex flex-row items-center justify-center gap-x-4 transition-all duration-700"
+            className="bg-zinc-700 hover:bg-red-600 px-3 py-2 cursor-pointer hover:text-white-600 rounded-lg flex flex-row items-center justify-center gap-x-4 transition-all duration-700"
           >
-            
             <p className="font-semibold text-sm"> My Appointments </p>
           </div>
-          )}
+        )}
         {user && user.role === "doctor" && (
           <div
             onClick={() => {
@@ -103,10 +115,7 @@ const Header = () => {
             }}
             className=" cursor-pointer bg-red-600 px-5 py-2 rounded-lg flex flex-row items-center justify-center gap-x-4"
           >
-            <FontAwesomeIcon
-              className="text-sm"
-              icon={faAdd}
-            ></FontAwesomeIcon>
+            <FontAwesomeIcon className="text-sm" icon={faAdd}></FontAwesomeIcon>
             <p className="font-semibold text-sm"> Add Schedule </p>
           </div>
         )}
@@ -143,37 +152,60 @@ const Header = () => {
           <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
         </div>
 
-        {user && (
+        {/* {user && (
           <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
           </div>
-        )}
-        {user && (
-          <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
-            <FontAwesomeIcon icon={faUser}></FontAwesomeIcon>
-          </div>
-        )}
-        {user && (
-          <div
-            onClick={async () => {
-              await logoutUser().then(() => {
-                navigate("/login");
-                dispatch(
-                  authSliceActions.replaceLoggedInState({
-                    user: null,
-                    token: null,
-                  })
-                );
-                dispatch(cartSliceActions.clearCart());
-              });
-            }}
-            className=" cursor-pointer bg-zinc-700 px-5 py-2 rounded-lg flex flex-row items-center justify-center gap-x-4"
-          >
-            <FontAwesomeIcon
-              className="text-sm"
-              icon={faSignOut}
-            ></FontAwesomeIcon>
-            <p className="font-semibold text-sm"> Log Out </p>
+        )} */}
+
+        {user !== null && (
+          <div className="relative flex justify-center">
+            <img
+              src={`http://localhost:3009/uploads/${user.image}`}
+              alt={user.name}
+              className="flex z-20 h-9 w-9 rounded-lg object-cover border border-gray-400 cursor-pointer justify-end"
+              onClick={toggleOptions}
+            />
+            {showOptions && (
+              <div
+                className={`absolute transition-all md:w-28 sm:w-24 sm:mt-10  lg:mt-10 md:mt-10 md:right-2 bg-white rounded-md  shadow-lg text-left  ${
+                  showOptions ? "max-h-screen" : "max-h-0"
+                } ${showOptions ? "opacity-100" : "opacity-10"}`}
+              >
+                <div className="flex flex-row bg-zinc-600 justify-center items-center hover:bg-red-600 cursor-pointer">
+                  <div
+                    onClick={async () => {
+                      toggleOptions();
+                      await logoutUser().then(() => {
+                        navigate("/login");
+                        dispatch(
+                          authSliceActions.replaceLoggedInState({
+                            user: null,
+                            token: null,
+                          })
+                        );
+                        dispatch(cartSliceActions.clearCart());
+                      });
+                    }}
+                    className="p-2  rounded-b-lg  z-20 text-sm "
+                  >
+                    Sign Out
+                  </div>
+                  <FontAwesomeIcon
+                    className="text-white text-sm "
+                    icon={faSignOut}
+                  ></FontAwesomeIcon>
+                </div>
+
+                {/* </ul> */}
+              </div>
+            )}
+            {showOptions && (
+              <div
+                onClick={toggleOptions}
+                className="bg-white bg-opacity-10 fixed h-full w-full top-0 left-0 -z-10"
+              ></div>
+            )}
           </div>
         )}
         {!user && (

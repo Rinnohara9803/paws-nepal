@@ -91,7 +91,7 @@ const AppointmentDates = () => {
         <p className="text-center"> No schedule found.</p>
       )}
 
-      <div className="shadow-md w-full h-96 overflow-y-auto overflow-hidden">
+      <div className="shadow-md w-full h-96 overflow-y-auto overflow-hidden border border-solid border-white">
         {schedule.length !== 0 &&
           schedule.map((schedule) => {
             return (

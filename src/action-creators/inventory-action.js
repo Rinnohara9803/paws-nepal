@@ -1,7 +1,6 @@
 export const addPet = async (pet, token) => {
   const url = "http://localhost:3009/pet/createproduct";
   const formData = new FormData();
-  
 
   const imageFile = new File([pet.images[0]], pet.images[0].name);
 
@@ -109,7 +108,6 @@ export const addPetAccessory = async (accessory, token) => {
 export const fetchPets = async () => {
   const url = "http://localhost:3009/product/get-pet-product";
 
-
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -130,7 +128,6 @@ export const fetchPets = async () => {
 
 export const fetchPetFoods = async () => {
   const url = "http://localhost:3009/product/get-petfood-product";
-
 
   try {
     const response = await fetch(url, {
@@ -153,7 +150,6 @@ export const fetchPetFoods = async () => {
 export const fetchPetAccessories = async () => {
   const url = "http://localhost:3009/product/get-petaccessories-product";
 
-
   try {
     const response = await fetch(url, {
       method: "GET",
@@ -163,6 +159,49 @@ export const fetchPetAccessories = async () => {
       return { result: [] };
     } else if (response.status === 200) {
       return jsonData;
+    } else {
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+export const fetchPetsByCategory = async (category) => {
+  const url = `http://localhost:3009/product/get-product-category?category=${category}`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    const jsonData = await response.json();
+    console.log(jsonData);
+    if (jsonData.result.pet === "Pet  not Avialable") {
+      console.log("no pet");
+      return [];
+    } else if (response.status === 200) {
+      console.log("yes pet");
+      return jsonData.result.pet;
+    } else {
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+export const fetchPetFoodsByCategory = async (category) => {
+  const url = `http://localhost:3009/product/get-product-category?category=${category}`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    const jsonData = await response.json();
+    console.log(jsonData);
+    if (jsonData.result.foodProduct === "Pet FOOD not Avialable") {
+      console.log("no food");
+      return [];
+    } else if (response.status === 200) {
+      return jsonData.result.foodProduct;
     } else {
       throw Error(jsonData.message);
     }

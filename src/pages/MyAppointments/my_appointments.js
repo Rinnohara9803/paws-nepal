@@ -94,7 +94,6 @@ const MyAppointments = () => {
                   <option value="Pending" className="px-1 py-2">
                     <p>Pending</p>
                   </option>
-                  <option value="Cancelled">Cancelled</option>
                   <option value="completed">Completed</option>
                 </select>
               </div>
@@ -124,7 +123,7 @@ const MyAppointments = () => {
               Start Time
             </div>
             <div className="text-white font-bold w-1/4 flex flex-row justify-center">
-              Status
+              Actions
             </div>
             {/* <div className="text-white font-bold w-1/4 flex flex-row justify-center">
               Action

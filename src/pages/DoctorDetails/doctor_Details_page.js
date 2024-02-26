@@ -153,19 +153,19 @@ const DoctorDetailsPage = () => {
                 className=" text-red-600  text-lg "
               ></FontAwesomeIcon>
               <p className="px-4 w-full text-sm text-start">
-                Please filter through the dates to your desired appointment
-                time.
+                Please filter through the dates to find your desired appointment
+                date.
               </p>
             </div>
           </div>
-          <div className="flex flex-col lg:w-3/5 sm:w-full">
-            <div className="flex flex-row mt-5 gap-x-0 w-full ">
+          <div className="flex flex-col lg:w-3/5 sm:w-full px-5">
+            <div className="flex flex-row justify-start mt-5 gap-x-0 w-full ">
               <NavLink
                 to={`/doctor-details/${doctorId}/appointmentdates`}
                 className={(navData) =>
                   navData.isActive
                     ? "w-1/3  text-center inline-block px-12 py-5 border-b-4 border-red-700 text-white-500 transition-all duration-300  ease-in-out hover:bg-zinc-600 hover:text-black bg-zinc-800 "
-                    : "w-1/3 text-center inline-block px-12 py-5 border-b-0 border-blue-700 text-gray-500 transition-all duration-300  ease-in-out hover:bg-zinc-600 hover:text-black bg-zinc-800"
+                    : "w-1/3 text-center inline-block px-12 py-5 border-b-0 border-red-700 text-gray-500 transition-all duration-300  ease-in-out hover:bg-zinc-600 hover:text-black bg-zinc-800"
                 }
               >
                 <FontAwesomeIcon icon={items[0].icon} className="text-lg" />
@@ -175,7 +175,7 @@ const DoctorDetailsPage = () => {
                 className={(navData) =>
                   navData.isActive
                     ? "w-1/3 text-center inline-block px-12 py-5 border-b-4 border-red-700 text-white-500 transition-all duration-300  ease-in-out hover:bg-zinc-600 hover:text-black bg-zinc-800"
-                    : "w-1/3 text-center inline-block px-12 py-5 border-b-0 border-blue-700 text-gray-500 transition-all duration-300  ease-in-out hover:bg-zinc-600 hover:text-black bg-zinc-800"
+                    : "w-1/3 text-center inline-block px-12 py-5 border-b-0 border-red-700 text-gray-500 transition-all duration-300  ease-in-out hover:bg-zinc-600 hover:text-black bg-zinc-800"
                 }
               >
                 <FontAwesomeIcon icon={items[2].icon} className="text-lg" />
