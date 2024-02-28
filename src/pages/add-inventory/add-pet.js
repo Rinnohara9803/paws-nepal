@@ -46,7 +46,7 @@ const AddPet = () => {
     await addPet(values, token)
       .then(() => {
         toast.success("Pet added successfully.");
-        resetForm({ ...values, images: [] });
+        // resetForm({ ...values, images: [] });
       })
       .catch((e) => {
         toast.error(e.message);

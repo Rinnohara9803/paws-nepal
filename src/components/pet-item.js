@@ -18,11 +18,11 @@ const AddToCartButton = ({ id, type, image, name, price }) => {
   const handleClick = (e) => {
     e.stopPropagation(); // Prevent the click event from propagating to the parent div
 
-    if (!user ) {
+    if (!user) {
       navigate("/login");
       toast.success("Plese login to add items to your cart.");
-    } else if (user.role !== 'user') {
-      toast.error('Access denied.');
+    } else if (user.role !== "user") {
+      toast.error("Access denied.");
     } else {
       dispatch(
         cartSliceActions.addItemToCart({
@@ -53,7 +53,7 @@ const AddToCartButton = ({ id, type, image, name, price }) => {
   );
 };
 
-const PetItem = ({ id, type, image, name, price, breed }) => {
+const PetItem = ({ pet, id, type, image, name, price, breed }) => {
   const navigate = useNavigate();
 
   const [isHovered, setIsHovered] = useState(false);
@@ -63,7 +63,7 @@ const PetItem = ({ id, type, image, name, price, breed }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
-        navigate("/home/pets/fido");
+        navigate("/home/pets/fido", { state: { pet: pet } });
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer relative"
     >
@@ -96,7 +96,7 @@ const PetItem = ({ id, type, image, name, price, breed }) => {
 
 export default PetItem;
 
-export const PetFoodItem = ({ id, type, image, name, price, brand }) => {
+export const PetFoodItem = ({petFood, id, type, image, name, price, brand }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -104,7 +104,7 @@ export const PetFoodItem = ({ id, type, image, name, price, brand }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
-        navigate("/home/pets/foods/chicken");
+        navigate("/home/pets/foods/chicken", {state: {petFood: petFood}});
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
     >
@@ -135,7 +135,7 @@ export const PetFoodItem = ({ id, type, image, name, price, brand }) => {
   );
 };
 
-export const PetAccessoryItem = ({ id, type, image, name, price, brand }) => {
+export const PetAccessoryItem = ({petAccessory, id, type, image, name, price, brand }) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   return (
@@ -143,7 +143,7 @@ export const PetAccessoryItem = ({ id, type, image, name, price, brand }) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
-        navigate("/home/pets/accessories/chew-toy");
+        navigate("/home/pets/accessories/chew-toy", {state: {petAccessory: petAccessory}});
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
     >

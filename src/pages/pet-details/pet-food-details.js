@@ -2,6 +2,10 @@ import { Rating } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import ReviewItem from "../../components/review-item";
 import WriteReview from "../../components/write-review";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { cartSliceActions } from "../../slices/cart-slice";
+import toast from "react-hot-toast";
 
 const PetFoodDetails = () => {
   const [selectedTab, setSelectedTab] = useState("Details");
@@ -21,6 +25,20 @@ const PetFoodDetails = () => {
 
   const scrollRef = useRef(0);
 
+  const location = useLocation();
+
+  const petFood = location.state.petFood;
+  console.log(petFood);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
+
   useEffect(() => {
     window.scrollTo(0, scrollRef.current);
   });
@@ -33,16 +51,37 @@ const PetFoodDetails = () => {
       </p>
       <div className="flex lg:flex-row flex-col-reverse items-start gap-x-5 w-full gap-y-5">
         <div className="flex flex-col items-start w-full lg:w-2/3 gap-y-1">
-          <p className="text-zinc-500 text-sm"> PetCo Brand</p>
-          <p className="text-sm font-semibold tracking-wide">
-            {" "}
-            Nutrition first Adult Cat Food - Chicken and Brown Rice
-          </p>
-          <p className="text-zinc-500 text-sm mb-3">
-            {" "}
-            4.8 (1200+ reviews) | 6lb bag{" "}
-          </p>
-          <div className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
+          <p className="text-zinc-500 text-sm"> {petFood.brand}</p>
+          <p className="text-sm font-semibold tracking-wide">{petFood.name}</p>
+          <p className="text-red-500 text-sm mb-3"> Rs. {petFood.price}</p>
+          <div
+            onClick={() => {
+              if (!user) {
+                navigate("/login");
+                toast.success("Plese login to add items to your cart.");
+              } else if (user.role !== "user") {
+                toast.error("Access denied.");
+              } else {
+                dispatch(
+                  cartSliceActions.addItemToCart({
+                    item: {
+                      productItem: {
+                        id: petFood._id,
+                        type: petFood.producttype,
+                        image: petFood.image,
+                        name: petFood.name,
+                        price: petFood.price,
+                      },
+                      count: 1,
+                      price: petFood.price,
+                    },
+                  })
+                );
+                toast.success("Item added to cart");
+              }
+            }}
+            className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3"
+          >
             {" "}
             Add to Cart{" "}
           </div>
@@ -50,7 +89,7 @@ const PetFoodDetails = () => {
         <div className="flex flex-col items-start w-full md:w-1/3">
           <img
             className="h-48 rounded-lg object-cover w-full"
-            src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"
+            src={`http://localhost:3009/uploads/${petFood.image}`}
             alt="paws-nepal"
           ></img>
           <p className="mt-2 text-zinc-500 font-semibold tracking-wider">
@@ -85,68 +124,6 @@ const PetFoodDetails = () => {
             />
             <p className="text-sm"> 1200 reviews</p>
           </div>
-          <div className="w-full flex flex-col gap-y-3">
-            <div className="flex flex-row items-center gap-x-2">
-              <p>5</p>
-              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-                <div
-                  style={{
-                    width: "68%",
-                  }}
-                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-                ></div>
-              </div>
-              <p> 68%</p>
-            </div>
-            <div className="flex flex-row items-center gap-x-2">
-              <p>4</p>
-              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-                <div
-                  style={{
-                    width: "15%",
-                  }}
-                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-                ></div>
-              </div>
-              <p> 15%</p>
-            </div>
-            <div className="flex flex-row items-center gap-x-2">
-              <p>3</p>
-              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-                <div
-                  style={{
-                    width: "8%",
-                  }}
-                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-                ></div>
-              </div>
-              <p> 8%</p>
-            </div>
-            <div className="flex flex-row items-center gap-x-2">
-              <p>2</p>
-              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-                <div
-                  style={{
-                    width: "3%",
-                  }}
-                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-                ></div>
-              </div>
-              <p> 3%</p>
-            </div>
-            <div className="flex flex-row items-center gap-x-2">
-              <p>1</p>
-              <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
-                <div
-                  style={{
-                    width: "5%",
-                  }}
-                  className="h-3 rounded-md w-full bg-red-600 absolute left-0"
-                ></div>
-              </div>
-              <p> 5%</p>
-            </div>
-          </div>
         </div>
         <div className="flex flex-col w-full items-start">
           <div
@@ -180,7 +157,7 @@ const PetFoodDetails = () => {
         >
           {" "}
           Details
-        </p>
+        </p> 
         <p
           onClick={() => {
             setSelectedTab("Ingredients");
@@ -217,19 +194,19 @@ const PetFoodDetails = () => {
         <p className="font-semibold tracking-wider mt-6 mb-5"> Details </p>
         <div className="flex flex-row justify-between items-center w-full tracking-wider my-2">
           <p className="text-zinc-500"> Brand </p>
-          <p className=""> PetCo Brand</p>
+          <p className=""> {petFood.brand} </p>
         </div>
         <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Model </p>
-          <p className=""> Adult</p>
+          <p className="text-zinc-500"> Fat </p>
+          <p className=""> {petFood.fat}% </p>
         </div>
         <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Weight </p>
-          <p className=""> 60lb </p>
+          <p className="text-zinc-500"> Fiber </p>
+          <p className=""> {petFood.fiber}%</p>
         </div>
         <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Flavour </p>
-          <p className=""> Chicken and Brown Rice</p>
+          <p className="text-zinc-500"> Protein </p>
+          <p className=""> {petFood.protein}%</p>
         </div>
       </div>
 
@@ -239,25 +216,7 @@ const PetFoodDetails = () => {
         className="flex flex-col items-start w-full"
       >
         <p className="font-semibold tracking-wider mt-6 mb-5"> Ingredients </p>
-        <p className="text-start text-sm">
-          {" "}
-          Deboned chicken, chicken meal, brown rice, barley, oatmeal, chicken
-          fat (preserved with mixed tocopherols), flaxseed, natural flavor,
-          choline chloride, taurine, dried chicory root, Yucca schidigera
-          extract, vitamins (vitamin E supplement, niacin supplement, thiamine
-          mononitrate, d-calcium pantothenate, vitamin A supplement, pyridoxine
-          hydrochloride, riboflavin supplement, vitamin D3 supplement, biotin,
-          vitamin B12 supplement, folic acid), minerals (ferrous sulfate, zinc
-          oxide, calcium carbonate, manganous oxide, copper sulfate, iron amino
-          acid chelate, manganese amino acid chelate, zinc amino acid chelate,
-          copper amino acid chelate, sodium selenite, cobalt carbonate,
-          ethylenediamine dihydriodide), potassium chloride, dried Lactobacillus
-          plantarum fermentation product, dried Enterococcus faecium
-          fermentation product, dried Bacillus subtilis fermentation product,
-          dried Bifidobacterium animalis fermentation product, dried
-          Lactobacillus casei fermentation product, dried Lactobacillus
-          acidophilus fermentation product.
-        </p>
+        <p className="text-start text-sm"> {petFood.ingredients}</p>
       </div>
 
       {/* reviews */}

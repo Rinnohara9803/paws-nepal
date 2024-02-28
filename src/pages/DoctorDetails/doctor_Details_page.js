@@ -100,7 +100,7 @@ const DoctorDetailsPage = () => {
                     className="border border-solid border-white mx-auto lg:justify-center sm:justify-center object-cover h-24 w-24 rounded-full"
                   />
                 </div>
-                <div>
+                <div className="pb-10">
                   <p className="text-center lg:text-xl sm:text-md">
                     Dr. {doctorData.username}
                   </p>
@@ -112,7 +112,7 @@ const DoctorDetailsPage = () => {
                       {doctorData.experience} years Experience
                     </p>
                   </div>
-                  <div className="flex content-center place-content-center mt-2 ">
+                  {/* <div className="flex content-center place-content-center mt-2 ">
                     <Box
                       sx={{
                         "& > legend": { mt: 2 },
@@ -122,10 +122,10 @@ const DoctorDetailsPage = () => {
                         name="simple-controlled"
                         value={doctorData.rating}
                       />
-                    </Box>
+                    </Box> */}
                     {/* <p className="pl-2  text-gray-300 ">{doctorData.rating}</p> */}
-                  </div>
-                  <div className="w-full flex justify-around px-4 items-center border border-t-slate-200 pb-4 pt-4 mt-2 gap-x-4">
+                  {/* </div> */}
+                  {/* <div className="w-full flex justify-around px-4 items-center border border-t-slate-200 pb-4 pt-4 mt-2 gap-x-4">
                     <div
                       onClick={() => {
                         if (doctorData.role !== "user") {
@@ -143,7 +143,7 @@ const DoctorDetailsPage = () => {
                       />
                       Rate Us
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

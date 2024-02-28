@@ -13,6 +13,12 @@ import ImageSlider from "./image_slider";
 import { fetchDoctorsList } from "../../action-creators/doctor-list-action";
 import { doctorsListSliceActions } from "../../slices/doctors_slice";
 import MedicalServices from "../Mobile/medicalservices";
+import {
+  fetchPetFoods,
+  fetchPets,
+} from "../../action-creators/inventory-action";
+import PetItem, { PetFoodItem } from "../../components/pet-item";
+import { inventorySliceActions } from "../../slices/inventory-slice";
 library.add(faFacebookF);
 
 const MainPage = () => {
@@ -27,6 +33,14 @@ const MainPage = () => {
   });
 
   const doctorsList = doctorsListState.doctorsList;
+
+  const inventoryState = useSelector((state) => {
+    return state.inventory;
+  });
+
+  const pets = inventoryState.pets;
+
+  const petFoods = inventoryState.petFoods;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -55,7 +69,6 @@ const MainPage = () => {
     );
     hiddenElements.forEach((el) => observer.observe(el));
 
-
     const fetchAllDoctors = async () => {
       await fetchDoctorsList("all")
         .then((data) => {
@@ -80,7 +93,50 @@ const MainPage = () => {
         .catch((e) => {});
     };
     fetchAllDoctors();
+
+    const fetchThePets = async () => {
+      await fetchPets()
+        .then((data) => {
+          if (data.result.length === 0) {
+            dispatch(
+              inventorySliceActions.replacePetsList({
+                list: [],
+              })
+            );
+          } else {
+            dispatch(
+              inventorySliceActions.replacePetsList({
+                list: data.result,
+              })
+            );
+          }
+        })
+        .catch((e) => {});
+    };
+    fetchThePets();
+
+    const fetchThePetFoods = async () => {
+      await fetchPetFoods()
+        .then((data) => {
+          if (data.result.length === 0) {
+            dispatch(
+              inventorySliceActions.replacePetFoodsList({
+                list: [],
+              })
+            );
+          } else {
+            dispatch(
+              inventorySliceActions.replacePetFoodsList({
+                list: data.result,
+              })
+            );
+          }
+        })
+        .catch((e) => {});
+    };
     window.scrollTo(0, scrollRef.current);
+
+    fetchThePetFoods();
 
     return () => {
       observer.disconnect();
@@ -180,7 +236,79 @@ const MainPage = () => {
         </div>
       )}
 
-      <div class="fourth_container pb-32">
+      {pets.length !== 0 && (
+        <div>
+          <div className="w-5/12  mr-auto ml-auto my-7">
+            <h3 className=" text-4xl font-semibold">Find Companions</h3>
+            <p className=" mt-3 font-normal">
+              Rescued pets from all around the country.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 items-start md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 px-10 md:px-28">
+            {pets.slice(0, 3).map((pet) => {
+              return (
+                <PetItem
+                  pet={pet}
+                  key={pet._id}
+                  id={pet._id}
+                  type={pet.producttype}
+                  price={pet.price}
+                  name={pet.name}
+                  image={pet.image}
+                  breed={pet.breed}
+                ></PetItem>
+              );
+            })}
+            <div
+              onClick={() => {
+                navigate("/category/All");
+              }}
+              className="bg-zinc-700 hover:bg-red-700 transition-all duration-500 flex flex-row justify-center py-10 rounded-lg cursor-pointer"
+            >
+              {" "}
+              See More
+            </div>
+          </div>
+        </div>
+      )}
+
+      {petFoods.length !== 0 && (
+        <div>
+          <div className="w-5/12  mr-auto ml-auto my-7">
+            <h3 className=" text-4xl font-semibold">Pet Foods</h3>
+            <p className=" mt-3 font-normal">
+              Rescued pets from all around the country.
+            </p>
+          </div>
+          <div className="grid items-start grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full md:px-28">
+            {petFoods.map((petFood) => {
+              return (
+                <PetFoodItem
+                petFood={petFood}
+                  key={petFood._id}
+                  id={petFood._id}
+                  type={petFood.producttype}
+                  price={petFood.price}
+                  name={petFood.name}
+                  image={petFood.image}
+                  brand={petFood.brand}
+                ></PetFoodItem>
+              );
+            })}
+            <div
+              onClick={() => {
+                navigate("/category/All");
+              }}
+              className="bg-zinc-700 hover:bg-red-700 transition-all duration-500 flex flex-row justify-center py-10 rounded-lg cursor-pointer"
+            >
+              {" "}
+              See More
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div class="fourth_container pb-32 pt-16">
         <div className="sm:w-4/6 my-0 mx-auto">
           <div className="my-0 mr-auto ml-auto ">
             <h3 className="text-4xl font-semibold mb-3">Our Services</h3>
@@ -219,9 +347,12 @@ const MainPage = () => {
               </p>
             </div>
             <div className="mt-10">
-              <button onClick={() => {
-                 navigate('/find-doctors');
-              }} className="px-5 py-2 font-semibold bg-red-600 text-white  hover:bg-red-700 transition-all duration-300 rounded-3xl">
+              <button
+                onClick={() => {
+                  navigate("/find-doctors");
+                }}
+                className="px-5 py-2 font-semibold bg-red-600 text-white  hover:bg-red-700 transition-all duration-300 rounded-3xl"
+              >
                 Learn More
               </button>
             </div>
@@ -240,58 +371,6 @@ const MainPage = () => {
           </div>
         </div>
       </div>
-
-      {/* <div class="seventh_container" className="flex pb-32">
-        <div className="w-4/6 lg:flex my-0 mx-auto">
-          <div className="lg:w-1/3 pt-12 sm:hidden lg:flex ">
-            <img
-              src={process.env.PUBLIC_URL + "/img/doctor-5.jpg"}
-              style={{ width: "100%", height: "26rem" }}
-              alt="alt"
-              className="object-cover"
-            />
-          </div>
-          <div className="lg:ml-36 mt-14 text-left">
-            <div className="mb-6">
-              <h1 className="text-3xl font-semibold">
-                Most questions by our beloved patients
-              </h1>
-            </div>
-            <div className="w-full sm:text-sm">
-              <Questions
-                question={"How can I book an appointment with a doctor?"}
-                answer={
-                  "Simply log in to our app, browse available doctors, and choose a convenient time for your appointment."
-                }
-              />
-              <Questions
-                question={
-                  "Is my personal information secure when booking through your app?"
-                }
-                answer={
-                  " Absolutely! We prioritize your privacy and use industry-standard security measures to protect your data."
-                }
-              />
-              <Questions
-                question={
-                  "What if I need to cancel or reschedule my appointment?"
-                }
-                answer={
-                  "No problem! You can easily manage your appointments in the app, and we offer a hassle-free cancellation and rescheduling process."
-                }
-              />
-              <Questions
-                question={
-                  "Are there any fees for using the doctor booking service?"
-                }
-                answer={
-                  "Our basic booking service is free. Any additional charges, if applicable, will be clearly communicated during the booking process. "
-                }
-              />
-            </div>
-          </div>
-        </div>
-      </div> */}
     </main>
   );
 };

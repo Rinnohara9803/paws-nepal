@@ -70,6 +70,7 @@ const Accessories = () => {
           {petAccessories.map((accessory) => {
             return ( 
               <PetAccessoryItem
+              petAccessory={accessory}
                 key={accessory._id}
                 id={accessory._id}
                 type={accessory.producttype}

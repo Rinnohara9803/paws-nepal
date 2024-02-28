@@ -105,6 +105,7 @@ const Breeds = ({ category }) => {
           {pets.map((pet) => {
             return (
               <PetItem
+                pet={pet}
                 key={pet._id}
                 id={pet._id}
                 type={pet.producttype}

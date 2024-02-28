@@ -2,6 +2,10 @@ import { Rating } from "@mui/material";
 import React, { useState, useEffect, useRef } from "react";
 import ReviewItem from "../../components/review-item";
 import WriteReview from "../../components/write-review";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { cartSliceActions } from "../../slices/cart-slice";
 
 const PetAccessoryDetails = () => {
   const [selectedTab, setSelectedTab] = useState("Details");
@@ -25,6 +29,20 @@ const PetAccessoryDetails = () => {
 
   const scrollRef = useRef(0);
 
+  const location = useLocation();
+
+  const petAccessory = location.state.petAccessory;
+  console.log(petAccessory);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
+
   useEffect(() => {
     window.scrollTo(0, scrollRef.current);
   });
@@ -37,17 +55,17 @@ const PetAccessoryDetails = () => {
       </p>
       <div className="flex flex-col-reverse lg:flex-row  gap-y-5 items-start gap-x-5 w-full">
         <div className="flex flex-col items-start w-full lg:w-2/3 gap-y-1">
-          <p className="text-zinc-500 text-sm"> PetCo Brand</p>
+          <p className="text-zinc-500 text-sm"> {petAccessory.brand} </p>
           <p className="text-sm font-semibold tracking-wide">
             {" "}
-            Nutrition first Adult Cat Food - Chicken and Brown Rice
+            {petAccessory.name}
           </p>
           <p className="text-zinc-500 text-sm mb-3">
             {" "}
-            4.8 (1200+ reviews) | 6lb bag{" "}
+          Size: {petAccessory.size}
           </p>
           {/* sizes */}
-          <div
+          {/* <div
             id="sizes-section"
             className="flex flex-col items-start w-full mb-5"
           >
@@ -68,8 +86,32 @@ const PetAccessoryDetails = () => {
                 );
               })}
             </div>
-          </div>
-          <div className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
+          </div> */}
+          <div onClick={() => {
+            if (!user) {
+              navigate("/login");
+              toast.success("Plese login to add items to your cart.");
+            } else if (user.role !== "user") {
+              toast.error("Access denied.");
+            } else {
+              dispatch(
+                cartSliceActions.addItemToCart({
+                  item: {
+                    productItem: {
+                      id: petAccessory._id,
+                      type: petAccessory.producttype,
+                      image: petAccessory.image,
+                      name: petAccessory.name,
+                      price: petAccessory.price,
+                    },
+                    count: 1,
+                    price: petAccessory.price,
+                  },
+                })
+              );
+              toast.success("Item added to cart");
+            }
+          }} className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
             {" "}
             Add to Cart{" "}
           </div>
@@ -77,12 +119,12 @@ const PetAccessoryDetails = () => {
         <div className="flex flex-col items-start w-full md:w-1/3">
           <img
             className="h-48 rounded-lg object-cover w-full"
-            src="https://www.wikihow.com/images/thumb/2/24/Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg/v4-460px-Draw-a-Cute-Cartoon-Cat-Step-7-Version-3.jpg"
+            src={`http://localhost:3009/uploads/${petAccessory.image}`}
             alt="paws-nepal"
           ></img>
           <p className="mt-2 text-zinc-500 font-semibold tracking-wider">
             {" "}
-            Rs. 250
+            Rs. {petAccessory.price}
           </p>
         </div>
       </div>
@@ -112,7 +154,7 @@ const PetAccessoryDetails = () => {
             />
             <p className="text-sm"> 1200 reviews</p>
           </div>
-          <div className="w-full flex flex-col gap-y-3">
+          {/* <div className="w-full flex flex-col gap-y-3">
             <div className="flex flex-row items-center gap-x-2">
               <p>5</p>
               <div className="h-3 rounded-md w-96 bg-zinc-600 relative">
@@ -173,7 +215,7 @@ const PetAccessoryDetails = () => {
               </div>
               <p> 5%</p>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="flex flex-col w-full items-start">
           <div
@@ -223,7 +265,7 @@ const PetAccessoryDetails = () => {
           Materials
         </p>
 
-        <p
+        {/* <p
           onClick={() => {
             setSelectedTab("Care Instructions");
             scrollToSection("instructions-section");
@@ -236,7 +278,7 @@ const PetAccessoryDetails = () => {
         >
           {" "}
           Care Instructions
-        </p>
+        </p> */}
         <p
           onClick={() => {
             setSelectedTab("Reviews");
@@ -259,16 +301,16 @@ const PetAccessoryDetails = () => {
         <p className="font-semibold tracking-wider mt-6 mb-5"> Details </p>
         <div className="flex flex-row justify-between items-center w-full tracking-wider my-2">
           <p className="text-zinc-500"> Brand </p>
-          <p className=""> PetCo Brand</p>
+          <p className=""> {petAccessory.brand} </p>
         </div>
         <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
-          <p className="text-zinc-500"> Name </p>
-          <p className=""> Chew Toy</p>
+          <p className="text-zinc-500"> Type </p>
+          <p className=""> {petAccessory.category} </p>
         </div>
-        <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
+        {/* <div className="flex flex-row justify-between items-center  w-full tracking-wider my-2">
           <p className="text-zinc-500"> Category </p>
           <p className=""> Toys </p>
-        </div>
+        </div> */}
       </div>
 
       {/* ingredients */}
@@ -276,27 +318,12 @@ const PetAccessoryDetails = () => {
         <p className="font-semibold tracking-wider mt-6 mb-5"> Materials </p>
         <p className="text-start text-sm">
           {" "}
-          Deboned chicken, chicken meal, brown rice, barley, oatmeal, chicken
-          fat (preserved with mixed tocopherols), flaxseed, natural flavor,
-          choline chloride, taurine, dried chicory root, Yucca schidigera
-          extract, vitamins (vitamin E supplement, niacin supplement, thiamine
-          mononitrate, d-calcium pantothenate, vitamin A supplement, pyridoxine
-          hydrochloride, riboflavin supplement, vitamin D3 supplement, biotin,
-          vitamin B12 supplement, folic acid), minerals (ferrous sulfate, zinc
-          oxide, calcium carbonate, manganous oxide, copper sulfate, iron amino
-          acid chelate, manganese amino acid chelate, zinc amino acid chelate,
-          copper amino acid chelate, sodium selenite, cobalt carbonate,
-          ethylenediamine dihydriodide), potassium chloride, dried Lactobacillus
-          plantarum fermentation product, dried Enterococcus faecium
-          fermentation product, dried Bacillus subtilis fermentation product,
-          dried Bifidobacterium animalis fermentation product, dried
-          Lactobacillus casei fermentation product, dried Lactobacillus
-          acidophilus fermentation product.
+         {petAccessory.materials}
         </p>
       </div>
 
       {/* instructions */}
-      <div
+      {/* <div
         id="instructions-section"
         className="flex flex-col items-start w-full"
       >
@@ -313,7 +340,7 @@ const PetAccessoryDetails = () => {
           mononitrate, d-calcium pantothenate, vitamin A supplement, pyridoxine
           hydrochloride, riboflavin supplement, vitamin D3 supplement, biotin
         </p>
-      </div>
+      </div> */}
 
       {/* reviews */}
       <div id="reviews-section" className="flex flex-col items-start w-full">
