@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
 import { useSelector } from "react-redux";
+import { createOrder } from "../../action-creators/order-action";
 
 const CheckOut = () => {
   const [selectedPm, setSelectedPm] = useState("Cash on Delivery");
 
-  const paymentMethods = ["Cash on Delivery", "E-sewa", "Khalti"];
+  const paymentMethods = [];
 
   const scrollRef = useRef(0);
 
@@ -45,32 +46,33 @@ const CheckOut = () => {
           paymentPin: "",
         }}
         validationSchema={Yup.object().shape({
-          houseNumber: Yup.string().required("House Number is required"),
-          streetName: Yup.string().required("Street Name is required"),
-          city: Yup.string().required("City is required"),
-          district: Yup.string().required("District is required"),
-          zone: Yup.string().required("Zone is required"),
-          phoneNumber: Yup.string()
-            .required("Phone Number is required")
-            .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-          paymentNumber:
-            selectedPm === "Cash on Delivery"
-              ? Yup.string()
-              : Yup.string()
-                  .required("Number is required")
-                  .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-          paymentPin:
-            selectedPm === "Cash on Delivery"
-              ? Yup.string()
-              : Yup.string()
-                  .required("MPIN is required")
-                  .matches(/^\d{4}$/, "MPIN must be 4 digits"),
+          // houseNumber: Yup.string().required("House Number is required"),
+          // streetName: Yup.string().required("Street Name is required"),
+          // city: Yup.string().required("City is required"),
+          // district: Yup.string().required("District is required"),
+          // zone: Yup.string().required("Zone is required"),
+          // phoneNumber: Yup.string()
+          //   .required("Phone Number is required")
+          //   .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
+          // paymentNumber:
+          //   selectedPm === "Cash on Delivery"
+          //     ? Yup.string()
+          //     : Yup.string()
+          //         .required("Number is required")
+          //         .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
+          // paymentPin:
+          //   selectedPm === "Cash on Delivery"
+          //     ? Yup.string()
+          //     : Yup.string()
+          //         .required("MPIN is required")
+          //         .matches(/^\d{4}$/, "MPIN must be 4 digits"),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 2000);
+          createOrder(100, "abc");
+          // setTimeout(() => {
+          //   alert(JSON.stringify(values, null, 2));
+          //   setSubmitting(false);
+          // }, 2000);
         }}
       >
         {({ isSubmitting }) => (
@@ -198,11 +200,11 @@ const CheckOut = () => {
               </div>
             </div>
 
-            <p className="font-semibold text-lg tracking-wider mt-8 mb-5">
+            {/* <p className="font-semibold text-lg tracking-wider mt-8 mb-5">
               {" "}
               Payment Method
-            </p>
-
+            </p> */}
+{/* 
             {paymentMethods.map((pm) => {
               return (
                 <div
@@ -230,7 +232,7 @@ const CheckOut = () => {
                   </div>
                 </div>
               );
-            })}
+            })} */}
 
             {/* online payment */}
             {(selectedPm === "E-sewa" || selectedPm === "Khalti") && (
@@ -313,7 +315,7 @@ const CheckOut = () => {
       </Formik>
 
       {/* animated truck */}
-      <div className="flex flex-row items-center">
+      {/* <div className="flex flex-row items-center">
         <div className=" h-24 w-40 bg-white rounded-lg"> </div>
         <div className="h-16 w-3 bg-blue-800"></div>
         <div className="h-24 w-16 bg-blue-600 rounded-tr-md rounded-br-md relative">
@@ -323,7 +325,7 @@ const CheckOut = () => {
             className="absolute left-2 h-16 w-14  bg-red-800 top-3"
           ></div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
