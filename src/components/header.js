@@ -160,7 +160,6 @@ const Header = () => {
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
           </div>
         )}
-
         {user !== null && (
           <div className="relative flex justify-center">
             <img

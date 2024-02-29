@@ -46,26 +46,26 @@ const CheckOut = () => {
           paymentPin: "",
         }}
         validationSchema={Yup.object().shape({
-          // houseNumber: Yup.string().required("House Number is required"),
-          // streetName: Yup.string().required("Street Name is required"),
-          // city: Yup.string().required("City is required"),
-          // district: Yup.string().required("District is required"),
-          // zone: Yup.string().required("Zone is required"),
-          // phoneNumber: Yup.string()
-          //   .required("Phone Number is required")
-          //   .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-          // paymentNumber:
-          //   selectedPm === "Cash on Delivery"
-          //     ? Yup.string()
-          //     : Yup.string()
-          //         .required("Number is required")
-          //         .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-          // paymentPin:
-          //   selectedPm === "Cash on Delivery"
-          //     ? Yup.string()
-          //     : Yup.string()
-          //         .required("MPIN is required")
-          //         .matches(/^\d{4}$/, "MPIN must be 4 digits"),
+          houseNumber: Yup.string().required("House Number is required"),
+          streetName: Yup.string().required("Street Name is required"),
+          city: Yup.string().required("City is required"),
+          district: Yup.string().required("District is required"),
+          zone: Yup.string().required("Zone is required"),
+          phoneNumber: Yup.string()
+            .required("Phone Number is required")
+            .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
+          paymentNumber:
+            selectedPm === "Cash on Delivery"
+              ? Yup.string()
+              : Yup.string()
+                  .required("Number is required")
+                  .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
+          paymentPin:
+            selectedPm === "Cash on Delivery"
+              ? Yup.string()
+              : Yup.string()
+                  .required("MPIN is required")
+                  .matches(/^\d{4}$/, "MPIN must be 4 digits"),
         })}
         onSubmit={(values, { setSubmitting }) => {
           createOrder(100, "abc");
