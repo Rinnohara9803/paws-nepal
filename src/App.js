@@ -28,6 +28,7 @@ import AppointmentDates from "./pages/DoctorDetails/appointment_dates";
 import RatingsAndReviews from "./pages/DoctorDetails/ratings_reviews";
 import MyAppointments from "./pages/MyAppointments/my_appointments";
 import DoctorForm from "./pages/MedicalHistory/post_checkup_form";
+import Notifications from "./pages/notifications/notifications";
 
 function App() {
   const dispatch = useDispatch();
@@ -166,11 +167,19 @@ function App() {
               element={<AddSchedule></AddSchedule>}
             ></Route>
           )}
-          {user && user.role === 'doctor' && <Route
-            exact
-            path="/my_appointments/:appointmentId/post_checkup_form"
-            element={<DoctorForm />}
-          ></Route>}
+          {user && (
+            <Route
+              path="/notifications"
+              element={<Notifications></Notifications>}
+            ></Route>
+          )}
+          {user && user.role === "doctor" && (
+            <Route
+              exact
+              path="/my_appointments/:appointmentId/post_checkup_form"
+              element={<DoctorForm />}
+            ></Route>
+          )}
           <Route path="*" element={<NotFound />}></Route>
         </Routes>
       </div>

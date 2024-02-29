@@ -9,26 +9,26 @@ const CartItem = ({ item, count, price }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleNavigation = () => {
-    switch (item.type) {
-      case "pet":
-        navigate(`/home/pets/${item.id}`);
-        break;
-      case "petfood":
-        navigate(`/home/pets/foods/${item.id}`);
-        break;
-      case "accessories":
-        navigate(`/home/pets/accessories/${item.id}`);
-        break;
-      default:
-        break;
-    }
-  };
+  // const handleNavigation = () => {
+  //   switch (item.type) {
+  //     case "pet":
+  //       navigate(`/home/pets/${item.id}`);
+  //       break;
+  //     case "petfood":
+  //       navigate(`/home/pets/foods/${item.id}`);
+  //       break;
+  //     case "accessories":
+  //       navigate(`/home/pets/accessories/${item.id}`);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
 
   return (
     <div className="flex flex-row items-center justify-between w-full mb-5">
       <div
-        onClick={handleNavigation}
+        // onClick={handleNavigation}
         className="flex flex-col items-start md:flex-row md:items-center gap-y-2 cursor-pointer"
       >
         <img

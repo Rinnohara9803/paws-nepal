@@ -152,11 +152,13 @@ const Header = () => {
           <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
         </div>
 
-        {/* {user && (
-          <div className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
+        {user && (
+          <div onClick={() => {
+            navigate('/notifications');
+          }} className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
           </div>
-        )} */}
+        )}
 
         {user !== null && (
           <div className="relative flex justify-center">
