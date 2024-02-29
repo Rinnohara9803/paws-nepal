@@ -5,7 +5,7 @@ export const createOrder = async (amount, id) => {
   console.log(id);
   try {
     const signature = createSignature(
-      "total_amount=100,transaction_uuid=11-201-13,product_code=EPAYTEST"
+      "total_amount=110,transaction_uuid=YOH,product_code=EPAYTEST"
     );
 
     console.log(signature);
@@ -22,7 +22,7 @@ export const createOrder = async (amount, id) => {
       success_url: "https://esewa.com.np",
       tax_amount: "10",
       total_amount: "110",
-      transaction_uuid: "11-201-13",
+      transaction_uuid: "YOH",
     };
 
     var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
