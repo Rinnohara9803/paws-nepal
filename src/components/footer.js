@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
         <p
           onClick={() => {
-            navigate("/category/All");
+            navigate("/home");
           }}
           className=" transition-all hover:underline cursor-pointer hover:text-gray-400"
         >
@@ -108,7 +108,7 @@ const Footer = () => {
           Become a Doctor
         </p>
       </div>
-      <div className="flex flex-col justify-start items-start text-white gap-y-3 pt-5 md:pt-0">
+      {/* <div className="flex flex-col justify-start items-start text-white gap-y-3 pt-5 md:pt-0">
         <div className="pb-4 flex flex-col">
           <p className="font-semibold text-lg "> Join Us </p>
           <div className="h-0.5 w-9 bg-white mt-1"></div>
@@ -145,7 +145,7 @@ const Footer = () => {
           {" "}
           Sign Up
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };
