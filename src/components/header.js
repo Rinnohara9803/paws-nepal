@@ -144,14 +144,14 @@ const Header = () => {
             <FontAwesomeIcon icon={faUserDoctor}></FontAwesomeIcon>
           </div>
         )}
-        <div
+        {user && (<div
           onClick={() => {
             navigate("/orders");
           }}
           className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
         >
           <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
-        </div>
+        </div>)}
 
         {user && (
           <div onClick={() => {
