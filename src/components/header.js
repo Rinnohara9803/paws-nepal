@@ -3,6 +3,7 @@ import {
   faAdd,
   faBars,
   faBell,
+  faBook,
   faCalendar,
   faPaw,
   faRightToBracket,
@@ -145,11 +146,11 @@ const Header = () => {
         )}
         <div
           onClick={() => {
-            navigate("/search");
+            navigate("/orders");
           }}
           className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
         >
-          <FontAwesomeIcon icon={faSearch}></FontAwesomeIcon>
+          <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
         </div>
 
         {user && (

@@ -29,6 +29,7 @@ import RatingsAndReviews from "./pages/DoctorDetails/ratings_reviews";
 import MyAppointments from "./pages/MyAppointments/my_appointments";
 import DoctorForm from "./pages/MedicalHistory/post_checkup_form";
 import Notifications from "./pages/notifications/notifications";
+import Orders from "./pages/orders/orders";
 
 function App() {
   const dispatch = useDispatch();
@@ -84,6 +85,7 @@ function App() {
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/search" element={<Search />}></Route>
+          <Route exact path="/orders" element={<Orders />}></Route>
           <Route
             exact
             path="/"

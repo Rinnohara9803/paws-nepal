@@ -1,5 +1,4 @@
-import CryptoJS from 'crypto-js';
-
+import CryptoJS from "crypto-js";
 
 export const createOrder = async (amount, id) => {
   console.log(amount);
@@ -10,7 +9,7 @@ export const createOrder = async (amount, id) => {
     );
 
     console.log(signature);
-    console.log('here');
+    console.log("here");
 
     const formData = {
       amount: "100",
@@ -22,8 +21,8 @@ export const createOrder = async (amount, id) => {
       signed_field_names: "total_amount,transaction_uuid,product_code",
       success_url: "https://esewa.com.np",
       tax_amount: "10",
-      total_amount: 100,
-      transaction_uuid: '11-201-13',
+      total_amount: "110",
+      transaction_uuid: "11-201-13",
     };
 
     var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
@@ -48,16 +47,16 @@ export const createOrder = async (amount, id) => {
 };
 
 export const createSignature = (message) => {
-    const secret = "8gBm/:&EnhH.1/q";
-  
-    // Convert secret to bytes
-    const secretBytes = CryptoJS.enc.Utf8.parse(secret);
-  
-    // Generate SHA-256 HMAC
-    const hmac = CryptoJS.HmacSHA256(message, secretBytes);
-  
-    // Convert HMAC to base64
-    const hashInBase64 = CryptoJS.enc.Base64.stringify(hmac);
-  
-    return hashInBase64;
-  };
+  const secret = "8gBm/:&EnhH.1/q";
+
+  // Convert secret to bytes
+  const secretBytes = CryptoJS.enc.Utf8.parse(secret);
+
+  // Generate SHA-256 HMAC
+  const hmac = CryptoJS.HmacSHA256(message, secretBytes);
+
+  // Convert HMAC to base64
+  const hashInBase64 = CryptoJS.enc.Base64.stringify(hmac);
+
+  return hashInBase64;
+};
