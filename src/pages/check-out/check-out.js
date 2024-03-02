@@ -2,15 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import ThePulseLoader from "../../components/pulse-loader";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../../action-creators/order-action";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { cartSliceActions } from "../../slices/cart-slice";
 
 const CheckOut = () => {
   const [selectedPm, setSelectedPm] = useState("Cash on Delivery");
 
   const paymentMethods = [];
+
+  const dispatch = useDispatch();
 
   const scrollRef = useRef(0);
 
@@ -80,6 +83,7 @@ const CheckOut = () => {
         onSubmit={async (values, { setSubmitting }) => {
           toast.success('Add items to cart to continue');
           if (totalCount === 0) {
+            dispatch(cartSliceActions.clearCart());
             navigate('/category/All');
             return;
           } else {
