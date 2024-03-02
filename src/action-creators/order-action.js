@@ -1,47 +1,48 @@
 import CryptoJS from "crypto-js";
 
-export const createOrder = async (amount, id) => {
-  const tid = 'babd';
-  console.log(amount);
-  console.log(id);
+export const createOrder = async (amount) => {
+  const tid = 'ldksfjs';
+  console.log(amount); 
   try {
-    const signature = createSignature(
-      `total_amount=110,transaction_uuid=${tid},product_code=EPAYTEST`
-    );
 
-    console.log(signature);
-    console.log("here");
+    
+    // const signature = createSignature(
+    //   `total_amount=110,transaction_uuid=${tid},product_code=EPAYTEST`
+    // );
 
-    const formData = {
-      amount: "100",
-      failure_url: "https://google.com",
-      product_delivery_charge: "0",
-      product_service_charge: "0",
-      product_code: "EPAYTEST",
-      signature: signature,
-      signed_field_names: "total_amount,transaction_uuid,product_code",
-      success_url: "https://esewa.com.np",
-      tax_amount: "10",
-      total_amount: "110",
-      transaction_uuid: tid,
-    };
+    // console.log(signature);
+    // console.log("here");
 
-    var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+    // const formData = {
+    //   amount: "100",
+    //   failure_url: "https://google.com",
+    //   product_delivery_charge: "0",
+    //   product_service_charge: "0",
+    //   product_code: "EPAYTEST",
+    //   signature: signature,
+    //   signed_field_names: "total_amount,transaction_uuid,product_code",
+    //   success_url: "https://esewa.com.np",
+    //   tax_amount: "10",
+    //   total_amount: "110",
+    //   transaction_uuid: tid, 
+    // };
 
-    var form = document.createElement("form");
-    form.setAttribute("method", "POST");
-    form.setAttribute("action", path);
+    // var path = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
 
-    for (var key in formData) {
-      var hiddenField = document.createElement("input");
-      hiddenField.setAttribute("type", "hidden");
-      hiddenField.setAttribute("name", key);
-      hiddenField.setAttribute("value", formData[key]);
-      form.appendChild(hiddenField);
-    }
+    // var form = document.createElement("form");
+    // form.setAttribute("method", "POST");
+    // form.setAttribute("action", path);
 
-    document.body.appendChild(form);
-    form.submit();
+    // for (var key in formData) {
+    //   var hiddenField = document.createElement("input");
+    //   hiddenField.setAttribute("type", "hidden");
+    //   hiddenField.setAttribute("name", key);
+    //   hiddenField.setAttribute("value", formData[key]);
+    //   form.appendChild(hiddenField);
+    // }
+
+    // document.body.appendChild(form);
+    // form.submit();
   } catch (e) {
     console.log(e.message);
   }

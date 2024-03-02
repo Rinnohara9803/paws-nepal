@@ -1,10 +1,11 @@
 export const addPet = async (pet, token) => {
-  const url = "http://localhost:3009/pet/createproduct";
+  const url = "http://localhost:3009/product/create-proudcts";
   const formData = new FormData();
 
   const imageFile = new File([pet.images[0]], pet.images[0].name);
 
   formData.append("name", pet.petName);
+  formData.append("producttype", "Pet");
   formData.append("category", pet.category);
   formData.append("breed", pet.breed);
   formData.append("age", pet.age);
@@ -33,12 +34,13 @@ export const addPet = async (pet, token) => {
 };
 
 export const addPetFood = async (food, token) => {
-  const url = "http://localhost:3009/pet/create-pet-food";
+  const url = "http://localhost:3009/product/create-proudcts";
   const formData = new FormData();
 
   const imageFile = new File([food.images[0]], food.images[0].name);
 
   formData.append("name", food.productName);
+  formData.append("producttype", "Petfood");
   formData.append("category", food.category);
   formData.append("brand", food.brand);
   formData.append("price", food.price);
@@ -71,12 +73,13 @@ export const addPetFood = async (food, token) => {
 };
 
 export const addPetAccessory = async (accessory, token) => {
-  const url = "http://localhost:3009/pet/create-accessories";
+  const url = "http://localhost:3009/product/create-proudcts";
   const formData = new FormData();
 
   const imageFile = new File([accessory.images[0]], accessory.images[0].name);
 
   formData.append("name", accessory.productName);
+  formData.append("producttype", "Petaccessories");
   formData.append("category", accessory.category);
   formData.append("brand", accessory.brand);
   formData.append("price", accessory.price);
@@ -105,8 +108,8 @@ export const addPetAccessory = async (accessory, token) => {
   }
 };
 
-export const fetchPets = async () => {
-  const url = "http://localhost:3009/product/get-pet-product";
+export const fetchProducts = async () => {
+  const url = "http://localhost:3009/product/get-all-product";
 
   try {
     const response = await fetch(url, {
@@ -118,6 +121,31 @@ export const fetchPets = async () => {
       return { result: [] };
     } else if (response.status === 200) {
       return jsonData;
+    } else {
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
+export const fetchPets = async () => {
+  const url = "http://localhost:3009/product/get-all-product";
+
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+    });
+    const jsonData = await response.json();
+
+    if (jsonData.result.length === 0) {
+      return { result: [] };
+    } else if (response.status === 200) {
+      const products = jsonData.result.filter(
+        (product) => product.producttype === "Pet"
+      );
+
+      return { result: products };
     } else {
       throw Error(jsonData.message);
     }
@@ -127,7 +155,7 @@ export const fetchPets = async () => {
 };
 
 export const fetchPetFoods = async () => {
-  const url = "http://localhost:3009/product/get-petfood-product";
+  const url = "http://localhost:3009/product/get-all-product";
 
   try {
     const response = await fetch(url, {
@@ -135,10 +163,14 @@ export const fetchPetFoods = async () => {
     });
     const jsonData = await response.json();
 
-    if (jsonData.result === "No product Avialable") {
+    if (jsonData.result.length === 0) {
       return { result: [] };
     } else if (response.status === 200) {
-      return jsonData;
+      const products = jsonData.result.filter(
+        (product) => product.producttype === "Petfood"
+      );
+
+      return { result: products };
     } else {
       throw Error(jsonData.message);
     }
@@ -148,17 +180,21 @@ export const fetchPetFoods = async () => {
 };
 
 export const fetchPetAccessories = async () => {
-  const url = "http://localhost:3009/product/get-petaccessories-product";
+  const url = "http://localhost:3009/product/get-all-product";
 
   try {
     const response = await fetch(url, {
       method: "GET",
     });
     const jsonData = await response.json();
-    if (jsonData.result === "No product Avialable") {
+    if (jsonData.result.length === 0) {
       return { result: [] };
     } else if (response.status === 200) {
-      return jsonData;
+      const products = jsonData.result.filter(
+        (product) => product.producttype === "Petaccessories"
+      );
+
+      return { result: products };
     } else {
       throw Error(jsonData.message);
     }
@@ -175,12 +211,15 @@ export const fetchPetsByCategory = async (category) => {
     });
     const jsonData = await response.json();
     console.log(jsonData);
-    if (jsonData.result.pet === "Pet  not Avialable") {
+    if (jsonData.result.length === 0) {
       console.log("no pet");
       return [];
     } else if (response.status === 200) {
+      const products = jsonData.result.filter(
+        (product) => product.producttype === "Pet"
+      );
       console.log("yes pet");
-      return jsonData.result.pet;
+      return products;
     } else {
       throw Error(jsonData.message);
     }
@@ -196,12 +235,17 @@ export const fetchPetFoodsByCategory = async (category) => {
       method: "GET",
     });
     const jsonData = await response.json();
+    console.log("pet food category");
     console.log(jsonData);
-    if (jsonData.result.foodProduct === "Pet FOOD not Avialable") {
+    console.log("pet food category");
+    if (jsonData.result.length === 0) {
       console.log("no food");
       return [];
     } else if (response.status === 200) {
-      return jsonData.result.foodProduct;
+      const products = jsonData.result.filter(
+        (product) => product.producttype === "Petfood"
+      );
+      return products;
     } else {
       throw Error(jsonData.message);
     }
