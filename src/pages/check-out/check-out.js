@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle, faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import ThePulseLoader from "../../components/pulse-loader";
 import { useSelector } from "react-redux";
 import { createOrder } from "../../action-creators/order-action";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const CheckOut = () => {
   const [selectedPm, setSelectedPm] = useState("Cash on Delivery");
@@ -20,11 +20,21 @@ const CheckOut = () => {
 
   let totalCount = cartState.totalItemCount;
 
-  // const authState = useSelector((state) => {
-  //   return state.auth;
-  // });
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
 
-  // const user = authState.user;
+  let items = cartState.items;
+  let products = items.map((item) => {
+    return {
+      productId: item.productItem.id,
+      quantity: item.count,
+    };
+  });
+
+  const navigate = useNavigate();
+
+  const token = authState.token;
 
   let totalPrice = cartState.totalPrice;
 
@@ -67,8 +77,21 @@ const CheckOut = () => {
                   .required("MPIN is required")
                   .matches(/^\d{4}$/, "MPIN must be 4 digits"),
         })}
-        onSubmit={(values, { setSubmitting }) => {
-          createOrder(100, "abc");
+        onSubmit={async (values, { setSubmitting }) => {
+          toast.success('Add items to cart to continue');
+          if (totalCount === 0) {
+            navigate('/category/All');
+            return;
+          } else {
+            await createOrder(token, products, values, totalPrice)
+              .then(() => {
+                toast.success('Order created successfully');
+              })
+              .catch((e) => {
+                toast.error(e.message);
+              });
+          }
+
           // setTimeout(() => {
           //   alert(JSON.stringify(values, null, 2));
           //   setSubmitting(false);
@@ -204,7 +227,7 @@ const CheckOut = () => {
               {" "}
               Payment Method
             </p> */}
-{/* 
+            {/* 
             {paymentMethods.map((pm) => {
               return (
                 <div
