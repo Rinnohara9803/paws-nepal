@@ -64,15 +64,19 @@ const CartItem = ({ item, count, price }) => {
         <p className="font-semibold"> {count} </p>
         <div
           onClick={() => {
-            dispatch(
-              cartSliceActions.addItemToCart({
-                item: {
-                  productItem: item,
-                  count: 1,
-                  price: item.price,
-                },
-              })
-            );
+            if (item.type === "Pet") {
+              return;
+            } else {
+              dispatch(
+                cartSliceActions.addItemToCart({
+                  item: {
+                    productItem: item,
+                    count: 1,
+                    price: item.price,
+                  },
+                })
+              );
+            }
           }}
           className="cursor-pointer bg-zinc-700 h-8 w-8 rounded-full text-center flex flex-row justify-center items-center"
         >

@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { cartSliceActions } from "../../slices/cart-slice";
+import { fetchFeedbacks } from "../../action-creators/feedback-action";
 
 const PetAccessoryDetails = () => {
   const [selectedTab, setSelectedTab] = useState("Details");
@@ -31,6 +32,8 @@ const PetAccessoryDetails = () => {
 
   const location = useLocation();
 
+  const [reviews, setReviews] = useState([]);
+
   const petAccessory = location.state.petAccessory;
   console.log(petAccessory);
 
@@ -43,9 +46,20 @@ const PetAccessoryDetails = () => {
 
   const user = authState.user;
 
+  const fetchReviews = async () => {
+    await fetchFeedbacks(petAccessory._id)
+      .then((data) => {
+        setReviews(data);
+      })
+      .catch((e) => {
+        setReviews([]);
+      });
+  };
+
   useEffect(() => {
+    fetchReviews();
     window.scrollTo(0, scrollRef.current);
-  });
+  }, []);
 
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36 ">
@@ -62,7 +76,7 @@ const PetAccessoryDetails = () => {
           </p>
           <p className="text-zinc-500 text-sm mb-3">
             {" "}
-          Size: {petAccessory.size}
+            Size: {petAccessory.size}
           </p>
           {/* sizes */}
           {/* <div
@@ -87,31 +101,34 @@ const PetAccessoryDetails = () => {
               })}
             </div>
           </div> */}
-          <div onClick={() => {
-            if (!user) {
-              navigate("/login");
-              toast.success("Plese login to add items to your cart.");
-            } else if (user.role !== "user") {
-              toast.error("Access denied.");
-            } else {
-              dispatch(
-                cartSliceActions.addItemToCart({
-                  item: {
-                    productItem: {
-                      id: petAccessory._id,
-                      type: petAccessory.producttype,
-                      image: petAccessory.image,
-                      name: petAccessory.name,
+          <div
+            onClick={() => {
+              if (!user) {
+                navigate("/login");
+                toast.success("Plese login to add items to your cart.");
+              } else if (user.role !== "user") {
+                toast.error("Access denied.");
+              } else {
+                dispatch(
+                  cartSliceActions.addItemToCart({
+                    item: {
+                      productItem: {
+                        id: petAccessory._id,
+                        type: petAccessory.producttype,
+                        image: petAccessory.image,
+                        name: petAccessory.name,
+                        price: petAccessory.price,
+                      },
+                      count: 1,
                       price: petAccessory.price,
                     },
-                    count: 1,
-                    price: petAccessory.price,
-                  },
-                })
-              );
-              toast.success("Item added to cart");
-            }
-          }} className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3">
+                  })
+                );
+                toast.success("Item added to cart");
+              }
+            }}
+            className="bg-red-500 text-center rounded-md px-7 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer w-full md:w-2/3 lg:w-1/3"
+          >
             {" "}
             Add to Cart{" "}
           </div>
@@ -137,7 +154,7 @@ const PetAccessoryDetails = () => {
             <p className="font-bold tracking-wide text-xl"> 4.5</p>
             <Rating
               name="simple-controlled"
-              value={4.5}
+              value={petAccessory.rating}
               precision={0.5}
               sx={{
                 "& .MuiRating-iconFilled": {
@@ -152,7 +169,7 @@ const PetAccessoryDetails = () => {
                 },
               }}
             />
-            <p className="text-sm"> 1200 reviews</p>
+            <p className="text-sm"> {reviews.length} reviews</p>
           </div>
           {/* <div className="w-full flex flex-col gap-y-3">
             <div className="flex flex-row items-center gap-x-2">
@@ -227,6 +244,7 @@ const PetAccessoryDetails = () => {
           </div>
           {showWriteReview && (
             <WriteReview
+              id={petAccessory._id}
               showWriteReview={showWriteReview}
               close={toggleShowWriteReview}
             />
@@ -316,10 +334,7 @@ const PetAccessoryDetails = () => {
       {/* ingredients */}
       <div id="materials-section" className="flex flex-col items-start w-full">
         <p className="font-semibold tracking-wider mt-6 mb-5"> Materials </p>
-        <p className="text-start text-sm">
-          {" "}
-         {petAccessory.materials}
-        </p>
+        <p className="text-start text-sm"> {petAccessory.materials}</p>
       </div>
 
       {/* instructions */}
@@ -345,10 +360,9 @@ const PetAccessoryDetails = () => {
       {/* reviews */}
       <div id="reviews-section" className="flex flex-col items-start w-full">
         <p className="font-semibold tracking-wider mt-6 mb-5"> Reviews </p>
-        <ReviewItem></ReviewItem>
-        <ReviewItem></ReviewItem>
-        <ReviewItem></ReviewItem>
-        <ReviewItem></ReviewItem>
+        {reviews.length === 0 && <p> No reviews found.</p>}
+        {reviews.length !== 0 &&
+          reviews.map((review) => <ReviewItem review={review}></ReviewItem>)}
       </div>
     </div>
   );

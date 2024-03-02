@@ -1,15 +1,15 @@
 import React from "react";
 import { Rating } from "@mui/material";
 
-const ReviewItem = () => {
+const ReviewItem = ({ review }) => {
   return (
     <div className="flex flex-col items-start mb-4 w-full">
-      <p className="font-semibold"> Sara </p>
-      <p className="text-sm text-zinc-500 mb-1.5"> Jul 9, 2023</p>
+      <p className="font-semibold"> {review.userId.name} </p>
+      {/* <p className="text-sm text-zinc-500 mb-1.5"> Jul 9, 2023</p> */}
       <Rating
         className="mb-2"
         name="simple-controlled"
-        value={4.5}
+        value={review.rating}
         precision={0.5}
         sx={{
           "& .MuiRating-iconFilled": {
@@ -24,11 +24,7 @@ const ReviewItem = () => {
           },
         }}
       />
-      <p className="text-start tracking-wider">
-        {" "}
-        My Dog didn't like it. Also, the quality is great but the price is
-        really high.
-      </p>
+      <p className="text-start tracking-wider">{review.comment}</p>
       <div style={{ height: "0.5px" }} className="w-full bg-white mt-4"></div>
     </div>
   );

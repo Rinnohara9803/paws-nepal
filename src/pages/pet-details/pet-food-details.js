@@ -6,11 +6,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { cartSliceActions } from "../../slices/cart-slice";
 import toast from "react-hot-toast";
+import { fetchFeedbacks } from "../../action-creators/feedback-action";
 
 const PetFoodDetails = () => {
   const [selectedTab, setSelectedTab] = useState("Details");
 
   const [showWriteReview, setShowWriteReview] = useState(false);
+
+  const [reviews, setReviews] = useState([]);
 
   const scrollToSection = (sectionId) => {
     const section = document.getElementById(sectionId);
@@ -39,9 +42,20 @@ const PetFoodDetails = () => {
 
   const user = authState.user;
 
+  const fetchReviews = async () => {
+    await fetchFeedbacks(petFood._id)
+      .then((data) => {
+        setReviews(data);
+      })
+      .catch((e) => {
+        setReviews([]);
+      });
+  };
+
   useEffect(() => {
+    fetchReviews();
     window.scrollTo(0, scrollRef.current);
-  });
+  }, []);
 
   return (
     <div className="flex flex-col items-start justify-start px-10 md:px-36 ">
@@ -107,7 +121,7 @@ const PetFoodDetails = () => {
             <p className="font-bold tracking-wide text-xl"> 4.5</p>
             <Rating
               name="simple-controlled"
-              value={4.5}
+              value={petFood.rating}
               precision={0.5}
               sx={{
                 "& .MuiRating-iconFilled": {
@@ -122,7 +136,7 @@ const PetFoodDetails = () => {
                 },
               }}
             />
-            <p className="text-sm"> 1200 reviews</p>
+            <p className="text-sm"> {reviews.length} reviews</p>
           </div>
         </div>
         <div className="flex flex-col w-full items-start">
@@ -135,6 +149,7 @@ const PetFoodDetails = () => {
           </div>
           {showWriteReview && (
             <WriteReview
+              id={petFood._id}
               showWriteReview={showWriteReview}
               close={toggleShowWriteReview}
             />
@@ -157,7 +172,7 @@ const PetFoodDetails = () => {
         >
           {" "}
           Details
-        </p> 
+        </p>
         <p
           onClick={() => {
             setSelectedTab("Ingredients");
@@ -222,10 +237,9 @@ const PetFoodDetails = () => {
       {/* reviews */}
       <div id="reviews-section" className="flex flex-col items-start w-full">
         <p className="font-semibold tracking-wider mt-6 mb-5"> Reviews </p>
-        <ReviewItem></ReviewItem>
-        <ReviewItem></ReviewItem>
-        <ReviewItem></ReviewItem>
-        <ReviewItem></ReviewItem>
+        {reviews.length === 0 && <p> No reviews found.</p>}
+        {reviews.length !== 0 &&
+          reviews.map((review) => <ReviewItem review={review}></ReviewItem>)}
       </div>
     </div>
   );

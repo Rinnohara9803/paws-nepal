@@ -26,6 +26,8 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
+  
+
   const toggleMenu = () => {
     setShowMenu(!showMenu); // Corrected the toggle logic
   };

@@ -170,7 +170,7 @@ const DoctorDetailsPage = () => {
               >
                 <FontAwesomeIcon icon={items[0].icon} className="text-lg" />
               </NavLink>
-              <NavLink
+              {/* <NavLink
                 to={`/doctor-details/${doctorId}/ratings&reviews`}
                 className={(navData) =>
                   navData.isActive
@@ -179,7 +179,7 @@ const DoctorDetailsPage = () => {
                 }
               >
                 <FontAwesomeIcon icon={items[2].icon} className="text-lg" />
-              </NavLink>
+              </NavLink> */}
             </div>
             <Outlet context={[doctorData]}></Outlet>
           </div>

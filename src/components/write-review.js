@@ -1,10 +1,37 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Rating } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import "../styles/home.css";
+import { postFeedback } from "../action-creators/feedback-action";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
-const WriteReview = ({ showWriteReview, close }) => {
+const WriteReview = ({ id, showWriteReview, close }) => {
+  const [rating, setRating] = useState(1);
+  const [review, setReview] = useState("");
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const token = authState.token;
+
+  const postReview = async () => {
+    if (review.length === 0) {
+      toast.error("Feedback is empty.");
+    } else {
+      await postFeedback(id, token, rating, review)
+        .then(() => {
+          toast.success("Your feedback has been posted.");
+          close();
+        })
+        .catch((e) => {
+          toast.error(e.message);
+        });
+    }
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -51,9 +78,12 @@ const WriteReview = ({ showWriteReview, close }) => {
             Overall, how satisfied are you with this product?
           </p>
           <Rating
+            onChange={(event, value) => {
+              setRating(value);
+            }}
             className="header-data"
             name="simple-controlled"
-            value={1}
+            value={rating}
             precision={0.5}
             sx={{
               "& .MuiRating-iconFilled": {
@@ -75,9 +105,15 @@ const WriteReview = ({ showWriteReview, close }) => {
             className="header-data bg-zinc-700 px-3 py-3 w-full rounded-lg"
             rows={5}
             placeholder="Please leave us a review ..."
+            onChange={(event) => {
+              setReview(event.target.value);
+            }}
           ></textarea>
           <div className="flex flex-row gap-x-4 justify-end w-full">
-            <div className="bg-red-500 text-center rounded-md px-3 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer">
+            <div
+              onClick={postReview}
+              className="bg-red-500 text-center rounded-md px-3 py-2 hover:bg-red-700 transition-all duration-700 cursor-pointer"
+            >
               {" "}
               Submit
             </div>
