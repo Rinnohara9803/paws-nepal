@@ -1,33 +1,42 @@
 import { faBell } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { fetchNotifications } from "../../action-creators/notification-action";
 
 const Notifications = () => {
-  const notifications = [
-    {
-      title: "Appointment Booked",
-      message: "You have booked your appointment with Dr. Prakash Shrestha.",
-      time: "4 June, 2024",
-    },
-    {
-      title: "Medical Report",
-      message: "Your pet's medical report has been posted.",
-      time: "4 June, 2024",
-    },
-    {
-      title: "Appointment Booked",
-      message: "You have booked your appointment with Dr. Sagar Karki.",
-      time: "4 June, 2024",
-    },
-  ];
+  const [notifications, setNotifications] = useState([]);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const token = authState.token;
+  const user = authState.user;
+
+  useEffect(() => {
+    const fetchTheNotifications = async () => {
+      await fetchNotifications(user._id, token)
+        .then((data) => {
+          setNotifications(data);
+        })
+        .catch((e) => {
+          setNotifications([]);
+        });
+    };
+
+    fetchTheNotifications();
+  }, [token, user._id]);
   return (
     <div className="flex flex-col gap-y-4 mx-10 items-start">
       <p className="font-bold text-xl tracking-wider"> Notifications </p>
-      {notifications.map((notification) => {
-        return (
-          <NotificationItem notification={notification}></NotificationItem>
-        );
-      })}
+      {notifications.length === 0 && <p className="py-36"> You have no notifications. </p>}
+      {notifications.length !== 0 &&
+        notifications.map((notification) => {
+          return (
+            <NotificationItem notification={notification}></NotificationItem>
+          );
+        })}
     </div>
   );
 };

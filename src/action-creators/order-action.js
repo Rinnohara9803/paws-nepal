@@ -94,6 +94,32 @@ export const fetchOrders = async (token) => {
   }
 };
 
+export const fetchUserOrders = async (token, id) => {
+  const url = `http://localhost:3009/order/get-order/${id}`;
+  try {
+    const response = await fetch(url, {
+      method: "GET",
+
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const jsonData = await response.json();
+    console.log("orders");
+    console.log(jsonData);
+    console.log("orders");
+
+    if (response.status === 200) {
+      return jsonData.result;
+    } else {
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    throw Error(e.message);
+  }
+};
+
 export const createSignature = (message) => {
   const secret = "8gBm/:&EnhH.1/q";
 

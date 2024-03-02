@@ -280,7 +280,7 @@ const MainPage = () => {
               Rescued pets from all around the country.
             </p>
           </div>
-          <div className="grid items-start grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full md:px-28">
+          <div className="grid items-start grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6 w-full md:px-28 px-10">
             {petFoods.map((petFood) => {
               return (
                 <PetFoodItem

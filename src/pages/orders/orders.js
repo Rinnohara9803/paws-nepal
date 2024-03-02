@@ -1,6 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
-import { fetchOrders } from "../../action-creators/order-action";
+import {
+  fetchOrders,
+  fetchUserOrders,
+} from "../../action-creators/order-action";
 import { useSelector } from "react-redux";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,16 +15,27 @@ const Orders = () => {
   });
 
   const token = authState.token;
+  const user = authState.user;
 
   useEffect(() => {
     const fetchTheOrders = async () => {
-      await fetchOrders(token)
-        .then((data) => {
-          setOrders(data);
-        })
-        .catch((e) => {
-          setOrders([]);
-        });
+      if (user.role === "user") {
+        await fetchUserOrders(token, user._id)
+          .then((data) => {
+            setOrders(data);
+          })
+          .catch((e) => {
+            setOrders([]);
+          });
+      } else {
+        await fetchOrders(token)
+          .then((data) => {
+            setOrders(data);
+          })
+          .catch((e) => {
+            setOrders([]);
+          });
+      }
     };
 
     fetchTheOrders();
@@ -42,6 +56,12 @@ export default Orders;
 
 const OrderItem = ({ order }) => {
   const date = new Date(order.updatedAt);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
 
   const formattedDate = date.toLocaleDateString("en-US", {
     year: "numeric",
@@ -72,6 +92,19 @@ const OrderItem = ({ order }) => {
             Rs.{order.totalprice}
           </span>{" "}
         </p>
+        <p className="font-normal tracking-wider pb-2">
+          {" "}
+          Location:{" "}
+          <span className="text-red-600">
+            {order.houseNumber}, {order.city}, {order.district}
+          </span>{" "}
+        </p>
+        <p className="font-normal tracking-wider pb-2">
+          {" "}
+          Contact: <span className="text-red-600">
+            {order.contactNumber}
+          </span>{" "}
+        </p>
         {/* <p className="tracking-wider"> {order.message}</p> */}
         {showDetails &&
           order.products.map((product) => (
@@ -96,6 +129,7 @@ const OrderItem = ({ order }) => {
               </div>
             </div>
           ))}
+        {showDetails && user.role === "admin" && <p> {order.userId.name}</p>}
         <p className="text-sm"> {formattedDate}</p>
       </div>
     </div>

@@ -26,8 +26,6 @@ const Header = () => {
 
   const dispatch = useDispatch();
 
-  
-
   const toggleMenu = () => {
     setShowMenu(!showMenu); // Corrected the toggle logic
   };
@@ -94,13 +92,13 @@ const Header = () => {
           </div>
         )}
         <div
-            onClick={() => {
-              navigate("/category/All");
-            }}
-            className="bg-zinc-700 hover:bg-red-600 px-3 py-2 cursor-pointer hover:text-white-600 rounded-lg flex flex-row items-center justify-center gap-x-4 transition-all duration-700"
-          >
-            <p className="font-semibold text-sm"> Categories </p>
-          </div>
+          onClick={() => {
+            navigate("/category/All");
+          }}
+          className="bg-zinc-700 hover:bg-red-600 px-3 py-2 cursor-pointer hover:text-white-600 rounded-lg flex flex-row items-center justify-center gap-x-4 transition-all duration-700"
+        >
+          <p className="font-semibold text-sm"> Categories </p>
+        </div>
         {user && user.role !== "admin" && (
           <div
             onClick={() => {
@@ -146,19 +144,24 @@ const Header = () => {
             <FontAwesomeIcon icon={faUserDoctor}></FontAwesomeIcon>
           </div>
         )}
-        {user && (<div
-          onClick={() => {
-            navigate("/orders");
-          }}
-          className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
-        >
-          <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
-        </div>)}
+        {user && user.role !== 'doctor' && (
+          <div
+            onClick={() => {
+              navigate("/orders");
+            }}
+            className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
+          >
+            <FontAwesomeIcon icon={faBook}></FontAwesomeIcon>
+          </div>
+        )}
 
         {user && (
-          <div onClick={() => {
-            navigate('/notifications');
-          }} className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer">
+          <div
+            onClick={() => {
+              navigate("/notifications");
+            }}
+            className="bg-zinc-700 rounded-lg px-3 py-2 text-sm hover:bg-zinc-800 transition-all ease-out duration-700 cursor-pointer"
+          >
             <FontAwesomeIcon icon={faBell}></FontAwesomeIcon>
           </div>
         )}
