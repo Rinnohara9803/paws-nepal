@@ -34,7 +34,7 @@ export const createOrder = async (token, products, shippingDetails, amount) => {
     const formData = {
       amount: `${jsonData.result.totalprice}`,
       failure_url: "https://google.com",
-      product_delivery_charge: "0",
+      product_delivery_charge: "0", 
       product_service_charge: "0",
       product_code: "EPAYTEST",
       signature: signature,

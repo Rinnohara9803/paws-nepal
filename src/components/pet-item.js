@@ -122,7 +122,7 @@ const PetItem = ({ pet, id, type, image, name, price, breed }) => {
             price={price}
           ></AddToCartButton>
         )}
-        {isHovered && user.role === "admin" && (
+        {isHovered && user && user.role === "admin" && (
           <DeleteIcon id={id} type={type}></DeleteIcon>
         )}
       </div>
@@ -180,7 +180,7 @@ export const PetFoodItem = ({
             price={price}
           ></AddToCartButton>
         )}
-        {isHovered && user.role === "admin" && (
+        {isHovered && user && user.role === "admin" && (
           <DeleteIcon id={id} type={type}></DeleteIcon>
         )}
       </div>
@@ -238,7 +238,7 @@ export const PetAccessoryItem = ({
             price={price}
           ></AddToCartButton>
         )}
-        {isHovered && user.role === "admin" && (
+        {isHovered && user && user.role === "admin" && (
           <DeleteIcon id={id} type={type}></DeleteIcon>
         )}
       </div>
