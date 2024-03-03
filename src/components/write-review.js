@@ -15,10 +15,14 @@ const WriteReview = ({ id, showWriteReview, close }) => {
     return state.auth;
   });
 
+  const user = authState.user;
   const token = authState.token;
 
   const postReview = async () => {
-    if (review.length === 0) {
+    if (!user) {
+      toast.error('Login to give feedbacks.');
+    }
+    else if (review.length === 0) {
       toast.error("Feedback is empty.");
     } else {
       await postFeedback(id, token, rating, review)
