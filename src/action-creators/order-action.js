@@ -33,13 +33,13 @@ export const createOrder = async (token, products, shippingDetails, amount) => {
 
     const formData = {
       amount: `${jsonData.result.totalprice}`,
-      failure_url: "https://google.com",
-      product_delivery_charge: "0", 
+      failure_url: "http://localhost:3000/home",
+      product_delivery_charge: "0",
       product_service_charge: "0",
       product_code: "EPAYTEST",
       signature: signature,
       signed_field_names: "total_amount,transaction_uuid,product_code",
-      success_url: "https://esewa.com.np",
+      success_url: "http://localhost:3000/home",
       tax_amount: "0",
       total_amount: `${jsonData.result.totalprice}`,
       transaction_uuid: tid,
