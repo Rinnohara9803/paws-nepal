@@ -15,6 +15,15 @@ const inventorySlice = createSlice({
     replacePetAccessoriesList(state, action) {
       state.petAccessories = action.payload.list;
     },
+    deletePet(state, action) {
+      state.pets = state.pets.filter((pet) => pet._id !== action.payload.id);
+    },
+    deletePetFood(state, action) {
+      state.pets = state.petFoods.filter((petFood) => petFood._id !== action.payload.id);
+    },
+    deletePetAccessory(state, action) {
+      state.pets = state.petAccessories.filter((petAccessory) => petAccessory._id !== action.payload.id);
+    },
   },
 });
 

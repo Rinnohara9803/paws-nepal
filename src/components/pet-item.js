@@ -3,6 +3,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { cartSliceActions } from "../slices/cart-slice";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
+import { deleteProduct } from "../action-creators/inventory-action";
+import { inventorySliceActions } from "../slices/inventory-slice";
+
+const DeleteIcon = ({ id, type }) => {
+  const dispatch = useDispatch();
+  return (
+    <FontAwesomeIcon
+      onClick={async (e) => {
+        e.stopPropagation();
+        await deleteProduct(id)
+          .then(() => {
+            if (type === "Pet") {
+              dispatch(inventorySliceActions.deletePet({ id: id }));
+            } else if (type === "Petfood") {
+              dispatch(inventorySliceActions.deletePetFood({ id: id }));
+            } else {
+              dispatch(inventorySliceActions.deletePetAccessory({ id: id }));
+            }
+            toast.success("Product deleted");
+          })
+          .catch((e) => {
+            toast.error("Product deletion failed.");
+          });
+      }}
+      icon={faDeleteLeft}
+      className="p-2 text-red-600 absolute top-2 right-2"
+    ></FontAwesomeIcon>
+  );
+};
 
 const AddToCartButton = ({ id, type, image, name, price }) => {
   const dispatch = useDispatch();
@@ -58,6 +89,12 @@ const PetItem = ({ pet, id, type, image, name, price, breed }) => {
 
   const [isHovered, setIsHovered] = useState(false);
 
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
+
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
@@ -85,6 +122,9 @@ const PetItem = ({ pet, id, type, image, name, price, breed }) => {
             price={price}
           ></AddToCartButton>
         )}
+        {isHovered && user.role === "admin" && (
+          <DeleteIcon id={id} type={type}></DeleteIcon>
+        )}
       </div>
       <div className="flex flex-col items-start">
         <p className="font-semibold text-lg"> {name} </p>
@@ -96,15 +136,29 @@ const PetItem = ({ pet, id, type, image, name, price, breed }) => {
 
 export default PetItem;
 
-export const PetFoodItem = ({petFood, id, type, image, name, price, brand }) => {
+export const PetFoodItem = ({
+  petFood,
+  id,
+  type,
+  image,
+  name,
+  price,
+  brand,
+}) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
-        navigate("/home/pets/foods/chicken", {state: {petFood: petFood}});
+        navigate("/home/pets/foods/chicken", { state: { petFood: petFood } });
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
     >
@@ -126,6 +180,9 @@ export const PetFoodItem = ({petFood, id, type, image, name, price, brand }) => 
             price={price}
           ></AddToCartButton>
         )}
+        {isHovered && user.role === "admin" && (
+          <DeleteIcon id={id} type={type}></DeleteIcon>
+        )}
       </div>
       <div className="flex flex-col items-start">
         <p className="font-semibold text-lg"> {name} </p>
@@ -135,15 +192,31 @@ export const PetFoodItem = ({petFood, id, type, image, name, price, brand }) => 
   );
 };
 
-export const PetAccessoryItem = ({petAccessory, id, type, image, name, price, brand }) => {
+export const PetAccessoryItem = ({
+  petAccessory,
+  id,
+  type,
+  image,
+  name,
+  price,
+  brand,
+}) => {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
+
+  const authState = useSelector((state) => {
+    return state.auth;
+  });
+
+  const user = authState.user;
   return (
     <div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
-        navigate("/home/pets/accessories/chew-toy", {state: {petAccessory: petAccessory}});
+        navigate("/home/pets/accessories/chew-toy", {
+          state: { petAccessory: petAccessory },
+        });
       }}
       className="flex flex-col items-start justify-start gap-y-3 w-full cursor-pointer"
     >
@@ -164,6 +237,9 @@ export const PetAccessoryItem = ({petAccessory, id, type, image, name, price, br
             name={name}
             price={price}
           ></AddToCartButton>
+        )}
+        {isHovered && user.role === "admin" && (
+          <DeleteIcon id={id} type={type}></DeleteIcon>
         )}
       </div>
       <div className="flex flex-col items-start">

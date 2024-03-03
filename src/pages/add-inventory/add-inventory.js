@@ -39,6 +39,7 @@ const AddInventory = () => {
           </select>
         </div>
       </div>
+      <div className=""> View Inventory </div>
       {selectedCategory === "Pet" && <AddPet></AddPet>}
       {selectedCategory === "Pet Food" && <AddPetFood></AddPetFood>}
       {selectedCategory === "Accessories" && <AddAccessories></AddAccessories>}

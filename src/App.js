@@ -30,44 +30,12 @@ import MyAppointments from "./pages/MyAppointments/my_appointments";
 import DoctorForm from "./pages/MedicalHistory/post_checkup_form";
 import Notifications from "./pages/notifications/notifications";
 import Orders from "./pages/orders/orders";
-import { messaging } from "./firebase";
-import { getMessaging, getToken } from "firebase/messaging";
+import Inventories from "./pages/add-inventory/inventories";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const getTokenAndHandlePermission = async () => {
-      try {
-        // const messaging = getMessaging();
-        getToken(messaging, {
-          vapidKey:
-            "BL8eWuupwHm1mWhJhp2EdSmaW2moZFRMUVn3OV9ESroPnHdvP2R4HRTGttmJUnFqyIGzmaQnpBD-IfFe2gZwpiA",
-        })
-          .then((currentToken) => {
-            if (currentToken) {
-              console.log("token: " + currentToken);
-              // Send the token to your server and update the UI if necessary
-              // ...
-            } else {
-              // Show permission request UI
-              console.log(
-                "No registration token available. Request permission to generate one."
-              );
-              // ...
-            }
-          })
-          .catch((err) => {
-            console.log("An error occurred while retrieving token. ", err);
-            // ...
-          });
-      } catch (error) {
-        console.error("Error getting FCM token:", error);
-      }
-    };
-
-    // getTokenAndHandlePermission();
-
     dispatch(getLoggedInState());
   }, [dispatch]);
 
@@ -118,9 +86,7 @@ function App() {
           <Route exact path="/login" element={<Login />}></Route>
           <Route exact path="/register" element={<Register />}></Route>
           <Route exact path="/search" element={<Search />}></Route>
-          {user && (
-            <Route exact path="/orders" element={<Orders />}></Route>
-          )}
+          {user && <Route exact path="/orders" element={<Orders />}></Route>}
           <Route
             exact
             path="/"
@@ -168,6 +134,13 @@ function App() {
               exact
               path="/my_appointments"
               element={<MyAppointments />}
+            ></Route>
+          )}
+          {user && user.role === "admin" && (
+            <Route
+              exact
+              path="/inventories/:category"
+              element={<Inventories />}
             ></Route>
           )}
           {user && user.role === "admin" && (

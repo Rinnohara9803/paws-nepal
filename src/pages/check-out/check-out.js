@@ -81,15 +81,15 @@ const CheckOut = () => {
                   .matches(/^\d{4}$/, "MPIN must be 4 digits"),
         })}
         onSubmit={async (values, { setSubmitting }) => {
-          toast.success('Add items to cart to continue');
+          toast.success("Add items to cart to continue");
           if (totalCount === 0) {
             dispatch(cartSliceActions.clearCart());
-            navigate('/category/All');
+            navigate("/category/All");
             return;
           } else {
             await createOrder(token, products, values, totalPrice)
               .then(() => {
-                toast.success('Order created successfully');
+                toast.success("Order created successfully");
               })
               .catch((e) => {
                 toast.error(e.message);

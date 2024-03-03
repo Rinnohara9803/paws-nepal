@@ -83,6 +83,16 @@ const Header = () => {
         {user && user.role === "admin" && (
           <div
             onClick={() => {
+              navigate(`/inventories/All`);
+            }}
+            className="flex flex-row items-center gap-x-4 bg-blue-700 rounded-lg px-3 py-2 text-sm hover:bg-blue-800 transition-all ease-out duration-700 cursor-pointer"
+          >
+            <p className="tracking-wider font-semibold">View Inventory</p>
+          </div>
+        )}
+        {user && user.role === "admin" && (
+          <div
+            onClick={() => {
               navigate("/inventory/add-inventory");
             }}
             className="flex flex-row items-center gap-x-4 bg-red-700 rounded-lg px-3 py-2 text-sm hover:bg-red-800 transition-all ease-out duration-700 cursor-pointer"
@@ -144,7 +154,7 @@ const Header = () => {
             <FontAwesomeIcon icon={faUserDoctor}></FontAwesomeIcon>
           </div>
         )}
-        {user && user.role !== 'doctor' && (
+        {user && user.role !== "doctor" && (
           <div
             onClick={() => {
               navigate("/orders");

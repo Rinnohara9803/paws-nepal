@@ -253,3 +253,24 @@ export const fetchPetFoodsByCategory = async (category) => {
     throw Error(e.message);
   }
 };
+
+export const deleteProduct = async (id) => {
+  const url = `http://localhost:3009/product/delete-product/${id}`;
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+    });
+    const jsonData = await response.json();
+    console.log("delete");
+    console.log(jsonData);
+    console.log("delete");
+    if (response.status === 200) {
+      return jsonData;
+    } else {
+      throw Error(jsonData.message);
+    }
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
