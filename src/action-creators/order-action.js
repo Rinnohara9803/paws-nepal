@@ -1,6 +1,6 @@
 import CryptoJS from "crypto-js";
 
-export const createOrder = async (token, products, shippingDetails, amount) => {
+export const createOrder = async (token, products, shippingDetails, amount, items) => {
   const url = "http://localhost:3009/order/create-order";
   try {
     const response = await fetch(url, {
@@ -22,6 +22,8 @@ export const createOrder = async (token, products, shippingDetails, amount) => {
     });
     const jsonData = await response.json();
 
+    localStorage.setItem('itemsToReview', JSON.stringify(items));
+
     const tid = jsonData.result._id;
     console.log(tid);
     const signature = createSignature(
@@ -39,7 +41,7 @@ export const createOrder = async (token, products, shippingDetails, amount) => {
       product_code: "EPAYTEST",
       signature: signature,
       signed_field_names: "total_amount,transaction_uuid,product_code",
-      success_url: "http://localhost:3000/home",
+      success_url: "http://localhost:3000/review-items",
       tax_amount: "0",
       total_amount: `${jsonData.result.totalprice}`,
       transaction_uuid: tid,
