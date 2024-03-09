@@ -1,6 +1,12 @@
 import CryptoJS from "crypto-js";
 
-export const createOrder = async (token, products, shippingDetails, amount, items) => {
+export const createOrder = async (
+  token,
+  products,
+  shippingDetails,
+  amount,
+  items
+) => {
   const url = "http://localhost:3009/order/create-order";
   try {
     const response = await fetch(url, {
@@ -22,7 +28,7 @@ export const createOrder = async (token, products, shippingDetails, amount, item
     });
     const jsonData = await response.json();
 
-    localStorage.setItem('itemsToReview', JSON.stringify(items));
+    localStorage.setItem("itemsToReview", JSON.stringify(items));
 
     const tid = jsonData.result._id;
     console.log(tid);
